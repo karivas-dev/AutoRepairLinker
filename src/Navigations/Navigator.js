@@ -5,12 +5,14 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+
 import { HomePage } from "../screens/HomePage";
 
 import {FormOwner} from '../screens/Owners/FormOwner';
 import {DetailOwner} from '../screens/Owners/DetailOwner';
 import { UserProfile } from "../screens/User/UserProfile";
-
+import { OwnersList } from "../screens/Owners/OwnersList";
 
 
 const Tab = createBottomTabNavigator();
@@ -18,15 +20,8 @@ const screenOptionsTabStyle = {
     headerShown:false,
     tabBarStyle:{
         backgroundColor:'#374A7A',
-        position:'absolute',
-        bottom:15,
-        left:20,
-        right:20,
-        elevation:0,
         height:60,
-        borderColor:'#374A7A',
-        borderRadius:15,
-        
+        borderTopWidth: 0,
     }
 }
 const BottomTabNavigator = () => {
@@ -41,6 +36,16 @@ const BottomTabNavigator = () => {
                     tabBarLabel: '',
                     tabBarIcon: ({focused}) => (
                         <AntDesign name="home" color={focused ? '#6987B7': 'white'} size={24} />
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name="OwnersList"
+                component={OwnersList}
+                options={{
+                    tabBarLabel: '',
+                    tabBarIcon: ({focused}) => (
+                        <MaterialIcons name="groups" size={24} color={focused ? '#6987B7': 'white'} />
                     ),
                 }}
             />
@@ -71,7 +76,6 @@ const HomeStackNavigator = () => {
 
            <Stack.Screen name="FormOwner" component={FormOwner} />
            <Stack.Screen name="DetailOwner" component={DetailOwner} />
-
         </Stack.Navigator>
     )
 };
