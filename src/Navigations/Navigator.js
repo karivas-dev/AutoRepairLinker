@@ -49,7 +49,7 @@ const BottomTabNavigator = () => {
                     ),
                 }}
             />
-            <Tab.Screen
+            <Tab.Screen 
                 name="UserProfile"
                 component={UserProfile}
                 options={{

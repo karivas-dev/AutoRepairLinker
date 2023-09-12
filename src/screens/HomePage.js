@@ -1,6 +1,7 @@
 import { View, Text, TextInput, Pressable, Image, TouchableOpacity  } from 'react-native';
 import { AuthenticateLayout } from '../layouts/AuthenticateLayout';
 import { Card } from '../components/Card';
+import { FormUser } from './User/FormUser';
 
 
 export const HomePage = ({navigation}) => {
@@ -32,6 +33,6 @@ export const HomePage = ({navigation}) => {
             </View>
         
         </AuthenticateLayout>
-       
+       /*<FormUser />*/
     ) 
 }
