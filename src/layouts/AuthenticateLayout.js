@@ -6,7 +6,7 @@ export const AuthenticateLayout = (props) => {
 
     return (
         <View 
-            className="flex-1 px-6 py-4 bg-blueC-600 rounded-lg"
+            className="flex-1 px-6 py-4 bg-blueC-600 "
         >
 
             {props.children}
