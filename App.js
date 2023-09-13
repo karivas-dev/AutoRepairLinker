@@ -11,11 +11,17 @@ import { ResetPassword } from './src/screens/ResetPassword';
 import { NavigationContainer } from '@react-navigation/native';
 import HomeStackNavigator from './src/Navigations/Navigator';
 
+import { QueryClient, QueryClientProvider } from 'react-query';
+
 export default function App() {
+
+  const queryClient = new QueryClient();
+
   return (
-    <NavigationContainer>
-        <HomeStackNavigator></HomeStackNavigator>
-    </NavigationContainer>
-    /* <FormOwner/> */
+    <QueryClientProvider client={queryClient}>
+      <NavigationContainer>
+          <HomeStackNavigator></HomeStackNavigator>
+      </NavigationContainer>
+    </QueryClientProvider>
   );
 }
