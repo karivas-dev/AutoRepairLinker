@@ -3,8 +3,10 @@ import { AuthenticateLayout } from '../layouts/AuthenticateLayout';
 import { Card } from '../components/Card';
 
 
-export const HomePage = ({navigation}) => {
+export const HomePage = ({route,navigation}) => {
 
+    const { token} = route.params;
+    console.log(token);
     return (
         <AuthenticateLayout>
             <View className="flex flex-1 flex-col justify-center items-center ">
