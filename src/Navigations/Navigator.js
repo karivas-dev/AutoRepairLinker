@@ -13,7 +13,8 @@ import {FormOwner} from '../screens/Owners/FormOwner';
 import {DetailOwner} from '../screens/Owners/DetailOwner';
 import { UserProfile } from "../screens/User/UserProfile";
 import { OwnersList } from "../screens/Owners/OwnersList";
-
+import { Login } from "../screens/Login";
+import { ResetPassword } from "../screens/ResetPassword";
 
 const Tab = createBottomTabNavigator();
 const screenOptionsTabStyle = {
@@ -71,8 +72,10 @@ const screenOptionsStyle = {
 const HomeStackNavigator = () => {
     
     return (
-        <Stack.Navigator screenOptions={screenOptionsStyle} >
-           <Stack.Screen name="Home" component={BottomTabNavigator} />
+        <Stack.Navigator initialRouteName="Login" screenOptions={screenOptionsStyle} >
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="ResetPassword" component={ResetPassword} />
+            <Stack.Screen name="Home" component={BottomTabNavigator} />
 
            <Stack.Screen name="FormOwner" component={FormOwner} />
            <Stack.Screen name="DetailOwner" component={DetailOwner} />
