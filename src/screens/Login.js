@@ -5,17 +5,18 @@ import { GuestLayout } from '../layouts/GuestLayout';
 import { PrimaryButton } from '../components/PrimaryButton';
 import {TxtInput }from '../components/TxtInput'
 import { Card } from '../components/Card';
-import { loginAttempt } from '../hooks/AuthApi';
+import { loginAttempt} from '../hooks/AuthApi';
 import { useMutation } from 'react-query';
+import { useAuth } from '../context/AuthContext';
 
 
 export const Login = ({navigation}) => {
 
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
-    const [success,setSuccess] = useState([]);
     const [generalException,setGeneralException] = useState([]);
-    
+    const { login, logout, getToken } = useAuth();
+
     const UserLogin = useMutation({
         mutationFn: loginAttempt,
         
@@ -25,7 +26,7 @@ export const Login = ({navigation}) => {
 
         },
         onSuccess: (data, variables, context) => {
-            setSuccess(data.data);
+            login(data.data?.token)
             console.log(data.data);
         },
     })
@@ -52,7 +53,7 @@ export const Login = ({navigation}) => {
                     }}
                 />
             </View>
-
+            
             <Text className="text-5xl font-bold mb-6 text-gray-200 mt-5">Sign In</Text>
             {/* form */}
             <TxtInput onChangeText={(text) => setEmail(text)} placeholder="Enter your Email"/> 
@@ -92,13 +93,15 @@ export const Login = ({navigation}) => {
                             )    
                         ) : null}
 
-                        {UserLogin.isSuccess ? navigation.navigate('Home',{
-                            screen: 'HomePage',
-                            params: { token: success.token },
-                        }) : null}
+                        {UserLogin.isSuccess ? navigation.navigate('Home',{screen: 'HomePage'}) : null}
                     </View>
                 )
             } 
         </GuestLayout>
     );
 }
+/* Pasar parametros en  navigation */
+/* {UserLogin.isSuccess ? navigation.navigate('Home',{
+    screen: 'HomePage',
+    params: { token: success.token },
+}) : null} */
