@@ -4,45 +4,26 @@ import { useState, useEffect, useCallback } from "react";
 import {Card} from '../../components/Card';
 import { TxtInput } from "../../components/TxtInput";
 import { PrimaryButton } from "../../components/PrimaryButton";
-
-import { Ionicons } from '@expo/vector-icons';
+import { Messages } from "../../components/Messages";
+import { Ionicons, createIconSetFromFontello } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 
 import { filter, includes } from "lodash";
-
-let limit = 10;
-let loadMore = true;
+import { getOwners } from "../../hooks/OwnerApi";
+import { useQuery } from "react-query";
 
 export const OwnersList = ({navigation}) => {
 
-    const [owners, setOwners] = useState([]);
+    const {isLoading,  data:owners, isError, error} = useQuery(['owners'], getOwners,{refetchOnWindowFocus: false,});
+    //const {owners, isLoading,isError,error} = GetAllOwners();
+    const [filterOwners,setFilterOwners] = useState(owners);
+    //console.log(owners);
+    //console.log(filterOwners);
+    
     const [search, setSearch] = useState('');
-
-    const [skip, setSkip] = useState(0);
-    const [showLoader, setShowLoader] = useState(false);
-    useEffect( () => {
-        fetchData();
-    },[]);
-
-
-    const fetchData =  () => {
-        setShowLoader(true);
-        let query = `?skip=${skip}&limit=${limit}&q=${search}`;
-        fetch('https://dummyjson.com/users' + query)
-        .then(res => res.json())
-        .then(res => {
-            console.log(res);
-            (res.users.length == 0 ? loadMore = false : loadMore = true);
-            setOwners([...owners, ...res.users]);
-
-            setSkip(skip + 10);
-            setShowLoader(false);
-        })
-        .catch((error => {
-            console.log('error raised, ',error)
-        }));
-    }
-
+    useEffect(() =>{
+        console.log('useEffect value',filterOwners)
+    },[search])
     const renderItem = useCallback(({item: owner}) => {
         return (
             <Card>
@@ -52,12 +33,12 @@ export const OwnersList = ({navigation}) => {
                     </View>
                     <View className="grow">
                         <View className="ml-4" >
-                            <Text className="text-gray-200 text-md font-bold ">{owner.firstName} , {owner.lastName}</Text>
+                            <Text className="text-gray-200 text-md font-bold ">{owner.FirstName} , {owner.LastName}</Text>
                             <Text className="text-gray-200 text-md ">{owner.email}</Text>
                         </View>
                     </View>
                     <View className="">
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate('DetailOwner')}>
                             <MaterialIcons name="arrow-forward-ios" size={30} color="white" />
                         </TouchableOpacity>
                     </View>
@@ -67,83 +48,78 @@ export const OwnersList = ({navigation}) => {
         )
     },[owners])
 
-    const keyExtractorOwner = useCallback((owner) => `${owner.id}`);
-    const onEndReachedOwners = () => {
-        if(loadMore){
-            setShowLoader(true);
-            fetchData();
+    const handleSearch = (text) => {
+        setSearch(text.toLowerCase());
+        const textSearch = text.toLowerCase();
+        if(text.trim().length !== 0 ){
+            let filteredData = owners.filter((owner) => {
+                const lowerFirstName = owner.FirstName.toLowerCase();
+                const lowerLastName = owner.LastName.toLowerCase();
+                const lowerEmail = owner.email.toLowerCase();
+
+                return (
+                    lowerFirstName.includes(textSearch.trim()) ||
+                    lowerLastName.includes(textSearch.trim()) ||
+                    lowerEmail.includes(textSearch.trim())
+                );
+            });
+            setFilterOwners(filteredData);
+        }else{
+            setFilterOwners(owners);
         }
     }
-    const ListFooterComponentOwners = useCallback(() => {
-        return (
-            <ActivityIndicator size="large" style={{marginVertical:16}} color="white"/>
-        )
-    },[]);
-
-    
-    const handleSearch = (query) => {
-        setSearch(query);
-        console.log(search);
-        //setShowLoader(true);
-        //fetchData();
-    }
-
+    const keyExtractorOwner = useCallback((item) => `${item.id}`);
     return (
-        //Por lo tanto, si la condición es true, el elemento que aparece inmediatamente después && aparecerá en la salida. 
-        //Si es así false, React lo ignorará y lo omitirá.
         <AuthenticateLayout>
             <View className="flex-1 items-center justify-center">
                 <View className="w-full max-w-sm">
                     <View className="flex flex-row justify-between">
                         <Text className="font-bold mb-6 text-gray-200 mt-5" style={{fontSize:34}}>Owners</Text>
                         <View className="justify-end mt-5 mb-6">
-                            <PrimaryButton message="+ Owner"/>
+                            <PrimaryButton onPress={() => navigation.navigate('FormOwner')} message="+ Owner"/>
                         </View>
                     </View>
-                    <TextInput
-                        className="w-full h-12 px-4 mb-4 bg-blueC-500  border-blueC-400 focus:border-grayC-500 focus:ring-grayC-500
-                        rounded-lg shadow-sm p-2.5 text-gray-200"
-                        placeholderTextColor="#E0E0E0"
-                        placeholder={"Search"}
-                        clearButtonMode="always"
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                        value={search}
-                        onChangeText={(query) => handleSearch(query)}
-                    />
-
+                    
+                    {
+                        isLoading ? (
+                            <Text></Text>
+                        ) : isError ? (
+                            <MaterialIcons name="error-outline" size={24} color="white" />
+                        ):(
+                            <TextInput
+                                className="w-full h-12 px-4 mb-4 bg-blueC-500  border-blueC-400 focus:border-grayC-500 focus:ring-grayC-500
+                                rounded-lg shadow-sm p-2.5 text-gray-200"
+                                placeholderTextColor="#E0E0E0"
+                                placeholder={"Search"}
+                                clearButtonMode="always"
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                value={search}
+                                onChangeText={(text) => handleSearch(text)}
+                            />
+                        )
+                    }
                 </View>
-
                 <View className="flex-1 w-full max-w-sm">
-                    <FlatList
-                        data={owners}
-                        renderItem={renderItem}
-                        keyExtractor={keyExtractorOwner}
-                        onEndReached={onEndReachedOwners}
-                        ListFooterComponent={showLoader && ListFooterComponentOwners} 
-                        style={{flex: 1}}
-                    />
+                    {
+                        isLoading ? (
+                            <ActivityIndicator size="large" style={{marginVertical:16}} color="white"/>
+                        ): isError ? (
+                            <Messages message={`here was a problem processing Owners : ${error.message}`} level={'error'}/>
+                           
+                        ) : owners ? (
+                            <FlatList
+                                data={search.length == 0 ? owners: filterOwners}
+                                renderItem={renderItem}
+                                keyExtractor={keyExtractorOwner}
+                                style={{flex: 1}}
+                            /> 
+                        ) : (
+                            <Messages message={'No data of Owners in our records ...'} level={'info'}/>
+                        )
+                    }
                 </View>
             </View>
         </AuthenticateLayout>
     ); 
-
 }
-
-
-
-/* const handleSearch = (query) => {
-        setSearch(query);
-        const formattedQuery = query.toLowerCase();
-        const filteredData = filter(owners, (owner) => {
-            return contains(owner,formattedQuery)
-        });
-        setOwners(filteredData);
-    }
-    const contains = ({firstName,email},query) => {
-        const {first, last} = firstName;
-        if(first?.includes(query) || last?.includes(query) || email?.includes(query)){
-            return true;
-        }
-        return false;
-    } */
