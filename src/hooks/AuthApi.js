@@ -1,6 +1,5 @@
 import axios from "axios";
-import { useAuth } from "react-query";
-
+import { getAuthToken } from "../context/AuthContext";
 const authApi = axios.create({
     baseURL: 'http://127.0.0.1:8000/api'
 });
@@ -14,12 +13,14 @@ const loginAttempt = (user) =>  (authApi.post('/login',user));
     }}); */
  
 const logoutAttempt = async () => {
-
-    const {getToken } = useAuth();
+    const token = await getAuthToken();
     const config = {
-        headers: {Authorization: `Bearer ${getToken()}`}
+        headers: {Authorization: `Bearer ${token}`}
     }
-    const res = await authApi.post('/logout',config);
+    const bodyParameters = {
+        key: "value"
+    };
+    const res = await authApi.post('/logout',bodyParameters,config);
     return res;
 }
 
