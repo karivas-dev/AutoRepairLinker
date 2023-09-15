@@ -1,35 +1,32 @@
-// AuthContext.js
-import React, { createContext, useContext, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const AuthContext = createContext();
+export const saveLoginData = async (token) => {
+  try {
+    await AsyncStorage.setItem('token', token);
+    // You can store more data here if needed
+    console.log('token stored Successfully');
+  } catch (error) {
+    console.error('Error saving login data: ', error);
+  }
+}
 
-export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(null); // Estado del usuario autenticado
+export const getAuthToken = async () => {
+  try {
+    const token = await AsyncStorage.getItem('token');
+    return token;
+    
+  } catch (error) {
+    console.error('Error getting auth token: ', error);
+    return null;
+  }
+}
 
-  // Función para iniciar sesión
-  const login = (token) => {
-    // Lógica de inicio de sesión, por ejemplo, autenticación con un servidor
-    setToken(token);
-  };
-
-  // Función para cerrar sesión
-  const logout = () => {
-    // Lógica de cierre de sesión, por ejemplo, eliminar el token de autenticación
-    setToken(null);
-  };
-
-   // Función para obtener el token actual
-    const getToken = () => {
-        return token;
-    };
-
-    return (
-        <AuthContext.Provider value={{ token, login, logout ,getToken}}>
-        {children}
-        </AuthContext.Provider>
-    );
-};
-
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
+export const logout = async () => {
+  try {
+    await AsyncStorage.removeItem('token');
+    console.log('token deleted successfuly');
+    // You can remove other login-related data here if needed
+  } catch (error) {
+    console.error('Error logging out: ', error);
+  }
+}
