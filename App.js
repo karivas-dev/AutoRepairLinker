@@ -10,6 +10,7 @@ import { ResetPassword } from './src/screens/ResetPassword';
 /* //import { Header } from './src/components/Header'; */
 import { NavigationContainer } from '@react-navigation/native';
 import HomeStackNavigator from './src/Navigations/Navigator';
+import { AuthProvider } from './src/context/AuthContext';
 
 import { QueryClient, QueryClientProvider } from 'react-query';
 
@@ -19,9 +20,11 @@ export default function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <NavigationContainer>
-          <HomeStackNavigator></HomeStackNavigator>
-      </NavigationContainer>
+      <AuthProvider>
+        <NavigationContainer>
+            <HomeStackNavigator></HomeStackNavigator>
+        </NavigationContainer>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
