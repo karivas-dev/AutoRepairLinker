@@ -1,12 +1,21 @@
 import { View, Text, TextInput, Pressable, Image, TouchableOpacity  } from 'react-native';
 import { AuthenticateLayout } from '../layouts/AuthenticateLayout';
 import { Card } from '../components/Card';
-import { useAuth } from '../context/AuthContext';
+import { useNavigation } from '@react-navigation/native';
+import { getAuthToken } from '../context/AuthContext';
+import { useState,useEffect } from 'react';
 
 
-export const HomePage = ({navigation}) => {
-    const { getToken } = useAuth();
-    console.log(getToken());
+export const HomePage = () => {
+   
+    const navigation = useNavigation();
+    const tok = async() => {
+        const token =  await getAuthToken();
+        console.log(token);
+        return token;
+    }
+    console.log(tok());
+
 
     return (
         <AuthenticateLayout>
