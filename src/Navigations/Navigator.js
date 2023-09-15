@@ -72,13 +72,15 @@ const screenOptionsStyle = {
 const HomeStackNavigator = () => {
     
     return (
-        <Stack.Navigator initialRouteName="Login" screenOptions={screenOptionsStyle} >
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="ResetPassword" component={ResetPassword} />
+        <Stack.Navigator  screenOptions={screenOptionsStyle} >
             <Stack.Screen name="Home" component={BottomTabNavigator} />
+            <Stack.Screen name="ResetPassword" component={ResetPassword} />
 
            <Stack.Screen name="FormOwner" component={FormOwner} />
            <Stack.Screen name="DetailOwner" component={DetailOwner} />
+
+           <Stack.Screen name="Login" component={Login} />
+
         </Stack.Navigator>
     )
 };
