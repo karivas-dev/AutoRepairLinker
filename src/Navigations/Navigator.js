@@ -69,20 +69,33 @@ const Stack = createStackNavigator();
 const screenOptionsStyle = {
     headerShown:false
 }
-const HomeStackNavigator = () => {
-    
+export const HomeStackNavigator = ({isLogin}) => {
+    console.log(isLogin);
     return (
-        <Stack.Navigator  screenOptions={screenOptionsStyle} >
+        <Stack.Navigator screenOptions={screenOptionsStyle} >
             <Stack.Screen name="Home" component={BottomTabNavigator} />
+            <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="ResetPassword" component={ResetPassword} />
 
-           <Stack.Screen name="FormOwner" component={FormOwner} />
-           <Stack.Screen name="DetailOwner" component={DetailOwner} />
-
-           <Stack.Screen name="Login" component={Login} />
-
+            <Stack.Screen name="FormOwner" component={FormOwner} />
+            <Stack.Screen name="DetailOwner" component={DetailOwner} />
         </Stack.Navigator>
     )
 };
 
-export default HomeStackNavigator;
+export const LoginStackNavigator = () => {
+    
+    return (
+        <Stack.Navigator screenOptions={screenOptionsStyle} >
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Home" component={BottomTabNavigator} />
+            <Stack.Screen name="ResetPassword" component={ResetPassword} />
+
+            <Stack.Screen name="FormOwner" component={FormOwner} />
+            <Stack.Screen name="DetailOwner" component={DetailOwner} />
+        </Stack.Navigator>
+    )
+};
+
+
+//export default HomeStackNavigator;
