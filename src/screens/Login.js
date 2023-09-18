@@ -34,9 +34,9 @@ export const Login = () => {
             navigation.navigate('Home',{screen: 'HomePage'});
         },
     })
-    console.log(UserLogin.isSuccess,UserLogin.data, UserLogin);
+    //console.log(UserLogin.isSuccess,UserLogin.data, UserLogin);
     const handleLogin = async() => {
-        console.log(email,password);
+        //console.log(email,password);
         if(email.trim().length ==0 || password.trim().length == 0){
             alert('No Null values !!!');
         }else{
@@ -90,8 +90,6 @@ export const Login = () => {
                                 /> 
                             )    
                         ) : null}
-
-                       
                     </View>
                 )
             } 
