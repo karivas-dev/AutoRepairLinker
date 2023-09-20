@@ -35,7 +35,7 @@ export const CreateEditBrand = ({navigation , route}) => {
             console.log(data.data);
             console.log('guardado');
             setBrand({ id:'',name:'' });
-            queryClient.invalidateQueries({queryKey: ['brands']}); //para recargar la pagina supuestamente xd
+            queryClient.invalidateQueries('brands'); //para recargar el query supuestamente xd
             navigation.navigate('Home',{screen: 'BrandsList'}); //aca depende si no esta en el button Nav seria navigation.navigate('nombre en el Stack',{BrandsList});
         },
     });
@@ -45,7 +45,6 @@ export const CreateEditBrand = ({navigation , route}) => {
         if(id == ''){
             console.log('store');
             await mutation.mutate(brand);
-            
         }
         else{
             console.log('update');
