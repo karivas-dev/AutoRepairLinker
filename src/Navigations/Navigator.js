@@ -15,6 +15,9 @@ import { UserProfile } from "../screens/User/UserProfile";
 import { OwnersList } from "../screens/Owners/OwnersList";
 import { Login } from "../screens/Login";
 import { ResetPassword } from "../screens/ResetPassword";
+import {BrandsList} from '../screens/Brands/BrandsList'
+import { DetailBrand } from "../screens/Brands/DetailBrand";
+import { CreateEditBrand } from "../screens/Brands/CreateEditBrand";
 
 const Tab = createBottomTabNavigator();
 const screenOptionsTabStyle = {
@@ -37,6 +40,16 @@ const BottomTabNavigator = () => {
                     tabBarLabel: '',
                     tabBarIcon: ({focused}) => (
                         <AntDesign name="home" color={focused ? '#6987B7': 'white'} size={24} />
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name="BrandsList"
+                component={BrandsList}
+                options={{
+                    tabBarLabel: '',
+                    tabBarIcon: ({focused}) => (
+                        <MaterialIcons name="groups" size={24} color={focused ? '#6987B7': 'white'} />
                     ),
                 }}
             />
@@ -69,8 +82,8 @@ const Stack = createStackNavigator();
 const screenOptionsStyle = {
     headerShown:false
 }
-export const HomeStackNavigator = ({isLogin}) => {
-    console.log(isLogin);
+export const HomeStackNavigator = () => {
+
     return (
         <Stack.Navigator screenOptions={screenOptionsStyle} >
             <Stack.Screen name="Home" component={BottomTabNavigator} />
@@ -79,6 +92,8 @@ export const HomeStackNavigator = ({isLogin}) => {
 
             <Stack.Screen name="FormOwner" component={FormOwner} />
             <Stack.Screen name="DetailOwner" component={DetailOwner} />
+            <Stack.Screen name="DetailBrand" component={DetailBrand} />
+            <Stack.Screen name="CreateEditBrand" component={CreateEditBrand} />
         </Stack.Navigator>
     )
 };
@@ -93,6 +108,8 @@ export const LoginStackNavigator = () => {
 
             <Stack.Screen name="FormOwner" component={FormOwner} />
             <Stack.Screen name="DetailOwner" component={DetailOwner} />
+            <Stack.Screen name="DetailBrand" component={DetailBrand} />
+            <Stack.Screen name="CreateEditBrand" component={CreateEditBrand} />
         </Stack.Navigator>
     )
 };
