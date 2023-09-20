@@ -1,28 +1,7 @@
-import axios from "axios";
-import { getAuthToken } from "../context/AuthContext";
-const authApi = axios.create({
-    baseURL: 'http://127.0.0.1:8000/api'
-});
+import axiosRoute from "../utils/route";
+const loginAttempt = (user) =>  axiosRoute.post('login', null, user);
 
-const loginAttempt = (user) =>  (authApi.post('/login',user));
-
-
-  /*   const res = authApi.post('/login',{ params: {
-        email: user.email,
-        password: user.password
-    }}); */
- 
-const logoutAttempt = async () => {
-    const token = await getAuthToken();
-    const config = {
-        headers: {Authorization: `Bearer ${token}`}
-    }
-    const bodyParameters = {
-        key: "value"
-    };
-    const res = await authApi.post('/logout',bodyParameters,config);
-    return res;
-}
+const logoutAttempt = () => axiosRoute.post('logout');
 
 
 export {loginAttempt,logoutAttempt};
