@@ -14,6 +14,7 @@ import { fetchBrands } from "../../hooks/BrandApi";
 import { QueryCache, QueryClient, useQuery } from "react-query";
 import {useInfiniteQuery} from "react-query";
 let loadMore = true;
+
 export const BrandsList = ({navigation}) => {
     const [page, setPage] = useState(1)   
     const [filterBrands,setFilterBrands] = useState(brands?.data);
@@ -24,6 +25,10 @@ export const BrandsList = ({navigation}) => {
     const { data, isLoading, isError, isFetching, error } = useQuery({
         queryKey: ['brands',page], 
         queryFn: () => fetchBrands(page), 
+        onError: (error) => {
+            console.log(error);
+            //showMessage(error.message, 'error');
+        },
         onSuccess:(data) => {
            /*  if(data.links.next === null){
                 loadMore = false
@@ -140,7 +145,7 @@ export const BrandsList = ({navigation}) => {
                             <ActivityIndicator size="large" style={{marginVertical:16}} color="white"/>
                         ): isError ? (
                             <Messages message={`Here was a problem processing Brands : ${error.message}`} level={'error'}/>
-                           
+                            
                         ) : brands ? (
                             <FlatList
                                 data={search.length ==0 ? brands : filterBrands}
