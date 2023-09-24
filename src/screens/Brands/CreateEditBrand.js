@@ -8,48 +8,21 @@ import { TxtInput } from '../../components/TxtInput';
 import { Messages } from '../../components/Messages';
 
 import { PrimaryButton } from '../../components/PrimaryButton';
-import { AntDesign } from '@expo/vector-icons';
-import { useMutation, useQueryClient } from 'react-query';
-import { storeBrand,updateBrand } from '../../hooks/BrandApi';
+import { createEditBrand} from '../../hooks/BrandApi';
 
 export const CreateEditBrand = ({navigation , route}) => {
 
-    const queryClient = new useQueryClient();
-
     const { id , name } = route.params;
-    const [generalException,setGeneralException] = useState([]);
     const [brand, setBrand] = useState({ id:id, name:name });
-    //const [brandName, setBrandName] = useState(name);
 
-    console.log(id,name);
-    const mutation = useMutation({
-        mutationFn: (id == '' ?  storeBrand : updateBrand),
-        
-        onError: (error,variables,context) => {
-            console.log(brand);
-            console.log(error);
-            setGeneralException(error?.response?.data ? false : true);
-        },
-        onSuccess: (data, variables, context) => {
-            console.log(brand);
-            console.log(data.data);
-            console.log('guardado');
-            setBrand({ id:'',name:'' });
-            queryClient.invalidateQueries({queryKey: ['brands']}); //para recargar la pagina supuestamente xd
-            navigation.navigate('Home',{screen: 'BrandsList'}); //aca depende si no esta en el button Nav seria navigation.navigate('nombre en el Stack',{BrandsList});
-        },
-    });
+    const mutation = createEditBrand(brand);
 
     const handleSubmit = async() => {
         console.log(brand);
-        if(id == ''){
-            console.log('store');
-            await mutation.mutate(brand);
-            
-        }
-        else{
-            console.log('update');
-            await mutation.mutate(brand);
+        await mutation.mutate(brand);
+        if(mutation.isSuccess){
+            setBrand({ id:'',name:'' });
+            (id == '' ? console.log('store') : console.log('update'))
         }
     }
 
@@ -63,13 +36,12 @@ export const CreateEditBrand = ({navigation , route}) => {
                     <Text className="text-lg font-extrabold text-gray-200 text-center mb-4">{ id == '' ? 'Add new Brand' : 'Update a Brand' }</Text>
                     {
                         id == '' ? (
-                            <Text></Text>
+                            null
                         ):(
                             <Text className="text-gray-200 mt-2 mb-2">Name: </Text>
                         )
                     }
                     
-                  {/*   <TxtInput value={brandName} onChangeText={(text) => setBrandName(text)} placeholder="Brand Name: " /> */}
                     <TxtInput value={brand.name} onChangeText={(text) => setBrand({...brand , name:text})} placeholder="Brand Name: " />
                     {   
                         mutation.isLoading ? (
@@ -79,12 +51,10 @@ export const CreateEditBrand = ({navigation , route}) => {
                                 <View>
                                     {
                                         mutation.isError ? (
-                                            generalException ? (
-                                                <Messages message={`Here was a problem processing Form : ${mutation.error}`} level={'error'}/>
+                                            mutation.error.response.data?.message ? (
+                                                <Messages message={`${mutation.error.response.data?.errors?.name ? mutation.error.response.data?.errors?.name : ''} `} level={'error'}/>
                                             ):(
-                                                <Messages message={`${mutation.error.response.data?.message } \n ${mutation.error.response.data?.error?.name ? mutation.error.response.data?.error?.name : ''} `} 
-                                                    level={'error'}
-                                                /> 
+                                                <Messages message={`Here was a problem processing Form : ${ mutation.error}`} level={'error'}/>
                                             )    
                                         ) : null
                                     }
@@ -98,8 +68,5 @@ export const CreateEditBrand = ({navigation , route}) => {
                 </View>
             </View>
         </AuthenticateLayout>
-       
-
     )
-
 }
