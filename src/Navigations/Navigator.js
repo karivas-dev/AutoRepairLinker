@@ -52,6 +52,7 @@ const BottomTabNavigator = () => {
                         <MaterialIcons name="groups" size={24} color={focused ? '#6987B7': 'white'} />
                     ),
                 }}
+                initialParams={{level: '', flashMessage: ''}}
             />
             <Tab.Screen
                 name="OwnersList"
