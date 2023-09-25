@@ -6,6 +6,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { HomePage } from "../screens/HomePage";
 
@@ -18,6 +19,7 @@ import { ResetPassword } from "../screens/ResetPassword";
 import {BrandsList} from '../screens/Brands/BrandsList'
 import { DetailBrand } from "../screens/Brands/DetailBrand";
 import { CreateEditBrand } from "../screens/Brands/CreateEditBrand";
+import { GarageList } from "../screens/Garage/GarageList";
 
 const Tab = createBottomTabNavigator();
 const screenOptionsTabStyle = {
@@ -50,6 +52,17 @@ const BottomTabNavigator = () => {
                     tabBarLabel: '',
                     tabBarIcon: ({focused}) => (
                         <MaterialIcons name="groups" size={24} color={focused ? '#6987B7': 'white'} />
+                    ),
+                }}
+                initialParams={{level: '', flashMessage: ''}}
+            />
+            <Tab.Screen
+                name="GarageList"
+                component={GarageList}
+                options={{
+                    tabBarLabel: '',
+                    tabBarIcon: ({focused}) => (
+                        <MaterialCommunityIcons name="garage" size={24} color={focused ? '#6987B7': 'white'} />
                     ),
                 }}
                 initialParams={{level: '', flashMessage: ''}}
