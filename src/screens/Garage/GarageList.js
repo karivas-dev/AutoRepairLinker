@@ -5,6 +5,7 @@ import {Card} from '../../components/Card';
 import { TxtInput } from "../../components/TxtInput";
 import { PrimaryButton } from "../../components/PrimaryButton";
 import { Messages } from "../../components/Messages";
+import { FormGarage } from "./FormGarage";
 
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
@@ -104,7 +105,7 @@ export const GarageList = ({navigation, route}) => {
                             
                         ) : garages ? (
                             <FlatList
-                                data={search.length ==0 ? garages : filterGarages}
+                                data={search.length == 0 ? garages : filterGarages}
                                 renderItem={renderItem}
                                 keyExtractor={(item) => item.id.toString()}
                                 ListFooterComponent={ListFooterComponentGarages}

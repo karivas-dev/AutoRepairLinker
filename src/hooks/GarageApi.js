@@ -3,8 +3,6 @@ import axiosRoute from "../utils/route";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-
-//Garage.index
 const fetchGarages = async (page) => {
     const res = await axiosRoute.get('garages.index', {page: page});
     console.log(res.data);
@@ -37,7 +35,7 @@ const fetchOneGarage = async (id) => {
 const getGarage = (id) => {
     const { data:garage, isLoading, isError, error,isFetching ,isSuccess } = useQuery({
         queryKey: ['garage'], 
-        queryFn: () => fetchOneBrand(id), 
+        queryFn: () => fetchOneGarage(id), 
         onSuccess:(data) => {
             console.log(data.data);
         },
@@ -50,5 +48,51 @@ const getGarage = (id) => {
     return { data:garage, isLoading, isError, error, isFetching , isSuccess}
 }
 
+const storeGarage = (garage) => (axiosRoute.post('garages.store', null, garage));
 
-export { getGarages , getGarage };
+const updateGarage = (garage) => (axiosRoute.put('garages.update', garage.id, garage));
+ 
+const createEditGarage = (garage) => {
+    const queryClient = new useQueryClient();
+    const navigation = useNavigation();
+
+    const createEditGarageMutation = useMutation({
+        mutationFn: (garage.id == '' ?  storeGarage : updateGarage),
+        
+        onError: (error, variables) => {
+            console.log(error);
+        },
+        onSuccess: (data, variables) => {
+            console.log('guardado');
+            queryClient.invalidateQueries(['garages',1]);
+            navigation.navigate('Home',{screen: 'GarageList', params: { level: 'success', flashMessage: data?.data?.message }}); 
+        },
+    });
+    return createEditGarageMutation;
+}
+
+
+const destroyGarage = (garage) => axiosRoute.delete('garages.destroy', garage.id);
+
+const deleteGarage = () => {
+    
+    const queryClient = new useQueryClient();
+    const navigation = useNavigation();
+
+    const deleteGarageMutation = useMutation({
+        mutationFn: destroyGarage,
+        
+        onError: (error) => {
+            console.log(error);
+        },
+        onSuccess: (data) => {
+            console.log('eliminado');
+            queryClient.invalidateQueries(['garages',1]); 
+            navigation.navigate('Home',{screen: 'GarageList', params: { level: 'success',  flashMessage: 'El garage se elimino correctamente.' }}); 
+        },
+    });
+    return deleteGarageMutation;
+}
+
+
+export { getGarages , getGarage, createEditGarage, deleteGarage };

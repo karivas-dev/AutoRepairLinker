@@ -20,6 +20,8 @@ import {BrandsList} from '../screens/Brands/BrandsList'
 import { DetailBrand } from "../screens/Brands/DetailBrand";
 import { CreateEditBrand } from "../screens/Brands/CreateEditBrand";
 import { GarageList } from "../screens/Garage/GarageList";
+import { FormGarage } from "../screens/Garage/FormGarage";
+import { DetailGarage } from "../screens/Garage/DetailGarage";
 
 const Tab = createBottomTabNavigator();
 const screenOptionsTabStyle = {
@@ -108,6 +110,8 @@ export const HomeStackNavigator = () => {
             <Stack.Screen name="DetailOwner" component={DetailOwner} />
             <Stack.Screen name="DetailBrand" component={DetailBrand} />
             <Stack.Screen name="CreateEditBrand" component={CreateEditBrand} />
+            <Stack.Screen name="FormGarage" component={FormGarage} />
+            <Stack.Screen name="DetailGarage" component={DetailGarage} />
         </Stack.Navigator>
     )
 };
@@ -124,6 +128,8 @@ export const LoginStackNavigator = () => {
             <Stack.Screen name="DetailOwner" component={DetailOwner} />
             <Stack.Screen name="DetailBrand" component={DetailBrand} />
             <Stack.Screen name="CreateEditBrand" component={CreateEditBrand} />
+            <Stack.Screen name="FormGarage" component={FormGarage} />
+            <Stack.Screen name="DetailGarage" component={DetailGarage} />
         </Stack.Navigator>
     )
 };
