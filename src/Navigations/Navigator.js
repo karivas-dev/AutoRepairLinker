@@ -9,9 +9,11 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import { HomePage } from "../screens/HomePage";
 
-import {FormOwner} from '../screens/Owners/FormOwner';
+import {CreateEditOwner} from "../screens/Owners/CreateEditOwner";
 import {DetailOwner} from '../screens/Owners/DetailOwner';
+
 import { UserProfile } from "../screens/User/UserProfile";
+
 import { OwnersList } from "../screens/Owners/OwnersList";
 import { Login } from "../screens/Login";
 import { ResetPassword } from "../screens/ResetPassword";
@@ -49,7 +51,7 @@ const BottomTabNavigator = () => {
                 options={{
                     tabBarLabel: '',
                     tabBarIcon: ({focused}) => (
-                        <MaterialIcons name="groups" size={24} color={focused ? '#6987B7': 'white'} />
+                        <MaterialIcons  name="format-list-bulleted"  size={24} color={focused ? '#6987B7': 'white'} />
                     ),
                 }}
                 initialParams={{level: '', flashMessage: ''}}
@@ -63,6 +65,7 @@ const BottomTabNavigator = () => {
                         <MaterialIcons name="groups" size={24} color={focused ? '#6987B7': 'white'} />
                     ),
                 }}
+                initialParams={{level: '', flashMessage: '', page: 1}}
             />
             <Tab.Screen 
                 name="UserProfile"
@@ -91,7 +94,7 @@ export const HomeStackNavigator = () => {
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="ResetPassword" component={ResetPassword} />
 
-            <Stack.Screen name="FormOwner" component={FormOwner} />
+            <Stack.Screen name="CreateEditOwner" component={CreateEditOwner} />
             <Stack.Screen name="DetailOwner" component={DetailOwner} />
             <Stack.Screen name="DetailBrand" component={DetailBrand} />
             <Stack.Screen name="CreateEditBrand" component={CreateEditBrand} />
@@ -107,7 +110,7 @@ export const LoginStackNavigator = () => {
             <Stack.Screen name="Home" component={BottomTabNavigator} />
             <Stack.Screen name="ResetPassword" component={ResetPassword} />
 
-            <Stack.Screen name="FormOwner" component={FormOwner} />
+            <Stack.Screen name="CreateEditOwner" component={CreateEditOwner} />
             <Stack.Screen name="DetailOwner" component={DetailOwner} />
             <Stack.Screen name="DetailBrand" component={DetailBrand} />
             <Stack.Screen name="CreateEditBrand" component={CreateEditBrand} />
