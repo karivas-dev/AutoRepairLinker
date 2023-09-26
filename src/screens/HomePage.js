@@ -24,20 +24,14 @@ export const HomePage = () => {
                     <Card>
                         <View className="flex flex-row justify-between">
                             <View className="py-2">
-                                <TouchableOpacity onPress={() => navigation.navigate('FormOwner')} >
+                                <TouchableOpacity onPress={() => navigation.navigate('StoresList')} >
                                     <Text className="text-gray-200 text-lg font-bold text-center" >
-                                        ForOwner
+                                       Store Index
                                     </Text>
 
                                 </TouchableOpacity>
                             </View>
-                            <View>
-                                <TouchableOpacity onPress={() => navigation.navigate('DetailOwner')} >
-                                    <Text className="text-gray-200 text-lg font-bold text-center" >
-                                        DetailOwner
-                                    </Text>
-                                </TouchableOpacity>
-                            </View>
+                           
                         </View>
                     </Card>
                 </View>

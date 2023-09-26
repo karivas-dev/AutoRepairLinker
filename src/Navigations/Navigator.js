@@ -20,6 +20,10 @@ import { ResetPassword } from "../screens/ResetPassword";
 import {BrandsList} from '../screens/Brands/BrandsList'
 import { DetailBrand } from "../screens/Brands/DetailBrand";
 import { CreateEditBrand } from "../screens/Brands/CreateEditBrand";
+import { StoresList } from "../screens/Stores/StoresList";
+import { DetailStore } from "../screens/Stores/DetailStore";
+import { CreateEditStore } from "../screens/Stores/CreateEditStore";
+
 
 const Tab = createBottomTabNavigator();
 const screenOptionsTabStyle = {
@@ -98,6 +102,11 @@ export const HomeStackNavigator = () => {
             <Stack.Screen name="DetailOwner" component={DetailOwner} />
             <Stack.Screen name="DetailBrand" component={DetailBrand} />
             <Stack.Screen name="CreateEditBrand" component={CreateEditBrand} />
+
+            <Stack.Screen name="StoresList" component={StoresList} initialParams={{level: '', flashMessage: '', page: 1}}/>
+            <Stack.Screen name="DetailStore" component={DetailStore} />
+            <Stack.Screen name="CreateEditStore" component={CreateEditStore} />
+
         </Stack.Navigator>
     )
 };
@@ -114,6 +123,11 @@ export const LoginStackNavigator = () => {
             <Stack.Screen name="DetailOwner" component={DetailOwner} />
             <Stack.Screen name="DetailBrand" component={DetailBrand} />
             <Stack.Screen name="CreateEditBrand" component={CreateEditBrand} />
+
+            <Stack.Screen name="StoresList" component={StoresList} initialParams={{level: '', flashMessage: '', page: 1}}/>
+            <Stack.Screen name="DetailStore" component={DetailStore} />
+            <Stack.Screen name="CreateEditStore" component={CreateEditStore} />
+
         </Stack.Navigator>
     )
 };
