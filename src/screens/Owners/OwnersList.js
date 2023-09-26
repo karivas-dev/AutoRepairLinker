@@ -121,7 +121,10 @@ export const OwnersList = ({navigation, route}) => {
                         isLoading || isFetching ? (
                             <ActivityIndicator size="large" style={{marginVertical:16}} color="white"/>
                         ): isError ? (
-                            <Messages message={`Here was a problem processing Owners : ${error.message}`} level={'error'}/>
+                            error.response.data?.message ? (
+                                <Messages message={`${error.response.data?.message}`} level={'error'}/>
+                            ) 
+                            : (<Messages message={`Here was a problem processing Owners : ${error.message}`} level={'error'}/>)
                            
                         ) : owners ? (
                             <FlatList
