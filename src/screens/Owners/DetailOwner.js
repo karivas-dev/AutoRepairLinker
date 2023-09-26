@@ -97,10 +97,18 @@ export const DetailOwner = ({navigation, route}) => {
                     )
                 }
                
-                <View className="flex-none w-full max-w-sm">
-                    <Card>
-                        <Text className="text-gray-200 text-lg font-extrabold ">Cars</Text>
-                    </Card>
+               <View className="flex-none w-full max-w-sm">
+                    {
+                        deleteOwnerMutation.isLoading ? (
+                            <ActivityIndicator size="large" style={{marginVertical:16}} color="white"/>
+                        ):(
+                            <View>
+                                {deleteOwnerMutation.isError ? (
+                                    <Messages message={`Here was a problem processing Form : ${deleteOwnerMutation.error}`} level={'error'}/>
+                                ) : null}
+                            </View>
+                        )
+                    }
                 </View>
                 
             </View>
