@@ -52,7 +52,11 @@ export const CreateEditBrand = ({navigation , route}) => {
                                     {
                                         mutation.isError ? (
                                             mutation.error.response.data?.message ? (
-                                                <Messages message={`${mutation.error.response.data?.errors?.name ? mutation.error.response.data?.errors?.name : ''} `} level={'error'}/>
+                                                <>
+                                                    <Messages message={`${mutation.error.response.data?.message} `} level={'error'}/>
+                                                    {mutation.error.response.data?.errors?.name && ( <Messages message={`${mutation.error.response.data?.errors?.name} `} level={'error'}/>)}
+
+                                                </>
                                             ):(
                                                 <Messages message={`Here was a problem processing Form : ${ mutation.error}`} level={'error'}/>
                                             )    
