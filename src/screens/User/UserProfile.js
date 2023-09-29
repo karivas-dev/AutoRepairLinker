@@ -5,26 +5,14 @@ import {PrimaryButton} from '../../components/PrimaryButton';
 import {DangerButton} from '../../components/DangerButton';
 import {Card} from '../../components/Card';
 import {Messages} from '../../components/Messages';
-import {useMutation} from 'react-query';
-import {logoutAttempt} from '../../hooks/AuthApi';
+import {QueryCache, useMutation,useQueryClient} from 'react-query';
+import {userLogoutAttempt} from '../../hooks/AuthApi';
 import {logout} from '../../context/AuthContext';
 import axiosRoute from "../../utils/route";
 
 export const UserProfile = ({navigation}) => {
-
-    const userLogOut = useMutation({
-        mutationFn: logoutAttempt,
-
-        onError: (error, variables, context) => {
-            console.log(error);
-        }, onSuccess: (data, variables, context) => {
-            logout();
-            axiosRoute.refreshToken();
-            console.log(data);
-            navigation.navigate('Login');
-        },
-
-    });
+   
+    const userLogOut = userLogoutAttempt();
 
     const handleLogOut = async () => {
         if (confirm('You want to Log Out ??? ..')) {
@@ -38,11 +26,11 @@ export const UserProfile = ({navigation}) => {
             <View className="w-full max-w-sm">
                 {userLogOut.isLoading ? (
                     <ActivityIndicator size="large" style={{marginVertical: 16}} color="white"/>) : (<View>
+                    
                     {userLogOut.isError ? (
-                        <Messages message={`Here was a problem processing Logout : ${userLogOut.error}`}
-                                  level={'error'}/>) : null}
+                        <Messages message={`Here was a problem processing Logout : ${userLogOut.error}`} level={'error'}/>
+                    ) : null}
 
-                    {/*   {userLogOut.isSuccess ? navigation.navigate('Login') : null} */}
                 </View>)}
             </View>
 
