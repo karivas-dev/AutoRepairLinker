@@ -1,3 +1,4 @@
+const nativewind = require('nativewind/tailwind/css');
 const defaultTheme = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors');
 /** @type {import('tailwindcss').Config} */
@@ -66,6 +67,6 @@ module.exports = {
           white: colors.white,
       },
     },
-    plugins: [],
+    plugins: [nativewind],
   }
 }

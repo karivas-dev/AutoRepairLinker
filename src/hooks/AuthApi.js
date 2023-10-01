@@ -1,25 +1,24 @@
-import { useState } from "react";
-import { saveLoginData,logout } from "../context/AuthContext";
+import {logout, saveLoginData} from "../context/AuthContext";
 import axiosRoute from "../utils/route";
-import { useNavigation } from "@react-navigation/native";
-import { useMutation, useQueryClient } from "react-query";
+import {useNavigation} from "@react-navigation/native";
+import {useMutation, useQueryClient} from "react-query";
+
 const loginAttempt = (user) =>  axiosRoute.post('login', null, user);
 
-const userLoginAttempt = () => {
+const userLoginAttempt = (formikErrors) => {
     const navigation = useNavigation();
-    const createUserLogin = useMutation({
+    return useMutation({
         mutationFn: loginAttempt,
-        
+
         onError: (error) => {
-            console.log(error);
+            formikErrors(error.response.data.errors);
         },
-        onSuccess: (data) => {
-            saveLoginData(data.data?.token);
-            axiosRoute.refreshToken();
-            navigation.navigate('Home', {screen: 'HomePage'});     
+        onSuccess: async (data) => {
+            await saveLoginData(data.data?.token);
+            await axiosRoute.refreshToken();
+            navigation.navigate('Home', {screen: 'HomePage'});
         },
     });
-    return createUserLogin;
 }
 
 const logoutAttempt = () => axiosRoute.post('logout');
@@ -28,21 +27,16 @@ const userLogoutAttempt = () => {
     const queryClient = new useQueryClient();
     const navigation = useNavigation();
 
-    const createUserLogOut = useMutation({
+    return useMutation({
         mutationFn: logoutAttempt,
 
-        onError: (error) => {
-            console.log(error);
-        }, onSuccess: (data) => {
-            logout();
-            axiosRoute.refreshToken();
-            queryClient.clear(); // resetea todos los queries 
-            console.log(data);
+        onSuccess: async (data) => {
+            await logout();
+            await axiosRoute.refreshToken();
+            queryClient.clear(); // resetea todos los queries
             navigation.navigate('Login');
         },
-
     });
-    return createUserLogOut;
 }
 
 export {userLoginAttempt, userLogoutAttempt};

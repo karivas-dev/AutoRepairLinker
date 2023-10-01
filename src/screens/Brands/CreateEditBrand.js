@@ -1,5 +1,5 @@
-import { View, Text, TextInput, Pressable, Image,TouchableOpacity ,ActivityIndicator } from 'react-native';
-import React, { useState } from 'react';
+import { View, Text, ActivityIndicator } from 'react-native';
+import React from 'react';
 
 import {Header} from '../../components/Header';
 
@@ -9,66 +9,42 @@ import { Messages } from '../../components/Messages';
 
 import { PrimaryButton } from '../../components/PrimaryButton';
 import { createEditBrand} from '../../hooks/BrandApi';
+import {useFormik} from "formik";
+import * as Yup from 'yup';
+import {FormikInput} from "../../components/FormikInput";
 
 export const CreateEditBrand = ({navigation , route}) => {
-
-    const { id , name } = route.params;
-    const [brand, setBrand] = useState({ id:id, name:name });
-
-    const mutation = createEditBrand(brand);
-
-    const handleSubmit = async() => {
-        console.log(brand);
-        await mutation.mutate(brand);
-        if(mutation.isSuccess){
-            setBrand({ id:'',name:'' });
-            (id == '' ? console.log('store') : console.log('update'))
-        }
-    }
+    const formik = useFormik({
+        initialValues: {
+            id: route.params.id ?? '',
+            name: route.params.name ?? '',
+        },
+        validationSchema: Yup.object().shape({
+            name: Yup.string().required()
+        }),
+        onSubmit: async (brand) => await createEditAttempt.mutateAsync(brand)
+    });
+    const createEditAttempt = createEditBrand(formik.setErrors, formik.values);
 
     return (
         <AuthenticateLayout>
-            
             <Header navigation={navigation}/>
 
             <View className="flex-1 items-center justify-center p-8">
                 <View className="w-full p-8 max-w-sm">
-                    <Text className="text-lg font-extrabold text-gray-200 text-center mb-4">{ id == '' ? 'Add new Brand' : 'Update a Brand' }</Text>
-                    {
-                        id == '' ? (
-                            null
-                        ):(
-                            <Text className="text-gray-200 mt-2 mb-2">Name: </Text>
-                        )
-                    }
-                    
-                    <TxtInput value={brand.name} onChangeText={(text) => setBrand({...brand , name:text})} placeholder="Brand Name: " />
-                    {   
-                        mutation.isLoading ? (
-                            <ActivityIndicator size="large" style={{marginVertical:16}} color="white"/>
-                        ) : (
-                            <View>
-                                <View>
-                                    {
-                                        mutation.isError ? (
-                                            mutation.error.response.data?.message ? (
-                                                <>
-                                                    <Messages message={`${mutation.error.response.data?.message} `} level={'error'}/>
-                                                    {mutation.error.response.data?.errors?.name && ( <Messages message={`${mutation.error.response.data?.errors?.name} `} level={'error'}/>)}
+                    <Text className="text-lg font-extrabold text-gray-200 text-center mb-2">
+                        { formik.values.id == '' ? 'Add new Brand' : 'Update a Brand' }
+                    </Text>
 
-                                                </>
-                                            ):(
-                                                <Messages message={`Here was a problem processing Form : ${ mutation.error}`} level={'error'}/>
-                                            )    
-                                        ) : null
-                                    }
-                                </View>
-                                <View className="block w-full mt-2">
-                                    <PrimaryButton onPress={() => handleSubmit()}  message={id == '' ? 'Store Brand' : 'Edit Brand'}/>
-                                </View>
-                            </View>
-                        )
-                    } 
+                    <FormikInput valueName="name" formik={formik} placeholder="Brand name:" label={formik.values.id == '' ? null : 'Name: '}/>
+
+                    <View className="block w-full mt-2">
+                    { formik.isSubmitting ? (
+                        <ActivityIndicator size="large" style={{marginVertical:16}} color="white"/>
+                    ) : (
+                        <PrimaryButton onPress={formik.handleSubmit}  message={formik.values.id == '' ? 'Store Brand' : 'Edit Brand'}/>
+                    )}
+                    </View>
                 </View>
             </View>
         </AuthenticateLayout>

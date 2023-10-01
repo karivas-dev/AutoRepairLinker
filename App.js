@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react';
-import "./styles.css";
+import { NativeWindStyleSheet } from "nativewind";
 
 import { NavigationContainer } from '@react-navigation/native';
 import { HomeStackNavigator } from './src/Navigations/Navigator';
@@ -7,6 +7,10 @@ import { LoginStackNavigator } from './src/Navigations/Navigator';
 import { getAuthToken } from './src/context/AuthContext';
 
 import { QueryClient, QueryClientProvider } from 'react-query';
+
+NativeWindStyleSheet.setOutput({
+  default: "native",
+});
 
 export default function App() {
   //const navigation = useNavigation();
@@ -19,11 +23,9 @@ export default function App() {
   const checkLoginStatus = async () => {
     try {
       const token = await getAuthToken();
-      console.log(token)
       // Si existe un token, el usuario ya ha iniciado sesión, navega al flujo principal
       if (token) {
         setHaveToken(true);
-        console.log('aqui')
       } else {
         setHaveToken(false);
       }

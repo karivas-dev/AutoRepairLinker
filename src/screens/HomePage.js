@@ -1,20 +1,16 @@
-import { View, Text, TextInput, Pressable, Image, TouchableOpacity  } from 'react-native';
-import { AuthenticateLayout } from '../layouts/AuthenticateLayout';
-import { Card } from '../components/Card';
-import { useNavigation } from '@react-navigation/native';
-import { getAuthToken } from '../context/AuthContext';
-import { useState,useEffect } from 'react';
+import {Pressable, Text, View} from 'react-native';
+import {AuthenticateLayout} from '../layouts/AuthenticateLayout';
+import {Card} from '../components/Card';
+import {useNavigation} from '@react-navigation/native';
+import {getAuthToken} from '../context/AuthContext';
 
 
 export const HomePage = () => {
    
     const navigation = useNavigation();
     const tok = async() => {
-        const token =  await getAuthToken();
-        console.log(token);
-        return token;
+        return await getAuthToken();
     }
-    console.log(tok());
 
 
     return (
@@ -24,19 +20,19 @@ export const HomePage = () => {
                     <Card>
                         <View className="flex flex-row justify-between">
                             <View className="py-2">
-                                <TouchableOpacity onPress={() => navigation.navigate('FormOwner')} >
+                                <Pressable onPress={() => navigation.navigate('FormOwner')} >
                                     <Text className="text-gray-200 text-lg font-bold text-center" >
                                         ForOwner
                                     </Text>
 
-                                </TouchableOpacity>
+                                </Pressable>
                             </View>
                             <View>
-                                <TouchableOpacity onPress={() => navigation.navigate('DetailOwner')} >
+                                <Pressable onPress={() => navigation.navigate('DetailOwner')} >
                                     <Text className="text-gray-200 text-lg font-bold text-center" >
                                         DetailOwner
                                     </Text>
-                                </TouchableOpacity>
+                                </Pressable>
                             </View>
                         </View>
                     </Card>
