@@ -14,7 +14,7 @@ export const SelectInput = ({ data, DefaultPlaceholder,onValueChange,selectedVal
             {DefaultPlaceholder && (
                 <Picker.Item
                     label={DefaultPlaceholder}
-                    value={null}
+                    value=""
                 />
             )}
             {
