@@ -14,20 +14,13 @@ import { deleteOwner, getOwner } from '../../hooks/OwnerApi';
 import { useEffect } from 'react';
 
 export const DetailOwner = ({navigation, route}) => {
-
-    const { id } = route.params;
-    
-    const { data:owner, isLoading, isError, error, isFetching ,isSuccess} = getOwner(id);
+    const { data:owner, isLoading, isError, error, isFetching ,isSuccess} = getOwner(route.params.id);
 
     const deleteOwnerMutation = deleteOwner();
 
-    useEffect(() => {
-        console.log(owner);
-    },[owner])
-
     const handleOwnerDelete = async() => {
         if (confirm('You want to delete this Owner ??? ..')) {
-            await deleteOwnerMutation.mutate(owner?.data);
+            await deleteOwnerMutation.mutateAsync(owner?.data);
         }
     }
     return (
@@ -58,14 +51,13 @@ export const DetailOwner = ({navigation, route}) => {
                                                 <View>
                                                 <View>
                                                     <PrimaryButton message='Edit' onPress={() => navigation.navigate('CreateEditOwner',{
-                                                        ownerParms : {
                                                             id: owner?.data.id,
                                                             firstname: owner?.data.firstname,
                                                             lastname: owner?.data.lastname,
                                                             email: owner?.data.email,
                                                             telephone: owner?.data.telephone,
-                                                            district_id: owner?.data.district
-                                                        }})
+                                                            district_id: owner?.data.district_id
+                                                        })
                                                     }/>
                                                 </View>
                                                 <View className="mt-2">
@@ -87,7 +79,7 @@ export const DetailOwner = ({navigation, route}) => {
                                                 <Text className="text-gray-200 text-lg font-bold" >Phone: </Text> {owner?.data.telephone}
                                             </Text><Text>{`\n`}</Text>
                                             <Text className="text-gray-200 text-lg text-center" > 
-                                                <Text className="text-gray-200 text-lg font-bold" >District: </Text> {owner?.data.district}
+                                                <Text className="text-gray-200 text-lg font-bold" >District: </Text> {owner?.data.district_id}
                                             </Text><Text>{`\n`}</Text>
                                         </Card>
                                     </View>

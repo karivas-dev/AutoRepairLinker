@@ -1,97 +1,88 @@
-import { View, Text, TextInput, Pressable, Image,TouchableOpacity, ActivityIndicator } from 'react-native';
-import React, { useState } from 'react';
+import { View, Text, ActivityIndicator } from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {Header} from '../../components/Header';
 
 import { AuthenticateLayout } from '../../layouts/AuthenticateLayout';
-import { Messages } from '../../components/Messages';
-import { TxtInput } from '../../components/TxtInput';
 import { SelectInput } from '../../components/SelectInput';
 import { PrimaryButton } from '../../components/PrimaryButton';
 import { createEditOwner } from '../../hooks/OwnerApi';
+import {useFormik} from "formik";
+import * as Yup from 'yup';
+import {FormikInput} from "../../components/FormikInput";
+import getLocation from "../../hooks/LocationApi";
 
 export const CreateEditOwner = ({navigation, route}) => {
+    const formik = useFormik({
+        initialValues: {
+            id: route.params.id ?? '',
+            firstname: route.params.firstname ?? '',
+            lastname: route.params.lastname ?? '',
+            email: route.params.email ?? '',
+            telephone: route.params.telephone ?? '',
+            district_id: route.params.district_id ?? ''
+        },
+        validationSchema: Yup.object().shape({
+            firstname: Yup.string().required(),
+            lastname: Yup.string().required(),
+            email: Yup.string().required().email(),
+            telephone: Yup.string().required().matches("^(2|6|7|8)[0-9]{7}$"),
+            district_id: Yup.string().required()
+        }),
+        onSubmit: async (owner) => await createEditAttempt.mutateAsync(owner),
+    });
+    const createEditAttempt = createEditOwner(formik.setErrors, formik.values);
 
-    const {ownerParms } = route.params;
-    const [owner, setOwner] = useState(ownerParms); 
-    console.log(owner);
+    const [selectedLocation, setSelectedLocation] = useState({state_id: 0, town_id: 0});
+    const location = getLocation();
 
-    const mutation = createEditOwner(owner)
-    const algo = [
-        {
-            id: 1, name: 'Atiquizaya'
-        },
-        {
-            id: 2, name: 'El Refugio'
-        },
-        {
-            id: 3, name: 'San Lorenzo'
-        },
-        {
-            id: 12, name: 'San Pedro Puxtla'
-        },
-    ];
- 
-    const handleSubmit = async() => {
-        console.log(owner);
-        if(owner.firstname  == '' || owner.lastname == '' || owner.email == '' || owner.district_id == ''){
-            alert('No Puede ingresar campos Nulos o Vacios...');
-        }else{
-            await mutation.mutate(owner);
-            if(mutation.isSuccess){
-                setOwner({   id: '',firstname:'',lastname: '', email: '', telephone: '', district_id: '' });
-                (owner.id == '' ? console.log('store') : console.log('update'))
-            }
+    const firstTime = useRef(true);
+    useEffect(() => {
+        const district_id = formik.values.district_id;
+        if (district_id != '' && location) {
+            const town_id = location?.districts.find(d => d.id == formik.values.district_id).town_id;
+            setSelectedLocation({
+                ...selectedLocation,
+                state_id: location?.towns.find(t => t.id == town_id).state_id,
+                town_id: town_id,
+            });
+            formik.setFieldValue('district_id', district_id);
         }
-       
-    }
-    
+    }, [location]);
+
     return (
         <AuthenticateLayout>
-            
             <Header navigation={navigation}/>
-
             <View className="flex-1 items-center justify-center p-8">
                 <View className="w-full p-8 max-w-sm">
-                    <Text className="text-lg font-extrabold text-gray-200 text-center mb-4">{ owner.id == '' ? 'Add new Owner' : 'Update a Owner' }</Text>
-                    <TxtInput placeholder="Nombre" value={owner.firstname}  onChangeText={(text) => setOwner({...owner, firstname: text})}/>
-                    <TxtInput placeholder="Apellido" value={owner.lastname} onChangeText={(text) => setOwner({...owner, lastname: text})}/>
-                    <TxtInput placeholder="Correo Electrónico" value={owner.email} onChangeText={(text) => setOwner({...owner, email: text})}/>
-                    <TxtInput placeholder="Teléfono" value={owner.telephone} onChangeText={(text) => setOwner({...owner, telephone: text})}/>
+                    <Text className="text-lg font-extrabold text-gray-200 text-center mb-4">{ formik.values.id  == '' ? 'Add new Owner' : 'Update a Owner' }</Text>
+                    <FormikInput valueName="firstname" formik={formik} placeholder="Nombre"/>
+                    <FormikInput valueName="lastname" formik={formik} placeholder="Apellido"/>
+                    <FormikInput valueName="email" formik={formik} placeholder="Correo Eletrónico"/>
+                    <FormikInput valueName="telephone" formik={formik} placeholder="Teléfono"/>
 
-                    <SelectInput selectedValue={owner.district_id} onValueChange={(id) => setOwner({...owner, district_id: id})} 
-                    DefaultPlaceholder="Selecciona Departamento" data={algo} />
-                    
-                    {
-                        mutation.isLoading ? (
-                            <ActivityIndicator size="large" style={{marginVertical:16}} color="white"/>
-                        ) : (
-                            <>
-                                {mutation.isError ? (
-                                    mutation.error.response.data?.message ? (
-                                        <>
-                                            <Messages message={`${mutation.error.response.data?.message} `} level={'error'}/>
-                                            {mutation.error.response.data?.errors?.firstname && (<Messages message={`${mutation.error.response.data?.errors?.firstname} `} level={'error'}/>)}
-                                            {mutation.error.response.data?.errors?.lastname&& (<Messages message={`${mutation.error.response.data?.errors?.lastname } `} level={'error'}/>)}
-                                            {mutation.error.response.data?.errors?.email && (<Messages message={`${mutation.error.response.data?.errors?.email } `} level={'error'}/>)}
-                                            {mutation.error.response.data?.errors?.telephone && (<Messages message={`${mutation.error.response.data?.errors?.telephone } `} level={'error'}/>)}
-                                            {mutation.error.response.data?.errors?.district_id && (<Messages message={`${mutation.error.response.data?.errors?.district_id } `} level={'error'}/>)}
-                                        </>
-                                    ):(
-                                        <Messages message={`Here was a problem processing Form : ${ mutation.error}`} level={'error'}/>
-                                    )    
-                                ) : null}
-                                <View className="block w-full mt-4">
-                                    <PrimaryButton onPress={() => handleSubmit()}  message={owner.id == '' ? 'Store Owner' : 'Edit Owner'}/>
-                                </View>
-                            </>
-                        )
-                    }
+                    {location == null ? null : ( <>
+                        <SelectInput selectedValue={selectedLocation.state_id} onValueChange={(id) => setSelectedLocation({state_id: id, town_id: 0})}
+                                     DefaultPlaceholder="Selecciona Departamento" data={location?.states}/>
+                        <SelectInput selectedValue={selectedLocation.town_id}
+                                     onValueChange={(id) => {setSelectedLocation({...selectedLocation, town_id: id}); formik.setFieldValue('district_id', '');}}
+                                     DefaultPlaceholder="Selecciona Municipio" data={location?.towns.filter(t => t.state_id == selectedLocation.state_id)}/>
+                        <SelectInput selectedValue={formik.values.district_id} onValueChange={formik.handleChange('district_id')}
+                                     DefaultPlaceholder="Selecciona Distrito" data={location?.districts.filter(d => d.town_id == selectedLocation.town_id)}/>
+                        <Text className="text-red-500 capitalize-first">
+                            { formik.touched.district_id && formik.errors.district_id }
+                        </Text>
+                    </>)}
+
+                    {createEditAttempt.isLoading ? (
+                        <ActivityIndicator size="large" style={{marginVertical:16}} color="white"/>
+                    ) : (
+                        <View className="block w-full mt-4">
+                            <PrimaryButton onPress={formik.handleSubmit}  message={formik.values.id == '' ? 'Store Owner' : 'Edit Owner'}/>
+                        </View>
+                    )}
                 </View>
             </View>
         </AuthenticateLayout>
-       
-
     )
-
 }

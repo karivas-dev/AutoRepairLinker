@@ -14,20 +14,11 @@ export const OwnersList = ({navigation, route}) => {
 
     //flash message
     const {level, flashMessage, page} = route.params;
-    console.log(level,flashMessage, page);
-    //const [page, setPage] = useState(indexPage)
 
     const [filterOwners,setFilterOwners] = useState(owners);
     const [search, setSearch] = useState('');
 
     const {data, isLoading, isError, isFetching, error, owners} = getOwners(page);
-
-    useEffect(() =>{
-        console.log(data);
-        console.log(page);
-        console.log('useEffect value',filterOwners);
-        console.log(owners);
-    },[owners]);
 
     const handleSearch = (text) => {
         setSearch(text.toLowerCase());
