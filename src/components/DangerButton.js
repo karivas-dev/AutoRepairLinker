@@ -9,7 +9,7 @@ export const DangerButton = ({message , onPress}) => {
             bg-red-500 hover:bg-red-800 active:bg-red-800 focus:bg-red-800 focus:ring-red-800"
             onPress={onPress}
         >
-           <Text className="font-extrabold text-sm text-gray-200 uppercase">{message}</Text>
+           <Text className="font-extrabold text-sm text-gray-200 uppercase text-center">{message}</Text>
         </Pressable>
     );
 }
