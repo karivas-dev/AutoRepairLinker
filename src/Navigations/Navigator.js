@@ -20,6 +20,8 @@ import { ResetPassword } from "../screens/ResetPassword";
 import {BrandsList} from '../screens/Brands/BrandsList'
 import { DetailBrand } from "../screens/Brands/DetailBrand";
 import { CreateEditBrand } from "../screens/Brands/CreateEditBrand";
+import { DetailModel } from "../screens/Models/DetailModel";
+import { CreateEditModel } from "../screens/Models/CreateEditModel";
 
 const Tab = createBottomTabNavigator();
 const screenOptionsTabStyle = {
@@ -96,8 +98,11 @@ export const HomeStackNavigator = () => {
 
             <Stack.Screen name="CreateEditOwner" component={CreateEditOwner} />
             <Stack.Screen name="DetailOwner" component={DetailOwner} />
-            <Stack.Screen name="DetailBrand" component={DetailBrand} />
+            <Stack.Screen name="DetailBrand" component={DetailBrand} initialParams={{level: '', flashMessage: '', page: 1}}/>
             <Stack.Screen name="CreateEditBrand" component={CreateEditBrand} />
+
+            <Stack.Screen name="DetailModel" component={DetailModel} />
+            <Stack.Screen name="CreateEditModel" component={CreateEditModel} />
         </Stack.Navigator>
     )
 };
@@ -112,8 +117,12 @@ export const LoginStackNavigator = () => {
 
             <Stack.Screen name="CreateEditOwner" component={CreateEditOwner} />
             <Stack.Screen name="DetailOwner" component={DetailOwner} />
-            <Stack.Screen name="DetailBrand" component={DetailBrand} />
+            <Stack.Screen name="DetailBrand" component={DetailBrand} initialParams={{level: '', flashMessage: '', page: 1}}/>
             <Stack.Screen name="CreateEditBrand" component={CreateEditBrand} />
+
+            <Stack.Screen name="DetailModel" component={DetailModel} />
+            <Stack.Screen name="CreateEditModel" component={CreateEditModel} />
+
         </Stack.Navigator>
     )
 };
