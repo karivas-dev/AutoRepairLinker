@@ -1,13 +1,11 @@
-import { useQuery, useQueryClient , useMutation } from "react-query";
 import axiosRoute from "../utils/route";
 import { useState } from "react";
+import { useQuery, useMutation , useQueryClient } from "react-query";
 import { useNavigation } from "@react-navigation/native";
 
-const fetchGarages = async (page) => {
-    const res = await axiosRoute.get('garages.index', {page: page});
-    console.log(res.data);
-    return res.data;
-}
+const fetchGarages = async (page,garageId) => (await axiosRoute.get('garages.index', { garage:garageId , page: page})).data;
+
+const fethcOneGarage =  async(id) => (await axiosRoute.get('garages.show', id)).data;
 
 const getGarages = (page) => {
     const [garages,setGarages] = useState([]);
@@ -26,16 +24,10 @@ const getGarages = (page) => {
 
 }
 
-const fetchOneGarage = async (id) => {
-    const res = await axiosRoute.get('garages.show', {garage: id})
-    console.log(res.data);
-    return res.data;
-}
-
 const getGarage = (id) => {
-    const { data:garage, isLoading, isError, error,isFetching ,isSuccess } = useQuery({
+    const { data, isLoading, isError, error,isFetching ,isSuccess } = useQuery({
         queryKey: ['garage'], 
-        queryFn: () => fetchOneGarage(id), 
+        queryFn: () => fethcOneGarage(id), 
         onSuccess:(data) => {
             console.log(data.data);
         },
@@ -45,41 +37,37 @@ const getGarage = (id) => {
         refetchOnWindowFocus:false
     });
 
-    return { data:garage, isLoading, isError, error, isFetching , isSuccess}
+    return { data, isLoading, isError, error, isFetching , isSuccess}
 }
 
-const storeGarage = (garage) => (axiosRoute.post('garages.store', null, garage));
+const storeGarage = (garage) => (axiosRoute.post('garages.store', null, garage),console.log(garage));
 
-const updateGarage = (garage) => (axiosRoute.put('garages.update', garage.id, garage));
- 
-const createEditGarage = (garage) => {
+const updateGarage = (garage) => (axiosRoute.patch('garages.update', garage.id, garage));
+
+const createEditGarage = (formikErrors, garage) => {
     const queryClient = new useQueryClient();
     const navigation = useNavigation();
-
-    const createEditGarageMutation = useMutation({
+    return useMutation({
         mutationFn: (garage.id == '' ?  storeGarage : updateGarage),
         
-        onError: (error, variables) => {
-            console.log(error);
+        onError: (error) => {
+            formikErrors(error.response.data.errors);
         },
-        onSuccess: (data, variables) => {
+        onSuccess: (data) => {
             console.log('guardado');
-            queryClient.invalidateQueries(['garages',1]);
-            navigation.navigate('Home',{screen: 'GarageList', params: { level: 'success', flashMessage: data?.data?.message }}); 
+            queryClient.invalidateQueries('garages');     
+            navigation.navigate('Home',{screen: 'GarageList', params: { level: 'success', flashMessage: data?.data?.message }});  
         },
     });
-    return createEditGarageMutation;
 }
-
 
 const destroyGarage = (garage) => axiosRoute.delete('garages.destroy', garage.id);
 
 const deleteGarage = () => {
-    
     const queryClient = new useQueryClient();
     const navigation = useNavigation();
 
-    const deleteGarageMutation = useMutation({
+    return useMutation({
         mutationFn: destroyGarage,
         
         onError: (error) => {
@@ -91,8 +79,5 @@ const deleteGarage = () => {
             navigation.navigate('Home',{screen: 'GarageList', params: { level: 'success',  flashMessage: 'El garage se elimino correctamente.' }}); 
         },
     });
-    return deleteGarageMutation;
 }
-
-
-export { getGarages , getGarage, createEditGarage, deleteGarage };
+export {getGarages ,getGarage ,createEditGarage, deleteGarage}
