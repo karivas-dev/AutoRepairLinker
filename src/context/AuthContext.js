@@ -12,8 +12,7 @@ export const saveLoginData = async (token) => {
 
 export const getAuthToken = async () => {
   try {
-    const token = await AsyncStorage.getItem('token');
-    return token;
+    return await AsyncStorage.getItem('token');
     
   } catch (error) {
     console.error('Error getting auth token: ', error);

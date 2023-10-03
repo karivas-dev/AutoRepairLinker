@@ -22,12 +22,6 @@ export const BrandsList = ({navigation,route}) => {
     const [search, setSearch] = useState('');
 
     const {data, isLoading, isError, isFetching, error, brands} = getBrands(page);
-    
-    useEffect(() =>{
-        console.log(data);
-        console.log('useEffect value',brands);
-        console.log(level,flashMessage);
-    },[brands]);
 
     const handleSearch = (text) => {
         setSearch(text.toLowerCase());

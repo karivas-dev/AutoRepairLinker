@@ -1,52 +1,28 @@
 import {ActivityIndicator, Image, Pressable, Text, View} from 'react-native';
-import React, {useState} from 'react';
-import {Messages} from '../components/Messages';
 import {GuestLayout} from '../layouts/GuestLayout';
 import {PrimaryButton} from '../components/PrimaryButton';
 import {TxtInput} from '../components/TxtInput'
-import {loginAttempt} from '../hooks/AuthApi';
-import {useMutation} from 'react-query';
-import {saveLoginData} from '../context/AuthContext';
-import {useNavigation} from '@react-navigation/native';
-import axiosRoute from "../utils/route";
+import {userLoginAttempt} from '../hooks/AuthApi';
+import {useFormik} from "formik";
+import * as Yup from 'yup';
+import {FormikInput} from "../components/FormikInput";
 
 export const Login = () => {
-    const navigation = useNavigation();
-
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [generalException, setGeneralException] = useState([]);
-
-    const UserLogin = useMutation({
-        mutationFn: loginAttempt,
-
-        onError: (error, variables, context) => {
-            console.log(error);
-            setGeneralException(error?.response?.data ? false : true);
-
-        }, onSuccess: (data, variables, context) => {
-            saveLoginData(data.data?.token)
-            console.log(data.data);
-            setEmail('');
-            setPassword('');
-            axiosRoute.refreshToken();
-            navigation.navigate('Home', {screen: 'HomePage'});
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
         },
-    })
-    //console.log(UserLogin.isSuccess,UserLogin.data, UserLogin);
-    const handleLogin = async () => {
-        //console.log(email,password);
-        if (email.trim().length == 0 || password.trim().length == 0) {
-            alert('No Null values !!!');
-        } else {
-            const user = {
-                email: email, password: password
-            }
-            await UserLogin.mutate(user);
-        }
-    }
+        validationSchema: Yup.object().shape({
+            email: Yup.string().required().email(),
+            password: Yup.string().required(),
+        }),
+        onSubmit: async (user) => await loginAttempt.mutateAsync(user)
+    });
+    const loginAttempt = userLoginAttempt(formik.setErrors);
 
-    return (<GuestLayout>
+    return (
+        <GuestLayout>
             <View className="items-center justify-center">
                 <Image
                     className="w-32 h-32 rounded-full"
@@ -58,8 +34,8 @@ export const Login = () => {
 
             <Text className="text-5xl font-bold mb-6 text-gray-200 mt-5">Sign In</Text>
             {/* form */}
-            <TxtInput onChangeText={(text) => setEmail(text)} placeholder="Enter your Email"/>
-            <TxtInput onChangeText={(text) => setPassword(text)} placeholder="Enter your password" passEntry={true}/>
+            <FormikInput valueName="email" formik={formik} placeholder="Enter your email" />
+            <FormikInput valueName="password" formik={formik} placeholder="Enter your password" passEntry={true}/>
 
             <View className="flex flex-row justify-between items-center mt-3">
                 <Pressable>
@@ -71,25 +47,12 @@ export const Login = () => {
             </View>
 
             <View className="flex flex-row justify-end mt-5">
-                <PrimaryButton onPress={() => {
-                    handleLogin()
-                }}
-                               message='log in'/>
+                <PrimaryButton onPress={formik.handleSubmit} message='log in'/>
             </View>
 
-            {UserLogin.isLoading ? (<ActivityIndicator size="large" style={{marginVertical: 16}} color="white"/>) : (
-                <View>
-                    {UserLogin.isError ? (generalException ? (
-                            <Messages message={`Here was a problem processing Login : ${UserLogin.error}`}
-                                      level={'error'}/>) : (<Messages
-                                message={`${UserLogin.error.response.data?.message} \n ${UserLogin.error.response.data?.error?.email ? UserLogin.error.response.data?.error?.email : ''} \n ${UserLogin.error.response.data?.error?.password ? UserLogin.error.response.data?.error?.password : ''}`}
-                                level={'error'}
-                            />)) : null}
-                </View>)}
-        </GuestLayout>);
+            {formik.isSubmitting ? (
+                <ActivityIndicator size="large" style={{marginVertical: 16}} color="white"/>
+            ) : null}
+        </GuestLayout>
+    );
 }
-/* Pasar parametros en  navigation */
-/* {UserLogin.isSuccess ? navigation.navigate('Home',{
-    screen: 'HomePage',
-    params: { token: success.token },  {UserLogin.isSuccess ?  handleNavSuccess() : null}
-}) : null} */

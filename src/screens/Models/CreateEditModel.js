@@ -4,27 +4,28 @@ import React from 'react';
 import {Header} from '../../components/Header';
 
 import { AuthenticateLayout } from '../../layouts/AuthenticateLayout';
-import { TxtInput } from '../../components/TxtInput';
-import { Messages } from '../../components/Messages';
 
 import { PrimaryButton } from '../../components/PrimaryButton';
-import { createEditBrand} from '../../hooks/BrandApi';
+import { createEditModel } from '../../hooks/ModelApi';
 import {useFormik} from "formik";
 import * as Yup from 'yup';
 import {FormikInput} from "../../components/FormikInput";
 
-export const CreateEditBrand = ({navigation , route}) => {
+
+export const CreateEditModel = ({navigation, route}) => {
     const formik = useFormik({
         initialValues: {
             id: route.params.id ?? '',
             name: route.params.name ?? '',
+            brand_id: route.params.brand_id
         },
         validationSchema: Yup.object().shape({
-            name: Yup.string().required()
+            name: Yup.string().required(),
+            brand_id: Yup.number().required()
         }),
-        onSubmit: async (brand) => await createEditAttempt.mutateAsync(brand)
+        onSubmit: async (model) => await createEditAttempt.mutateAsync(model),
     });
-    const createEditAttempt = createEditBrand(formik.setErrors, formik.values);
+    const createEditAttempt = createEditModel(formik.setErrors, formik.values);
 
     return (
         <AuthenticateLayout>
@@ -33,16 +34,16 @@ export const CreateEditBrand = ({navigation , route}) => {
             <View className="flex-1 items-center justify-center p-8">
                 <View className="w-full p-8 max-w-sm">
                     <Text className="text-lg font-extrabold text-gray-200 text-center mb-2">
-                        { formik.values.id == '' ? 'Add new Brand' : 'Update a Brand' }
+                        { formik.values.id == '' ? 'Add new Model' : 'Update Model' }
                     </Text>
 
-                    <FormikInput valueName="name" formik={formik} placeholder="Brand name:" label={formik.values.id == '' ? null : 'Name: '}/>
+                    <FormikInput valueName="name" formik={formik} placeholder="Model name:" label={formik.values.id == '' ? null : 'Name: '}/>
 
                     <View className="block w-full mt-2">
                     { formik.isSubmitting ? (
                         <ActivityIndicator size="large" style={{marginVertical:16}} color="white"/>
                     ) : (
-                        <PrimaryButton onPress={formik.handleSubmit}  message={formik.values.id == '' ? 'Store Brand' : 'Edit Brand'}/>
+                        <PrimaryButton onPress={formik.handleSubmit}  message={formik.values.id == '' ? 'Store Model' : 'Edit Model'}/>
                     )}
                     </View>
                 </View>

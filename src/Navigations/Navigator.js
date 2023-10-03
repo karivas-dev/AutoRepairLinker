@@ -10,9 +10,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { HomePage } from "../screens/HomePage";
 
-import {FormOwner} from '../screens/Owners/FormOwner';
+import {CreateEditOwner} from "../screens/Owners/CreateEditOwner";
 import {DetailOwner} from '../screens/Owners/DetailOwner';
+
 import { UserProfile } from "../screens/User/UserProfile";
+
 import { OwnersList } from "../screens/Owners/OwnersList";
 import { Login } from "../screens/Login";
 import { ResetPassword } from "../screens/ResetPassword";
@@ -22,6 +24,8 @@ import { CreateEditBrand } from "../screens/Brands/CreateEditBrand";
 import { GarageList } from "../screens/Garage/GarageList";
 import { FormGarage } from "../screens/Garage/FormGarage";
 import { DetailGarage } from "../screens/Garage/DetailGarage";
+import { DetailModel } from "../screens/Models/DetailModel";
+import { CreateEditModel } from "../screens/Models/CreateEditModel";
 
 const Tab = createBottomTabNavigator();
 const screenOptionsTabStyle = {
@@ -53,7 +57,7 @@ const BottomTabNavigator = () => {
                 options={{
                     tabBarLabel: '',
                     tabBarIcon: ({focused}) => (
-                        <MaterialIcons name="groups" size={24} color={focused ? '#6987B7': 'white'} />
+                        <MaterialIcons  name="format-list-bulleted"  size={24} color={focused ? '#6987B7': 'white'} />
                     ),
                 }}
                 initialParams={{level: '', flashMessage: ''}}
@@ -78,6 +82,7 @@ const BottomTabNavigator = () => {
                         <MaterialIcons name="groups" size={24} color={focused ? '#6987B7': 'white'} />
                     ),
                 }}
+                initialParams={{level: '', flashMessage: '', page: 1}}
             />
             <Tab.Screen 
                 name="UserProfile"
@@ -106,12 +111,15 @@ export const HomeStackNavigator = () => {
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="ResetPassword" component={ResetPassword} />
 
-            <Stack.Screen name="FormOwner" component={FormOwner} />
+            <Stack.Screen name="CreateEditOwner" component={CreateEditOwner} />
             <Stack.Screen name="DetailOwner" component={DetailOwner} />
-            <Stack.Screen name="DetailBrand" component={DetailBrand} />
+            <Stack.Screen name="DetailBrand" component={DetailBrand} initialParams={{level: '', flashMessage: '', page: 1}}/>
             <Stack.Screen name="CreateEditBrand" component={CreateEditBrand} />
             <Stack.Screen name="FormGarage" component={FormGarage} />
             <Stack.Screen name="DetailGarage" component={DetailGarage} />
+
+            <Stack.Screen name="DetailModel" component={DetailModel} />
+            <Stack.Screen name="CreateEditModel" component={CreateEditModel} />
         </Stack.Navigator>
     )
 };
@@ -124,12 +132,16 @@ export const LoginStackNavigator = () => {
             <Stack.Screen name="Home" component={BottomTabNavigator} />
             <Stack.Screen name="ResetPassword" component={ResetPassword} />
 
-            <Stack.Screen name="FormOwner" component={FormOwner} />
+            <Stack.Screen name="CreateEditOwner" component={CreateEditOwner} />
             <Stack.Screen name="DetailOwner" component={DetailOwner} />
-            <Stack.Screen name="DetailBrand" component={DetailBrand} />
+            <Stack.Screen name="DetailBrand" component={DetailBrand} initialParams={{level: '', flashMessage: '', page: 1}}/>
             <Stack.Screen name="CreateEditBrand" component={CreateEditBrand} />
             <Stack.Screen name="FormGarage" component={FormGarage} />
             <Stack.Screen name="DetailGarage" component={DetailGarage} />
+
+            <Stack.Screen name="DetailModel" component={DetailModel} />
+            <Stack.Screen name="CreateEditModel" component={CreateEditModel} />
+
         </Stack.Navigator>
     )
 };
