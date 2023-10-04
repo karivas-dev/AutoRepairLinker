@@ -17,8 +17,8 @@ export const DetailCar = ({navigation, route}) => {
 
     const deleteCarMutation = deleteCar();
 
-    const handleOwnerDelete = async() => {
-        if (confirm('You want to delete this Owner ??? ..')) {
+    const handleDelete = async() => {
+        if (confirm('You want to delete this Car ??? ..')) {
             await deleteCarMutation.mutateAsync(car?.data);
         }
     }
@@ -58,7 +58,7 @@ export const DetailCar = ({navigation, route}) => {
                                                     <PrimaryButton message='Edit' onPress={() => consoles.log('hola')}/>
                                                 </View>
                                                 <View className="mt-2">
-                                                    <DangerButton message="Delete" onPress={() => handleOwnerDelete()} />
+                                                    <DangerButton message="Delete" onPress={() => handleDelete()} />
                                                 </View>
                                                 </View>
                                             </View>
