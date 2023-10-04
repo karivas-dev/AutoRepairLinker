@@ -17,7 +17,7 @@ const getCars = (page) => {
             if(data?.meta?.current_page === 1){
                 setCars(data?.data);
             }else{
-                setCars([...carss, ...data?.data]);
+                setCars([...cars, ...data?.data]);
             }
         },
         refetchOnWindowFocus:false
