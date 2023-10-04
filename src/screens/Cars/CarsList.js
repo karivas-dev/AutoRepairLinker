@@ -39,8 +39,6 @@ export const CarsList = ({navigation, route}) => {
         }
     }
 
-    const keyExtractorOwner = useCallback((item) => `${item.id}`);
-
     const renderItem = useCallback(({item: car}) => {
         return (
             <Card>
@@ -67,7 +65,7 @@ export const CarsList = ({navigation, route}) => {
         )
     },[])
 
-    const ListFooterComponentOwners= () => {
+    const ListFooterComponent = () => {
         if(data?.links?.next != null){
             return (
                 <View className="mt-2">
@@ -112,8 +110,8 @@ export const CarsList = ({navigation, route}) => {
                             <FlatList
                                 data={search.length == 0 ? cars : filterCars}
                                 renderItem={renderItem}
-                                keyExtractor={keyExtractorOwner}
-                                ListFooterComponent={ListFooterComponentOwners}
+                                keyExtractor={(item) => `${item.id}`}
+                                ListFooterComponent={ListFooterComponent}
                                 style={{flex: 1}}
                             /> 
                         ) : (
