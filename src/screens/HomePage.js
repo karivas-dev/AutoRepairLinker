@@ -20,17 +20,9 @@ export const HomePage = () => {
                     <Card>
                         <View className="flex flex-row justify-between">
                             <View className="py-2">
-                                <Pressable onPress={() => navigation.navigate('FormOwner')} >
+                                <Pressable onPress={() => navigation.navigate('ReplacementList')} >
                                     <Text className="text-gray-200 text-lg font-bold text-center" >
-                                        ForOwner
-                                    </Text>
-
-                                </Pressable>
-                            </View>
-                            <View>
-                                <Pressable onPress={() => navigation.navigate('DetailOwner')} >
-                                    <Text className="text-gray-200 text-lg font-bold text-center" >
-                                        DetailOwner
+                                        Replacements
                                     </Text>
                                 </Pressable>
                             </View>

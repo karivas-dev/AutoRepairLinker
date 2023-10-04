@@ -22,6 +22,8 @@ import { DetailBrand } from "../screens/Brands/DetailBrand";
 import { CreateEditBrand } from "../screens/Brands/CreateEditBrand";
 import { DetailModel } from "../screens/Models/DetailModel";
 import { CreateEditModel } from "../screens/Models/CreateEditModel";
+import { ReplacementList } from "../screens/Replacements/ReplacementsList";
+import { DetailReplacement } from "../screens/Replacements/DetailReplacement";
 
 const Tab = createBottomTabNavigator();
 const screenOptionsTabStyle = {
@@ -103,6 +105,10 @@ export const HomeStackNavigator = () => {
 
             <Stack.Screen name="DetailModel" component={DetailModel} />
             <Stack.Screen name="CreateEditModel" component={CreateEditModel} />
+
+            <Stack.Screen name="ReplacementList" component={ReplacementList} initialParams={{level: '', flashMessage: '', page: 1}}/>
+            <Stack.Screen name="DetailReplacement" component={DetailReplacement} />
+
         </Stack.Navigator>
     )
 };
@@ -122,6 +128,9 @@ export const LoginStackNavigator = () => {
 
             <Stack.Screen name="DetailModel" component={DetailModel} />
             <Stack.Screen name="CreateEditModel" component={CreateEditModel} />
+
+            <Stack.Screen name="ReplacementList" component={ReplacementList}  initialParams={{level: '', flashMessage: '', page: 1}}/>
+            <Stack.Screen name="DetailReplacement" component={DetailReplacement} />
 
         </Stack.Navigator>
     )

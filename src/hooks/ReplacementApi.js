@@ -59,7 +59,7 @@ const deleteReplacement = () => {
         onSuccess: (data) => {
             console.log('eliminado');
             queryClient.invalidateQueries('replacements'); 
-            navigation.navigate('Home',{screen: 'CarsList', params: { level: 'success',  flashMessage: data?.data?.message, page: 1}});
+            navigation.navigate('Home',{screen: 'ReplacementList', params: { level: 'success',  flashMessage: data?.data?.message, page: 1}});
         },
     });
 }
