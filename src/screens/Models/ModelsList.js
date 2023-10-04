@@ -57,8 +57,10 @@ export const ModelList = ({navigation, route}) => {
     const ListFooterComponentModels= () => {
         if(data?.links?.next != null){
             return (
-                <View className="mt-2">
-                    <PrimaryButton message={'load more'} onPress={ () => navigation.setParams({ page: page + 1}) }></PrimaryButton>
+                <View className=" ml-2 p-4">
+                    <Card>
+                        <PrimaryButton message={'load more'} onPress={ () => navigation.setParams({ page: page + 1}) }></PrimaryButton>
+                    </Card>
                 </View>
             );
         }
