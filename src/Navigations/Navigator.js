@@ -15,17 +15,24 @@ import {DetailOwner} from '../screens/Owners/DetailOwner';
 import { UserProfile } from "../screens/User/UserProfile";
 import { ReplacementList } from "../screens/Replacements/ReplacementsList";
 import { DetailReplacement } from "../screens/Replacements/DetailReplacement";
+
+import { StoresList } from "../screens/Stores/StoresList";
+import { DetailStore } from "../screens/Stores/DetailStore";
+import { CreateEditStore } from "../screens/Stores/CreateEditStore";
+
 import { OwnersList } from "../screens/Owners/OwnersList";
 import { Login } from "../screens/Login";
 import { ResetPassword } from "../screens/ResetPassword";
 import {BrandsList} from '../screens/Brands/BrandsList'
 import { DetailBrand } from "../screens/Brands/DetailBrand";
 import { CreateEditBrand } from "../screens/Brands/CreateEditBrand";
+
 import { DetailModel } from "../screens/Models/DetailModel";
 import { CreateEditModel } from "../screens/Models/CreateEditModel";
 
 import { CarsList } from "../screens/Cars/CarsList";
 import { DetailCar } from "../screens/Cars/DetailCar";
+
 
 
 const Tab = createBottomTabNavigator();
@@ -122,6 +129,10 @@ export const HomeStackNavigator = () => {
             <Stack.Screen name="DetailBrand" component={DetailBrand} initialParams={{level: '', flashMessage: '', page: 1}}/>
             <Stack.Screen name="CreateEditBrand" component={CreateEditBrand} />
 
+            <Stack.Screen name="StoresList" component={StoresList} initialParams={{level: '', flashMessage: '', page: 1}}/>
+            <Stack.Screen name="DetailStore" component={DetailStore} />
+            <Stack.Screen name="CreateEditStore" component={CreateEditStore} />
+
             <Stack.Screen name="DetailModel" component={DetailModel} />
             <Stack.Screen name="CreateEditModel" component={CreateEditModel} />
             <Stack.Screen name="DetailCar" component={DetailCar} />
@@ -131,6 +142,7 @@ export const HomeStackNavigator = () => {
 
 
             <Stack.Screen name="DetailCar" component={DetailCar} />
+
 
 
         </Stack.Navigator>
@@ -150,6 +162,10 @@ export const LoginStackNavigator = () => {
             <Stack.Screen name="DetailBrand" component={DetailBrand} initialParams={{level: '', flashMessage: '', page: 1}}/>
             <Stack.Screen name="CreateEditBrand" component={CreateEditBrand} />
 
+            <Stack.Screen name="StoresList" component={StoresList} initialParams={{level: '', flashMessage: '', page: 1}}/>
+            <Stack.Screen name="DetailStore" component={DetailStore} />
+            <Stack.Screen name="CreateEditStore" component={CreateEditStore} />
+
             <Stack.Screen name="DetailModel" component={DetailModel} />
             <Stack.Screen name="CreateEditModel" component={CreateEditModel} />
 
@@ -158,6 +174,12 @@ export const LoginStackNavigator = () => {
 
 
             <Stack.Screen name="DetailCar" component={DetailCar} />
+
+            <Stack.Screen name="StoresList" component={StoresList} initialParams={{level: '', flashMessage: '', page: 1}}/>
+            <Stack.Screen name="DetailStore" component={DetailStore} />
+            <Stack.Screen name="CreateEditStore" component={CreateEditStore} />
+
+
         </Stack.Navigator>
     )
 };

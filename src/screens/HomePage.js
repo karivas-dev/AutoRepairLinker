@@ -19,11 +19,22 @@ export const HomePage = () => {
                 <View className="block w-full mb-4">
                     <Card>
                         <View className="flex flex-row justify-between">
+                            
                             <View className="py-2">
+
                                 <Pressable onPress={() => navigation.navigate('ReplacementList')} >
                                     <Text className="text-gray-200 text-lg font-bold text-center" >
                                         Replacements
                                     </Text>
+                                </Pressable>
+                            </View>
+
+                            <View  className="py-2">
+                                <Pressable onPress={() => navigation.navigate('StoresList')} >
+                                    <Text className="text-gray-200 text-lg font-bold text-center" >
+                                       Store Index
+                                    </Text>
+
                                 </Pressable>
                             </View>
                         </View>
