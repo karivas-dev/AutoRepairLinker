@@ -57,17 +57,14 @@ export const DetailStore = ({navigation, route}) => {
                                                     <MaterialCommunityIcons name="warehouse" size={60} color="white" />
                                                 </View>
                                                 <View>
-                                                <View>
-                                                    <PrimaryButton onPress={() => (navigation.navigate('CreateEditStore',{ 
-                                                        storeParms  : {
-                                                            id: store?.data.id,
-                                                            name: store?.data.name,
-                                                        }}))}
-                                                    message="Edit"/>
-                                                </View>
-                                                <View className="mt-2">
-                                                    <DangerButton message="Delete" onPress={() => handleStoreDelete()} />
-                                                </View>
+                                                    <View>
+                                                        <PrimaryButton onPress={() => (navigation.navigate('CreateEditStore',{id: store?.data.id, name: store?.data.name}))}
+                                                            message="Edit"
+                                                        />
+                                                    </View>
+                                                    <View className="mt-2">
+                                                        <DangerButton message="Delete" onPress={() => handleStoreDelete()} />
+                                                    </View>
                                                 </View>
                                             </View>
                                         </Card>

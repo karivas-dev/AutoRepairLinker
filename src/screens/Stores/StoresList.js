@@ -1,6 +1,6 @@
-import { View,Text,FlatList,TouchableOpacity,ActivityIndicator } from "react-native"
+import { View,Text,FlatList, ActivityIndicator, Pressable } from "react-native"
 import { AuthenticateLayout } from '../../layouts/AuthenticateLayout';
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 
 import { Card } from '../../components/Card';
 import { TxtInput } from "../../components/TxtInput";
@@ -16,21 +16,10 @@ export const StoresList = ({navigation, route}) => {
 
     //flash message
     const {level, flashMessage, page} = route.params;
-    console.log(level,flashMessage, page);
-    //const [page, setPage] = useState(indexPage)
-
+    
+    const {data, isLoading, isError, isFetching, error, stores} = getStores(page);
     const [filterStores,setFilterStores] = useState(stores);
     const [search, setSearch] = useState('');
-
-    const {data, isLoading, isError, isFetching, error, stores} = getStores(page);
-
-    useEffect(() =>{
-        console.log(data);
-        console.log(page);
-        console.log('useEffect value',filterStores);
-        console.log(level,flashMessage, page);
-        console.log(stores);
-    },[stores]);
 
     const handleSearch = (text) => {
         setSearch(text.toLowerCase());
@@ -49,8 +38,6 @@ export const StoresList = ({navigation, route}) => {
         }
     }
 
-    const keyExtractorOwner = useCallback((item) => `${item.id}`);
-
     const renderItem = useCallback(({item: store}) => {
         return (
             <Card>
@@ -64,9 +51,9 @@ export const StoresList = ({navigation, route}) => {
                         </View>
                     </View>
                     <View className="py-2">
-                        <TouchableOpacity onPress={() => (navigation.navigate('DetailStore',{ id: store.id }), setSearch(''))}>
+                        <Pressable onPress={() => (navigation.navigate('DetailStore',{ id: store.id }), setSearch(''))}>
                             <MaterialIcons name="arrow-forward-ios" size={30} color="white" />
-                        </TouchableOpacity>
+                        </Pressable>
                     </View>
                 </View>
             </Card>
@@ -77,7 +64,6 @@ export const StoresList = ({navigation, route}) => {
         if(data?.links?.next != null){
             return (
                 <View className="mt-2">
-                    {/* <PrimaryButton message={'load more'} onPress={ () =>  setPage(page + 1) }></PrimaryButton> */}
                     <PrimaryButton message={'load more'} onPress={ () => navigation.setParams({ page: page + 1}) }></PrimaryButton>
                 </View>
             );
@@ -117,18 +103,15 @@ export const StoresList = ({navigation, route}) => {
                         ): isError ? (
                             <Messages message={`Here was a problem processing Stores : ${error.message}`} level={'error'}/>
                            
-                        ) : stores ? (
-                            <View style={{ flex: 1 }}>
-                                 <FlatList
-                                    data={search.length == 0 ? stores : filterStores}
-                                    renderItem={renderItem}
-                                    keyExtractor={keyExtractorOwner}
-                                    /* ListHeaderComponent={ListHeaderComponentStores} */
-                                    ListFooterComponent={ListFooterComponentStores}
-                                    style={{flex: 1}}
-                                /> 
-                            </View>
-                           
+                        ) : stores.length != 0  ? (
+                            <FlatList
+                                data={search.length == 0 ? stores : filterStores}
+                                renderItem={renderItem}
+                                keyExtractor={(item) => `${item.id}`}
+                                /* ListHeaderComponent={ListHeaderComponentStores} */
+                                ListFooterComponent={ListFooterComponentStores}
+                                style={{flex: 1}}
+                            /> 
                         ) : (
                             <Messages message={'No data of Stores in our records ...'} level={'info'}/>
                         )
