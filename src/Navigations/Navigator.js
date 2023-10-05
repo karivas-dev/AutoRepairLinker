@@ -13,8 +13,19 @@ import {CreateEditOwner} from "../screens/Owners/CreateEditOwner";
 import {DetailOwner} from '../screens/Owners/DetailOwner';
 
 import { UserProfile } from "../screens/User/UserProfile";
+
 import { ReplacementList } from "../screens/Replacements/ReplacementsList";
 import { DetailReplacement } from "../screens/Replacements/DetailReplacement";
+<<<<<<< Updated upstream
+=======
+// import { CreateEditReplacement } from "../screens/Replacements/CreateEditReplacement";
+import { CreateEditForm } from "../screens/Replacements/CreateEditForm";
+
+import { StoresList } from "../screens/Stores/StoresList";
+import { DetailStore } from "../screens/Stores/DetailStore";
+import { CreateEditStore } from "../screens/Stores/CreateEditStore";
+
+>>>>>>> Stashed changes
 import { OwnersList } from "../screens/Owners/OwnersList";
 import { Login } from "../screens/Login";
 import { ResetPassword } from "../screens/ResetPassword";
@@ -128,11 +139,15 @@ export const HomeStackNavigator = () => {
 
             <Stack.Screen name="ReplacementList" component={ReplacementList} initialParams={{level: '', flashMessage: '', page: 1}}/>
             <Stack.Screen name="DetailReplacement" component={DetailReplacement} />
+<<<<<<< Updated upstream
 
 
             <Stack.Screen name="DetailCar" component={DetailCar} />
 
 
+=======
+            <Stack.screen name="CreateEditForm" component={{CreateEditForm}} />
+>>>>>>> Stashed changes
         </Stack.Navigator>
     )
 };
@@ -155,6 +170,8 @@ export const LoginStackNavigator = () => {
 
             <Stack.Screen name="ReplacementList" component={ReplacementList} initialParams={{level: '', flashMessage: '', page: 1}}/>
             <Stack.Screen name="DetailReplacement" component={DetailReplacement} />
+            <Stack.Screen name="CreateEditForm" component={CreateEditForm} />
+
 
 
             <Stack.Screen name="DetailCar" component={DetailCar} />
@@ -163,4 +180,4 @@ export const LoginStackNavigator = () => {
 };
 
 
-//export default HomeStackNavigator;
+
