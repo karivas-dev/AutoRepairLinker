@@ -139,12 +139,6 @@ export const HomeStackNavigator = () => {
 
             <Stack.Screen name="ReplacementList" component={ReplacementList} initialParams={{level: '', flashMessage: '', page: 1}}/>
             <Stack.Screen name="DetailReplacement" component={DetailReplacement} />
-
-
-            <Stack.Screen name="DetailCar" component={DetailCar} />
-
-
-
         </Stack.Navigator>
     )
 };
@@ -174,11 +168,6 @@ export const LoginStackNavigator = () => {
 
 
             <Stack.Screen name="DetailCar" component={DetailCar} />
-
-            <Stack.Screen name="StoresList" component={StoresList} initialParams={{level: '', flashMessage: '', page: 1}}/>
-            <Stack.Screen name="DetailStore" component={DetailStore} />
-            <Stack.Screen name="CreateEditStore" component={CreateEditStore} />
-
 
         </Stack.Navigator>
     )
