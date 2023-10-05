@@ -124,11 +124,14 @@ export const HomeStackNavigator = () => {
 
             <Stack.Screen name="DetailModel" component={DetailModel} />
             <Stack.Screen name="CreateEditModel" component={CreateEditModel} />
-
             <Stack.Screen name="DetailCar" component={DetailCar} />
 
             <Stack.Screen name="ReplacementList" component={ReplacementList} initialParams={{level: '', flashMessage: '', page: 1}}/>
             <Stack.Screen name="DetailReplacement" component={DetailReplacement} />
+
+
+            <Stack.Screen name="DetailCar" component={DetailCar} />
+
 
         </Stack.Navigator>
     )
@@ -149,11 +152,12 @@ export const LoginStackNavigator = () => {
 
             <Stack.Screen name="DetailModel" component={DetailModel} />
             <Stack.Screen name="CreateEditModel" component={CreateEditModel} />
-            
-            <Stack.Screen name="DetailCar" component={DetailCar} />
 
             <Stack.Screen name="ReplacementList" component={ReplacementList} initialParams={{level: '', flashMessage: '', page: 1}}/>
             <Stack.Screen name="DetailReplacement" component={DetailReplacement} />
+
+
+            <Stack.Screen name="DetailCar" component={DetailCar} />
         </Stack.Navigator>
     )
 };
