@@ -13,7 +13,8 @@ import {CreateEditOwner} from "../screens/Owners/CreateEditOwner";
 import {DetailOwner} from '../screens/Owners/DetailOwner';
 
 import { UserProfile } from "../screens/User/UserProfile";
-
+import { ReplacementList } from "../screens/Replacements/ReplacementsList";
+import { DetailReplacement } from "../screens/Replacements/DetailReplacement";
 import { OwnersList } from "../screens/Owners/OwnersList";
 import { Login } from "../screens/Login";
 import { ResetPassword } from "../screens/ResetPassword";
@@ -22,8 +23,10 @@ import { DetailBrand } from "../screens/Brands/DetailBrand";
 import { CreateEditBrand } from "../screens/Brands/CreateEditBrand";
 import { DetailModel } from "../screens/Models/DetailModel";
 import { CreateEditModel } from "../screens/Models/CreateEditModel";
-import { ReplacementList } from "../screens/Replacements/ReplacementsList";
-import { DetailReplacement } from "../screens/Replacements/DetailReplacement";
+
+import { CarsList } from "../screens/Cars/CarsList";
+import { DetailCar } from "../screens/Cars/DetailCar";
+
 
 const Tab = createBottomTabNavigator();
 const screenOptionsTabStyle = {
@@ -34,6 +37,10 @@ const screenOptionsTabStyle = {
         borderTopWidth: 0,
     }
 }
+const BottomTabItemIcon = (IconLib,size, name, focused) => {
+    return (<IconLib size={24} name={name} color={focused ? '#6987B7': 'white'}/>)
+}
+
 const BottomTabNavigator = () => {
     return (
         <Tab.Navigator
@@ -59,6 +66,18 @@ const BottomTabNavigator = () => {
                     ),
                 }}
                 initialParams={{level: '', flashMessage: ''}}
+            />
+             <Tab.Screen
+                name="CarsList"
+                component={CarsList}
+                options={{
+                    tabBarLabel: '',
+                    tabBarIcon: ({focused}) => (
+                        /* <AntDesign name="car" size={24} color={focused ? '#6987B7': 'white'} /> */
+                        BottomTabItemIcon(AntDesign,24,'car',focused) 
+                    ),
+                }}
+                initialParams={{level: '', flashMessage: '' , page: 1}}
             />
             <Tab.Screen
                 name="OwnersList"
@@ -106,6 +125,8 @@ export const HomeStackNavigator = () => {
             <Stack.Screen name="DetailModel" component={DetailModel} />
             <Stack.Screen name="CreateEditModel" component={CreateEditModel} />
 
+            <Stack.Screen name="DetailCar" component={DetailCar} />
+
             <Stack.Screen name="ReplacementList" component={ReplacementList} initialParams={{level: '', flashMessage: '', page: 1}}/>
             <Stack.Screen name="DetailReplacement" component={DetailReplacement} />
 
@@ -128,10 +149,11 @@ export const LoginStackNavigator = () => {
 
             <Stack.Screen name="DetailModel" component={DetailModel} />
             <Stack.Screen name="CreateEditModel" component={CreateEditModel} />
+            
+            <Stack.Screen name="DetailCar" component={DetailCar} />
 
-            <Stack.Screen name="ReplacementList" component={ReplacementList}  initialParams={{level: '', flashMessage: '', page: 1}}/>
+            <Stack.Screen name="ReplacementList" component={ReplacementList} initialParams={{level: '', flashMessage: '', page: 1}}/>
             <Stack.Screen name="DetailReplacement" component={DetailReplacement} />
-
         </Stack.Navigator>
     )
 };
