@@ -9,9 +9,11 @@ export const HomePage = () => {
    
     const navigation = useNavigation();
     const tok = async() => {
+        
         return await getAuthToken();
     }
 
+    console.log(tok());
 
     return (
         <AuthenticateLayout>
@@ -22,7 +24,7 @@ export const HomePage = () => {
                             
                             <View className="py-2">
 
-                                <Pressable onPress={() => navigation.navigate('ReplacementList')} >
+                                <Pressable onPress={() => navigation.navigate('ReplacementsList')} >
                                     <Text className="text-gray-200 text-lg font-bold text-center" >
                                         Replacements
                                     </Text>

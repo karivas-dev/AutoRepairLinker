@@ -3,27 +3,31 @@ import { useEffect, useState } from "react";
 import { useQuery, useMutation , useQueryClient } from "react-query";
 import { useNavigation } from "@react-navigation/native";
 
-let brandData = null;
-const getBrand=({id})=> {
-
-    const [brand, setBrand] = useState(brandData);
-
-    useEffect( () => {
-        
+//Piker Models
+const fetchModels = async (page,brandId) => (await axiosRoute.get('models.index', { brand:brandId , page: page})).data;
+const getSelectModels = (brandId) => {
+    const [allData, setAllData] = useState([]); // Estado para almacenar todos los datos
+    useEffect(() => {
         async function fetchData() {
-            if(brand == null){
-                const data = await fetchBrand(id);
-                setBrand(data);
-                brandData = data;
+            if (brandId != '') {
+                const data = await fetchModels(1,brandId);
+                let allDataArray = [];
+                if(data.data.length == 0 ){
+                    setAllData([{id:'', name:'No models for this brand'}]);
+                }
+                else{
+                    for (let page = 1; page <= data.meta?.last_page; page++) {
+                        const response = await fetchModels(page,brandId);
+                        allDataArray = [...allDataArray, ...response.data];
+                    }
+                    setAllData(allDataArray);
+                }
             }
         }
         fetchData();
-
-    },[id]);
-        return brand;
-    }
-
-
+    }, [brandId]);
+    return allData;
+}
 
 const fetchReplacements = async (page) => (await axiosRoute.get('replacements.index', { page: page})).data;
 
@@ -82,17 +86,15 @@ const createEditReplacement = (formikErrors, replacement) => {
     const createEditReplacementMutation = useMutation({
         mutationFn: (replacement.id == '' ?  storeReplacement : updateReplacement),
 
-        onError: (error, variables) => {
+        onError: (error) => {
             formikErrors(error.response.data.errors);
         },
-        onSuccess: (data, variables) => {
+        onSuccess: (data) => {
             console.log('guardado');
             queryClient.invalidateQueries('replacements');
-            navigation.navigate('ReplacementList', { level: 'success',  flashMessage: data?.data?.message, page: 1});
-
+            navigation.navigate('ReplacementsList', { level: 'success',  flashMessage: data?.data?.message, page: 1});
 },
     });
-
     return createEditReplacementMutation;
 }   
 
@@ -111,9 +113,9 @@ const deleteReplacement = () => {
         onSuccess: (data) => {
             console.log('eliminado');
             queryClient.invalidateQueries('replacements'); 
-            navigation.navigate('ReplacementList', { level: 'success',  flashMessage: data?.data?.message, page: 1});
+            navigation.navigate('ReplacementsList', { level: 'success',  flashMessage: data?.data?.message, page: 1});
         },
     });
 }
 
-export {getReplacements, getReplacement, deleteReplacement, createEditReplacement, getBrand}
+export {getReplacements, getReplacement, deleteReplacement, createEditReplacement, getSelectModels}

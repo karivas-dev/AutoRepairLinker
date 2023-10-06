@@ -19,7 +19,7 @@ export const DetailReplacement = ({navigation, route}) => {
 
     const handleDelete = async() => {
         if (confirm('You want to delete this Replacement ??? ..')) {
-            await deleteReplacementMutation .mutateAsync(replacement?.data);
+            await deleteReplacementMutation.mutateAsync(replacement?.data);
         }
     }
 
@@ -55,7 +55,15 @@ export const DetailReplacement = ({navigation, route}) => {
                                                 </View>
                                                 <View>
                                                 <View>
-                                                    <PrimaryButton message='Edit' onPress={() => console.log('hola')}/>
+                                                    <PrimaryButton message='Edit' onPress={() => 
+                                                        navigation.navigate("EditCreateReplacement", {
+                                                            id: replacement?.data.id,
+                                                            name: replacement?.data.name,
+                                                            description: replacement?.data.description,
+                                                            brand_id: replacement?.data.model.brand.id,
+                                                            model_id: replacement?.data.model.id,
+                                                        })}
+                                                    />
                                                 </View>
                                                 <View className="mt-2">
                                                     <DangerButton message="Delete" onPress={() => handleDelete()} />
@@ -73,20 +81,19 @@ export const DetailReplacement = ({navigation, route}) => {
                                             <Text className="text-gray-200 text-lg text-center" > 
                                                 <Text className="text-gray-200 text-lg font-bold" >Description : </Text> {replacement?.data.description}
                                             </Text><Text>{`\n`}</Text>
-                                           
-                                           
+                                            <Text className="text-gray-200 text-lg text-center" > 
+                                                <Text className="text-gray-200 text-lg font-bold" >Brand : </Text> {replacement?.data.model.brand.name}
+                                            </Text><Text>{`\n`}</Text>
+                                            <Text className="text-gray-200 text-lg text-center" > 
+                                                <Text className="text-gray-200 text-lg font-bold" >Model : </Text> {replacement?.data.model.name}
+                                            </Text><Text>{`\n`}</Text>
                                         </Card>
-                                        <Card>
-                                            <Text className="font-extrabold mb-3 text-gray-200 mt-3 text-2xl">Models </Text>
-                                        </Card>
-                                        
                                     </View>
                                 </>   
                             ) : null}
                         </>
                     )
                 }
-               
                <View className="flex-none w-full max-w-sm">
                     {
                         deleteReplacementMutation .isLoading ? (
@@ -103,9 +110,7 @@ export const DetailReplacement = ({navigation, route}) => {
                         )
                     }
                 </View>
-                
-            </View>
-          
+            </View>         
        </AuthenticateLayout>
     );
 }

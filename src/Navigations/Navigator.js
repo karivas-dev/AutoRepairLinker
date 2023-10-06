@@ -14,8 +14,9 @@ import {DetailOwner} from '../screens/Owners/DetailOwner';
 
 import { UserProfile } from "../screens/User/UserProfile";
 
-import { ReplacementList } from "../screens/Replacements/ReplacementsList";
+import { ReplacementsList } from "../screens/Replacements/ReplacementsList";
 import { DetailReplacement } from "../screens/Replacements/DetailReplacement";
+import { EditCreateReplacement } from "../screens/Replacements/EditCreateReplacement";
 
 import { StoresList } from "../screens/Stores/StoresList";
 import { DetailStore } from "../screens/Stores/DetailStore";
@@ -33,6 +34,8 @@ import { CreateEditModel } from "../screens/Models/CreateEditModel";
 
 import { CarsList } from "../screens/Cars/CarsList";
 import { DetailCar } from "../screens/Cars/DetailCar";
+
+
 
 
 
@@ -138,10 +141,10 @@ export const HomeStackNavigator = () => {
             <Stack.Screen name="CreateEditModel" component={CreateEditModel} />
             <Stack.Screen name="DetailCar" component={DetailCar} />
 
-            <Stack.Screen name="ReplacementList" component={ReplacementList} initialParams={{level: '', flashMessage: '', page: 1}}/>
+            <Stack.Screen name="ReplacementsList" component={ReplacementsList} initialParams={{level: '', flashMessage: '', page: 1}}/>
             <Stack.Screen name="DetailReplacement" component={DetailReplacement} />
+            <Stack.Screen name="EditCreateReplacement" component={EditCreateReplacement} />
 
-            <Stack.screen name="CreateEditForm" component={CreateEditForm} />
 
         </Stack.Navigator>
     )
@@ -167,13 +170,10 @@ export const LoginStackNavigator = () => {
             <Stack.Screen name="DetailModel" component={DetailModel} />
             <Stack.Screen name="CreateEditModel" component={CreateEditModel} />
 
-            <Stack.Screen name="ReplacementList" component={ReplacementList} initialParams={{level: '', flashMessage: '', page: 1}}/>
+            <Stack.Screen name="ReplacementsList" component={ReplacementsList} initialParams={{level: '', flashMessage: '', page: 1}}/>
             <Stack.Screen name="DetailReplacement" component={DetailReplacement} />
-            <Stack.Screen name="CreateEditForm" component={CreateEditForm} />
-
-
-
             <Stack.Screen name="DetailCar" component={DetailCar} />
+            <Stack.Screen name="EditCreateReplacement" component={EditCreateReplacement} />
 
         </Stack.Navigator>
     )
