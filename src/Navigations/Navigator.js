@@ -35,7 +35,8 @@ import { CreateEditModel } from "../screens/Models/CreateEditModel";
 import { CarsList } from "../screens/Cars/CarsList";
 import { DetailCar } from "../screens/Cars/DetailCar";
 
-
+import { BranchesList } from "../screens/Branches/BranchesList";
+import { BranchDetail } from "../screens/Branches/BranchDetail";
 
 
 
@@ -101,6 +102,17 @@ const BottomTabNavigator = () => {
                 }}
                 initialParams={{level: '', flashMessage: '', page: 1}}
             />
+            <Tab.Screen
+                name="BranchesList"
+                component={BranchesList}
+                options={{
+                    tabBarLabel: '',
+                    tabBarIcon: ({focused}) => (
+                        <MaterialIcons name="groups" size={24} color={focused ? '#6987B7': 'white'} />
+                    ),
+                }}
+                initialParams={{level: '', flashMessage: '', page: 1}}
+            />
             <Tab.Screen 
                 name="UserProfile"
                 component={UserProfile}
@@ -145,6 +157,9 @@ export const HomeStackNavigator = () => {
             <Stack.Screen name="DetailReplacement" component={DetailReplacement} />
             <Stack.Screen name="EditCreateReplacement" component={EditCreateReplacement} />
 
+            <Stack.Screen name="BranchesList" component={BranchesList} />
+            <Stack.Screen name="BranchDetail" component={BranchDetail} />
+
 
         </Stack.Navigator>
     )
@@ -174,6 +189,9 @@ export const LoginStackNavigator = () => {
             <Stack.Screen name="DetailReplacement" component={DetailReplacement} />
             <Stack.Screen name="DetailCar" component={DetailCar} />
             <Stack.Screen name="EditCreateReplacement" component={EditCreateReplacement} />
+
+            <Stack.Screen name="BranchesList" component={BranchesList} />
+            <Stack.Screen name="BranchDetail" component={BranchDetail} />
 
         </Stack.Navigator>
     )
