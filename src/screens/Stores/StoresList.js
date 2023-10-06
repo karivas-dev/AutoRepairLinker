@@ -79,10 +79,18 @@ export const StoresList = ({navigation, route}) => {
                         <Text className="font-bold mb-6 text-gray-200 mt-5 text-3xl">Stores</Text>
                         <View className="justify-end mt-5 mb-6">
                             <PrimaryButton onPress={() => (navigation.navigate('CreateEditStore',{ 
-                                storeParms  : {
                                     id: '',
                                     name:'',
-                                }}), setSearch(''))}
+                                    branch : {
+                                        id: '',
+                                        email: '',
+                                        telephone: '',
+                                        main: '',
+                                        district_id: '',
+                                        branchable_id: '',
+                                        branchable_type: ''
+                                    }
+                                }), setSearch(''))}
                             message="+ Store"/>
                         </View>
                     </View>

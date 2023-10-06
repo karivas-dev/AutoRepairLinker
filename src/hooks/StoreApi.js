@@ -2,6 +2,7 @@ import axiosRoute from "../utils/route";
 import { useState } from "react";
 import { useQuery, useMutation , useQueryClient } from "react-query";
 import { useNavigation } from "@react-navigation/native";
+import { createEditBranch } from "./BranchApi";
 
 const fetchStores  = async (page) => (await axiosRoute.get('stores.index', { page: page})).data;
 
@@ -50,7 +51,7 @@ const storeStoreXd = (store) => (axiosRoute.post('stores.store', null, store));
 const updateStore = (store) => (axiosRoute.put('stores.update', store.id, store));
 
 //store CREATE - UPDATE 
-const createEditStore = (formikErrors,store) => {
+const createEditStore = (formikErrors, store) => {
     const queryClient = new useQueryClient();
     const navigation = useNavigation();
 
@@ -60,8 +61,9 @@ const createEditStore = (formikErrors,store) => {
         onError: (error) => {
             formikErrors(error.response.data.errors);
         },
-        onSuccess: (data, variables) => {
-            queryClient.invalidateQueries(['stores',1]);      
+        onSuccess: async (data, variables) => {
+            queryClient.invalidateQueries(['stores',1]); 
+            await createEditBranch(store.branch);    
             navigation.navigate('StoresList',{ level: 'success',  flashMessage: data?.data?.message , page: 1}); 
         },
     });
