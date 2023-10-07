@@ -27,25 +27,23 @@ export const CreateEditStore = ({navigation, route}) => {
                 main: route.params.branch.main ?? '',
                 district_id: route.params.branch.district_id ?? '',
                 branchable_id: route.params.branch.branchable_id ?? '',
-                branchable_type: route.params.branch.branchable_type ?? "Store"
+                branchable_type: 'Store'
             }
         },
         validationSchema: Yup.object().shape({
             name: Yup.string().required(),
-            branch: {
-                email: Yup.string().required().email(),
-                telephone: Yup.string().required().matches("^(2|6|7|8)[0-9]{7}$"),
-                main: Yup.bool().required(),
-                district_id: Yup.number().required(),
-                branchable_id: Yup.number().required(),
-                branchable_type: Yup.string().required()
-            }
+            branch: Yup.object().shape({
+                email: Yup.string().required('email is required').email(),
+                telephone: Yup.string().required('telephone is required').matches("^(2|6|7|8)[0-9]{7}$"),
+                main: Yup.bool().required('main is required'),
+                district_id: Yup.number().required('district is required'),
+            })
         }),
         onSubmit: async (store) => await createEditAttempt.mutateAsync(store)
     });
      
     console.log(formik.values);
-
+    console.log(formik);
     const prueba = [
         {
             id: '1',
@@ -64,11 +62,11 @@ export const CreateEditStore = ({navigation, route}) => {
     const tipo = [
         {
             id: '0',
-            name: 'cuartel'
+            name: 'regular'
         },
         {
             id: '1',
-            name: 'regular'
+            name: 'main'
         }
     ]
 
@@ -87,11 +85,29 @@ export const CreateEditStore = ({navigation, route}) => {
                     </Text>
 
                     <FormikInput valueName="name" formik={formik} placeholder="Store name:" label={formik.values.id == '' ? null : 'Name: '}/>
-                    <FormikInput valueName="branch.email" formik={formik} placeholder="Correo Eletrónico"/>
-                    <FormikInput valueName="branch.telephone" formik={formik} placeholder="Teléfono"/>
-                    <SelectInput selectedValue={formik.values.branch.district_id} onValueChange={formik.handleChange("branch.district_id")} data={prueba} />
-                    <SelectInput selectedValue={formik.values.branch.main} onValueChange={formik.handleChange("branch.main")} data={tipo} />
 
+                    <FormikInput valueName="branch.email" formik={formik} placeholder="Email"/>
+                    <Text className="text-red-500 capitalize-first">
+                        { formik.touched?.branch?.email && formik.errors?.branch?.email }
+                    </Text>
+
+                    <FormikInput valueName="branch.telephone" formik={formik} placeholder="Telephone"/> 
+                    <Text className="text-red-500 capitalize-first">
+                        { formik.touched?.branch?.telephone && formik.errors?.branch?.telephone }
+                    </Text>
+
+                    <SelectInput DefaultPlaceholder={'Distrito'} selectedValue={formik.values.branch.district_id} 
+                        onValueChange={formik.handleChange("branch.district_id")} data={prueba} />
+                    
+                    <Text className="text-red-500 capitalize-first">
+                        { formik.touched?.branch?.district_id && formik.errors?.branch?.district_id }
+                    </Text>
+
+                    <SelectInput  DefaultPlaceholder={'Select Type'} selectedValue={formik.values.branch.main} 
+                        onValueChange={formik.handleChange("branch.main")} data={tipo} />
+                    <Text className="text-red-500 capitalize-first">
+                        { formik.touched?.branch?.main && formik.errors?.branch?.main }
+                    </Text>
 
                     {/*{location == null ? null : ( <>
                         <SelectInput selectedValue={selectedLocation.state_id} onValueChange={(id) => setSelectedLocation({state_id: id, town_id: 0})}

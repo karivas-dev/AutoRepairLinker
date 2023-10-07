@@ -50,7 +50,11 @@ const storeStoreXd = (store) => (axiosRoute.post('stores.store', null, store));
 
 const updateStore = (store) => (axiosRoute.put('stores.update', store.id, store));
 
-//store CREATE - UPDATE 
+//branch store
+const storeBranch = (branch) => (axiosRoute.post('branches.store', null, branch),console.log(branch));
+
+const updateBranch = (branch) => (axiosRoute.patch('branches.update', branch.id, branch));
+
 const createEditStore = (formikErrors, store) => {
     const queryClient = new useQueryClient();
     const navigation = useNavigation();
@@ -62,8 +66,12 @@ const createEditStore = (formikErrors, store) => {
             formikErrors(error.response.data.errors);
         },
         onSuccess: async (data, variables) => {
-            queryClient.invalidateQueries(['stores',1]); 
-            await createEditBranch(store.branch);    
+            queryClient.invalidateQueries(['stores',1]);
+            if(store.id == ''){
+                const branch = store?.branch;
+                branch.branchable_id = data?.data?.data?.id;
+                //await storeBranch(store.branch);
+            }
             navigation.navigate('StoresList',{ level: 'success',  flashMessage: data?.data?.message , page: 1}); 
         },
     });

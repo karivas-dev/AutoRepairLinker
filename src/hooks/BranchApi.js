@@ -44,14 +44,14 @@ const storeBranch = (branch) => (axiosRoute.post('branches.store', null, branch)
 
 const updateBranch = (branch) => (axiosRoute.patch('branches.update', garage.id, branch));
 
-const createEditBranch = (branch) => {
+const createEditBranch = (formikErrors,branch) => {
     const queryClient = new useQueryClient();
     const navigation = useNavigation();
     return useMutation({
         mutationFn: (branch.id == '' ?  storeBranch : updateBranch),
         
         onError: (error) => {
-            console.log(error);
+            formikErrors(error.response.data.errors);
         },
         onSuccess: (data) => {
             console.log('guardado');
