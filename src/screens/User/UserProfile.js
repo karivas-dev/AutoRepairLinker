@@ -11,13 +11,10 @@ import {logout} from '../../context/AuthContext';
 import axiosRoute from "../../utils/route";
 
 export const UserProfile = ({navigation}) => {
-   
     const userLogOut = userLogoutAttempt();
 
-    const handleLogOut = async () => {
-        if (confirm('You want to Log Out ??? ..')) {
-            await userLogOut.mutate();
-        }
+    const handleLogOut = () => {
+        userLogOut.mutateAsync();
     }
 
     return (<AuthenticateLayout>
@@ -45,7 +42,7 @@ export const UserProfile = ({navigation}) => {
                                 <PrimaryButton message='Edit'/>
                             </View>
                             <View className="mt-2">
-                                <DangerButton onPress={() => handleLogOut()} message="Log Out"/>
+                                <DangerButton onPress={handleLogOut} message="Log Out"/>
                             </View>
                         </View>
                     </View>

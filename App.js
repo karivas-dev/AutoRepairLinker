@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { NativeWindStyleSheet } from "nativewind";
-
+import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { HomeStackNavigator } from './src/Navigations/Navigator';
 import { LoginStackNavigator } from './src/Navigations/Navigator';
-import { getAuthToken } from './src/context/AuthContext';
+import {getAuthToken} from './src/context/AuthContext';
 
 import { QueryClient, QueryClientProvider } from 'react-query';
 import axiosRoute from './src/utils/route';
