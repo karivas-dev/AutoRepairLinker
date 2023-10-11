@@ -9,9 +9,11 @@ export const HomePage = () => {
    
     const navigation = useNavigation();
     const tok = async() => {
+        
         return await getAuthToken();
     }
 
+    console.log(tok());
 
     return (
         <AuthenticateLayout>
@@ -19,19 +21,22 @@ export const HomePage = () => {
                 <View className="block w-full mb-4">
                     <Card>
                         <View className="flex flex-row justify-between">
+                            
                             <View className="py-2">
-                                <Pressable onPress={() => navigation.navigate('FormOwner')} >
-                                    <Text className="text-gray-200 text-lg font-bold text-center" >
-                                        ForOwner
-                                    </Text>
 
+                                <Pressable onPress={() => navigation.navigate('ReplacementsList')} >
+                                    <Text className="text-gray-200 text-lg font-bold text-center" >
+                                        Replacements
+                                    </Text>
                                 </Pressable>
                             </View>
-                            <View>
-                                <Pressable onPress={() => navigation.navigate('DetailOwner')} >
+
+                            <View  className="py-2">
+                                <Pressable onPress={() => navigation.navigate('StoresList')} >
                                     <Text className="text-gray-200 text-lg font-bold text-center" >
-                                        DetailOwner
+                                       Store Index
                                     </Text>
+
                                 </Pressable>
                             </View>
                         </View>

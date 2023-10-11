@@ -3,7 +3,9 @@ import { AuthenticateLayout } from '../../layouts/AuthenticateLayout';
 
 import { FontAwesome } from '@expo/vector-icons';
 import { PrimaryButton } from '../../components/PrimaryButton';
+import  { SecondaryButton } from '../../components/SecondaryButton';
 import { DangerButton } from '../../components/DangerButton';
+import { ModelList } from '../Models/ModelsList';
 
 import { MaterialIcons } from '@expo/vector-icons';
 import { Messages } from '../../components/Messages';
@@ -26,7 +28,7 @@ export const DetailBrand = ({navigation, route}) => {
     }
 
     return (
-        <AuthenticateLayout>
+        <AuthenticateLayout level={route.params?.level} flashMessage={route.params?.flashMessage}>
             <Header navigation={navigation}/>
             <View className="flex flex-1 flex-col justify-center items-center" >
                <View className="flex-none w-full max-w-sm" >
@@ -54,6 +56,10 @@ export const DetailBrand = ({navigation, route}) => {
                                             <View className="py-2">
                                                 <PrimaryButton message='Edit' onPress={() => navigation.navigate('CreateEditBrand', { id: id , name: brand?.data.name})}/>
                                                 
+                                                {/*  <View className="mt-2">
+                                                    <SecondaryButton message="+ model" onPress={() => console.log('add model')}/>
+                                                </View> */}
+
                                                 <View className="mt-2">
                                                     <DangerButton message="delete" onPress={() => handleBrandDelete()}/>
                                                 </View>
@@ -65,6 +71,12 @@ export const DetailBrand = ({navigation, route}) => {
                             )
                         }
                     </Card>
+                    
+                    <ModelList
+                        navigation={navigation}
+                        route={route}
+                    />
+                    
                     <View className="max-w-sm p-6 rounded-lg">
                         {
                             deleteBrandMutation.isLoading ? (

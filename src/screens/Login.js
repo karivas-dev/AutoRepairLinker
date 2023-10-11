@@ -1,13 +1,30 @@
 import {ActivityIndicator, Image, Pressable, Text, View} from 'react-native';
 import {GuestLayout} from '../layouts/GuestLayout';
 import {PrimaryButton} from '../components/PrimaryButton';
-import {TxtInput} from '../components/TxtInput'
-import {userLoginAttempt} from '../hooks/AuthApi';
+import {userLoginAttempt, userLoginWithGoogleAttempt, userLoginWithGoogleSubAttempt} from '../hooks/AuthApi';
 import {useFormik} from "formik";
 import * as Yup from 'yup';
 import {FormikInput} from "../components/FormikInput";
+import {useEffect, useState} from "react";
+
+import * as WebBrowser from 'expo-web-browser';
+import * as Google from 'expo-auth-session/providers/google';
+import {Messages} from "../components/Messages";
+
+WebBrowser.maybeCompleteAuthSession();
 
 export const Login = () => {
+    const [googleLoginMessage, setGoogleLoginMessage] = useState(null);
+    const [request, response, promptAsync] = Google.useAuthRequest({
+        clientId: process.env.EXPO_PUBLIC_GOOGLE_ANDROID_ID
+    });
+
+    useEffect(() => {
+        if (response?.type === 'success') {
+            loginGoogleAttempt.mutateAsync(response.authentication.accessToken);
+        }
+    }, [response]);
+
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -20,6 +37,8 @@ export const Login = () => {
         onSubmit: async (user) => await loginAttempt.mutateAsync(user)
     });
     const loginAttempt = userLoginAttempt(formik.setErrors);
+    const loginWithGoogleSubAttempt = userLoginWithGoogleSubAttempt();
+    const loginGoogleAttempt = userLoginWithGoogleAttempt(setGoogleLoginMessage, loginWithGoogleSubAttempt);
 
     return (
         <GuestLayout>
@@ -46,9 +65,14 @@ export const Login = () => {
                 </Pressable>
             </View>
 
-            <View className="flex flex-row justify-end mt-5">
-                <PrimaryButton onPress={formik.handleSubmit} message='log in'/>
+            <View className="flex flex-row justify-between mt-5">
+                <PrimaryButton onPress={formik.handleSubmit} message='Log In'/>
+                <PrimaryButton onPress={() => promptAsync()} message='Google Log In'/>
             </View>
+
+            {googleLoginMessage == null ? null : (
+                <Messages level="error" message={googleLoginMessage}/>
+            )}
 
             {formik.isSubmitting ? (
                 <ActivityIndicator size="large" style={{marginVertical: 16}} color="white"/>

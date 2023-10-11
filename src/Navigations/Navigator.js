@@ -14,12 +14,30 @@ import {DetailOwner} from '../screens/Owners/DetailOwner';
 
 import { UserProfile } from "../screens/User/UserProfile";
 
+import { ReplacementsList } from "../screens/Replacements/ReplacementsList";
+import { DetailReplacement } from "../screens/Replacements/DetailReplacement";
+import { EditCreateReplacement } from "../screens/Replacements/EditCreateReplacement";
+
+import { StoresList } from "../screens/Stores/StoresList";
+import { DetailStore } from "../screens/Stores/DetailStore";
+import { CreateEditStore } from "../screens/Stores/CreateEditStore";
+
 import { OwnersList } from "../screens/Owners/OwnersList";
 import { Login } from "../screens/Login";
 import { ResetPassword } from "../screens/ResetPassword";
 import {BrandsList} from '../screens/Brands/BrandsList'
 import { DetailBrand } from "../screens/Brands/DetailBrand";
 import { CreateEditBrand } from "../screens/Brands/CreateEditBrand";
+
+import { DetailModel } from "../screens/Models/DetailModel";
+import { CreateEditModel } from "../screens/Models/CreateEditModel";
+
+import { CarsList } from "../screens/Cars/CarsList";
+import { DetailCar } from "../screens/Cars/DetailCar";
+
+
+
+
 
 const Tab = createBottomTabNavigator();
 const screenOptionsTabStyle = {
@@ -30,6 +48,10 @@ const screenOptionsTabStyle = {
         borderTopWidth: 0,
     }
 }
+const BottomTabItemIcon = (IconLib,size, name, focused) => {
+    return (<IconLib size={24} name={name} color={focused ? '#6987B7': 'white'}/>)
+}
+
 const BottomTabNavigator = () => {
     return (
         <Tab.Navigator
@@ -55,6 +77,18 @@ const BottomTabNavigator = () => {
                     ),
                 }}
                 initialParams={{level: '', flashMessage: ''}}
+            />
+             <Tab.Screen
+                name="CarsList"
+                component={CarsList}
+                options={{
+                    tabBarLabel: '',
+                    tabBarIcon: ({focused}) => (
+                        /* <AntDesign name="car" size={24} color={focused ? '#6987B7': 'white'} /> */
+                        BottomTabItemIcon(AntDesign,24,'car',focused) 
+                    ),
+                }}
+                initialParams={{level: '', flashMessage: '' , page: 1}}
             />
             <Tab.Screen
                 name="OwnersList"
@@ -96,8 +130,22 @@ export const HomeStackNavigator = () => {
 
             <Stack.Screen name="CreateEditOwner" component={CreateEditOwner} />
             <Stack.Screen name="DetailOwner" component={DetailOwner} />
-            <Stack.Screen name="DetailBrand" component={DetailBrand} />
+            <Stack.Screen name="DetailBrand" component={DetailBrand} initialParams={{level: '', flashMessage: '', page: 1}}/>
             <Stack.Screen name="CreateEditBrand" component={CreateEditBrand} />
+
+            <Stack.Screen name="StoresList" component={StoresList} initialParams={{level: '', flashMessage: '', page: 1}}/>
+            <Stack.Screen name="DetailStore" component={DetailStore} />
+            <Stack.Screen name="CreateEditStore" component={CreateEditStore} />
+
+            <Stack.Screen name="DetailModel" component={DetailModel} />
+            <Stack.Screen name="CreateEditModel" component={CreateEditModel} />
+            <Stack.Screen name="DetailCar" component={DetailCar} />
+
+            <Stack.Screen name="ReplacementsList" component={ReplacementsList} initialParams={{level: '', flashMessage: '', page: 1}}/>
+            <Stack.Screen name="DetailReplacement" component={DetailReplacement} />
+            <Stack.Screen name="EditCreateReplacement" component={EditCreateReplacement} />
+
+
         </Stack.Navigator>
     )
 };
@@ -112,11 +160,24 @@ export const LoginStackNavigator = () => {
 
             <Stack.Screen name="CreateEditOwner" component={CreateEditOwner} />
             <Stack.Screen name="DetailOwner" component={DetailOwner} />
-            <Stack.Screen name="DetailBrand" component={DetailBrand} />
+            <Stack.Screen name="DetailBrand" component={DetailBrand} initialParams={{level: '', flashMessage: '', page: 1}}/>
             <Stack.Screen name="CreateEditBrand" component={CreateEditBrand} />
+
+            <Stack.Screen name="StoresList" component={StoresList} initialParams={{level: '', flashMessage: '', page: 1}}/>
+            <Stack.Screen name="DetailStore" component={DetailStore} />
+            <Stack.Screen name="CreateEditStore" component={CreateEditStore} />
+
+            <Stack.Screen name="DetailModel" component={DetailModel} />
+            <Stack.Screen name="CreateEditModel" component={CreateEditModel} />
+
+            <Stack.Screen name="ReplacementsList" component={ReplacementsList} initialParams={{level: '', flashMessage: '', page: 1}}/>
+            <Stack.Screen name="DetailReplacement" component={DetailReplacement} />
+            <Stack.Screen name="DetailCar" component={DetailCar} />
+            <Stack.Screen name="EditCreateReplacement" component={EditCreateReplacement} />
+
         </Stack.Navigator>
     )
 };
 
 
-//export default HomeStackNavigator;
+
