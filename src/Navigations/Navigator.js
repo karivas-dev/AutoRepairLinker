@@ -34,6 +34,8 @@ import { CreateEditModel } from "../screens/Models/CreateEditModel";
 
 import { CarsList } from "../screens/Cars/CarsList";
 import { DetailCar } from "../screens/Cars/DetailCar";
+import { TicketsList } from "../screens/Tickets/TicketsList";
+import { DetailTicket } from "../screens/Tickets/DetailTicket";
 
 
 
@@ -145,6 +147,8 @@ export const HomeStackNavigator = () => {
             <Stack.Screen name="DetailReplacement" component={DetailReplacement} />
             <Stack.Screen name="EditCreateReplacement" component={EditCreateReplacement} />
 
+            <Stack.Screen name="TicketsList" component={TicketsList} initialParams={{level: '', flashMessage: '', page: 1}}/>
+            <Stack.Screen name="DetailTicket" component={DetailTicket} />
 
         </Stack.Navigator>
     )
@@ -174,6 +178,9 @@ export const LoginStackNavigator = () => {
             <Stack.Screen name="DetailReplacement" component={DetailReplacement} />
             <Stack.Screen name="DetailCar" component={DetailCar} />
             <Stack.Screen name="EditCreateReplacement" component={EditCreateReplacement} />
+
+            <Stack.Screen name="TicketsList" component={TicketsList} initialParams={{level: '', flashMessage: '', page: 1}}/>
+            <Stack.Screen name="DetailTicket" component={DetailTicket} />
 
         </Stack.Navigator>
     )
