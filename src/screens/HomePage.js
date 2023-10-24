@@ -39,7 +39,16 @@ export const HomePage = () => {
 
                                 </Pressable>
                             </View>
+                           
                         </View>
+                        <View  className="py-2">
+                                <Pressable onPress={() => navigation.navigate('TicketsList')} >
+                                    <Text className="text-gray-200 text-lg font-bold text-center" >
+                                       Tickets Index
+                                    </Text>
+
+                                </Pressable>
+                            </View>
                     </Card>
                 </View>
             </View>
