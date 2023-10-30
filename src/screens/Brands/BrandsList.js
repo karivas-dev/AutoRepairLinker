@@ -5,7 +5,7 @@ import {Card} from '../../components/Card';
 import { TxtInput } from "../../components/TxtInput";
 import { PrimaryButton } from "../../components/PrimaryButton";
 import { Messages } from "../../components/Messages";
-
+import { Header } from "../../components/Header";
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -75,7 +75,7 @@ export const BrandsList = ({navigation,route}) => {
 
     return (
         <AuthenticateLayout level={level} flashMessage={flashMessage}>
-
+            <Header navigation={navigation}/>
             <View className="flex-1 items-center justify-center">
                 <View className="w-full max-w-sm">
                     <View className="flex flex-row justify-between">
