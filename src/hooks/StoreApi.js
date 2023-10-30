@@ -60,14 +60,56 @@ const createEditStore = (formikErrors,store) => {
         onError: (error) => {
             formikErrors(error.response.data.errors);
         },
-        onSuccess: (data, variables) => {
-            queryClient.invalidateQueries(['stores',1]);      
+        onSuccess: (data) => {
+            queryClient.invalidateQueries(['stores']);      
             navigation.navigate('StoresList',{ level: 'success',  flashMessage: data?.data?.message , page: 1}); 
         },
     });
     return createEditStoreMutation;
 }
 
+//BRANCH SECTION
+const storeBranch = (branch) => (axiosRoute.post('branches.store', null, branch));
+
+const updateBranch = (branch) => (axiosRoute.patch('branches.update', branch.id, branch));
+
+const createEditStoreBranch = (formikErrors,branch) => {
+    const queryClient = new useQueryClient();
+    const navigation = useNavigation();
+    return useMutation({
+        mutationFn: (branch.id == '' ?  storeBranch : updateBranch),
+        
+        onError: (error) => {
+            formikErrors(error.response.data.errors);
+        },
+        onSuccess: (data) => {
+            queryClient.invalidateQueries('store'); 
+            queryClient.invalidateQueries(['branches']); 
+            navigation.navigate('DetailStore',{ level: 'success',  flashMessage: data?.data?.message, id: branch.brancheable_id}); 
+        },
+    });
+}
+const destroyBranch = (branch) => axiosRoute.delete('branches.destroy', branch.id);
+
+const deleteStoreBranch = () => {
+    const queryClient = new useQueryClient();
+    const navigation = useNavigation();
+
+    return useMutation({
+        mutationFn: destroyBranch,
+        
+        onError: (error) => {
+            console.log(error);
+        },
+        onSuccess: (data) => {
+            console.log('eliminado');
+            queryClient.invalidateQueries(['store']); 
+            queryClient.invalidateQueries(['branches']); 
+            navigation.navigate('DetailStore',{ level: 'success',  flashMessage: data?.data?.message});  
+        },
+    });
+}
+//--------------------------------------------------------------
 const destroyStore = (store) => axiosRoute.delete('stores.destroy', store.id);
 
 const deleteStore = () => {
@@ -91,4 +133,4 @@ const deleteStore = () => {
     return deleteStoreMutation;
 }
 
-export {getStores , getStore, createEditStore ,deleteStore};
+export {getStores , getStore, createEditStore ,createEditStoreBranch, deleteStoreBranch ,deleteStore};
