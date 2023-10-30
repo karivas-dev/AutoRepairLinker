@@ -9,6 +9,7 @@ import { Messages } from "../../components/Messages";
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { getOwners } from "../../hooks/OwnerApi";
+import { Pressable } from "react-native";
 
 export const OwnersList = ({navigation, route}) => {
 
@@ -41,7 +42,6 @@ export const OwnersList = ({navigation, route}) => {
             setFilterOwners(owners);
         }
     }
-
     const keyExtractorOwner = useCallback((item) => `${item.id}`);
 
     const renderItem = useCallback(({item: owner}) => {
@@ -59,9 +59,9 @@ export const OwnersList = ({navigation, route}) => {
                         </View>
                     </View>
                     <View className="py-2">
-                        <TouchableOpacity onPress={() => (navigation.navigate('DetailOwner',{ id: owner.id }), setSearch(''))}>
+                        <Pressable onPress={() => (navigation.navigate('DetailOwner',{ id: owner.id }), setSearch(''))}>
                             <MaterialIcons name="arrow-forward-ios" size={30} color="white" />
-                        </TouchableOpacity>
+                        </Pressable>
                     </View>
                 </View>
             </Card>

@@ -34,6 +34,7 @@ import { CreateEditModel } from "../screens/Models/CreateEditModel";
 
 import { CarsList } from "../screens/Cars/CarsList";
 import { DetailCar } from "../screens/Cars/DetailCar";
+import { CreateEditCar } from "../screens/Cars/CreateEditCar";
 
 
 
@@ -140,11 +141,12 @@ export const HomeStackNavigator = () => {
             <Stack.Screen name="DetailModel" component={DetailModel} />
             <Stack.Screen name="CreateEditModel" component={CreateEditModel} />
             <Stack.Screen name="DetailCar" component={DetailCar} />
+            <Stack.Screen name="CreateEditCar" component={CreateEditCar} />
 
             <Stack.Screen name="ReplacementsList" component={ReplacementsList} initialParams={{level: '', flashMessage: '', page: 1}}/>
             <Stack.Screen name="DetailReplacement" component={DetailReplacement} />
             <Stack.Screen name="EditCreateReplacement" component={EditCreateReplacement} />
-
+            
 
         </Stack.Navigator>
     )
@@ -172,8 +174,10 @@ export const LoginStackNavigator = () => {
 
             <Stack.Screen name="ReplacementsList" component={ReplacementsList} initialParams={{level: '', flashMessage: '', page: 1}}/>
             <Stack.Screen name="DetailReplacement" component={DetailReplacement} />
-            <Stack.Screen name="DetailCar" component={DetailCar} />
             <Stack.Screen name="EditCreateReplacement" component={EditCreateReplacement} />
+
+            <Stack.Screen name="DetailCar" component={DetailCar} />
+            <Stack.Screen name="CreateEditCar" component={CreateEditCar} />
 
         </Stack.Navigator>
     )
