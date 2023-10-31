@@ -9,6 +9,7 @@ import { Messages } from "../../components/Messages";
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { getOwners } from "../../hooks/OwnerApi";
+import { Pressable } from "react-native";
 
 export const OwnersList = ({navigation, route}) => {
 
@@ -41,7 +42,6 @@ export const OwnersList = ({navigation, route}) => {
             setFilterOwners(owners);
         }
     }
-
     const keyExtractorOwner = useCallback((item) => `${item.id}`);
 
     const renderItem = useCallback(({item: owner}) => {
@@ -59,9 +59,9 @@ export const OwnersList = ({navigation, route}) => {
                         </View>
                     </View>
                     <View className="py-2">
-                        <TouchableOpacity onPress={() => (navigation.navigate('DetailOwner',{ id: owner.id }), setSearch(''))}>
+                        <Pressable onPress={() => (navigation.navigate('DetailOwner',{ id: owner.id }), setSearch(''))}>
                             <MaterialIcons name="arrow-forward-ios" size={30} color="white" />
-                        </TouchableOpacity>
+                        </Pressable>
                     </View>
                 </View>
             </Card>
@@ -84,7 +84,7 @@ export const OwnersList = ({navigation, route}) => {
             <View className="flex-1 items-center justify-center">
                 <View className="w-full max-w-sm">
                     <View className="flex flex-row justify-between">
-                        <Text className="font-bold mb-6 text-gray-200 mt-5" style={{fontSize:34}}>Owners</Text>
+                        <Text className="font-bold mb-6 text-gray-200 mt-5 text-3xl">Owners</Text>
                         <View className="justify-end mt-5 mb-6">
                             <PrimaryButton onPress={() => (navigation.navigate('CreateEditOwner',{ 
                                 ownerParms  : {

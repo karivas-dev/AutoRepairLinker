@@ -5,7 +5,7 @@ import {Card} from '../../components/Card';
 import { TxtInput } from "../../components/TxtInput";
 import { PrimaryButton } from "../../components/PrimaryButton";
 import { Messages } from "../../components/Messages";
-
+import { Header } from "../../components/Header";
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -75,11 +75,11 @@ export const BrandsList = ({navigation,route}) => {
 
     return (
         <AuthenticateLayout level={level} flashMessage={flashMessage}>
-
+            <Header navigation={navigation}/>
             <View className="flex-1 items-center justify-center">
                 <View className="w-full max-w-sm">
                     <View className="flex flex-row justify-between">
-                        <Text className="font-bold mb-6 text-gray-200 mt-5" style={{fontSize:34}}>Brands</Text>
+                        <Text className="font-bold mb-6 text-gray-200 mt-5 text-3xl">Brands</Text>
                         <View className="justify-end mt-5 mb-6">
                             <PrimaryButton onPress={() => (navigation.navigate('CreateEditBrand',{id:'' ,name:''}), setSearch(''))} message="+ Brand"/>
                         </View>

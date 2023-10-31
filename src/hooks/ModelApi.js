@@ -17,7 +17,7 @@ const getModelsByBrand = (page,brandId) => {
             if(data?.meta?.current_page === 1){
                 setModels(data?.data);
             }else{
-                setModels([...owners, ...data?.data]);
+                setModels([...models, ...data?.data]);
             }
         },
         refetchOnWindowFocus:false

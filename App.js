@@ -1,26 +1,28 @@
-import React,{useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { NativeWindStyleSheet } from "nativewind";
-
+import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { HomeStackNavigator } from './src/Navigations/Navigator';
 import { LoginStackNavigator } from './src/Navigations/Navigator';
-import { getAuthToken } from './src/context/AuthContext';
+import {getAuthToken} from './src/context/AuthContext';
 
 import { QueryClient, QueryClientProvider } from 'react-query';
+import axiosRoute from './src/utils/route';
 
 NativeWindStyleSheet.setOutput({
   default: "native",
 });
 
 export default function App() {
-  //const navigation = useNavigation();
-  useEffect( () => {
-    checkLoginStatus();
-  },[]);
-  
   const queryClient = new QueryClient();
-  const [haveToken,setHaveToken] = useState(false);
+  const [haveToken, setHaveToken] = useState(false);
+
+  useEffect(() => {
+    checkLoginStatus();
+  }, []);
+
   const checkLoginStatus = async () => {
+    await axiosRoute.boot();
     try {
       const token = await getAuthToken();
       // Si existe un token, el usuario ya ha iniciado sesión, navega al flujo principal
@@ -41,7 +43,7 @@ export default function App() {
           <NavigationContainer>
             <HomeStackNavigator></HomeStackNavigator>
           </NavigationContainer>
-        ):(
+        ) : (
           <NavigationContainer>
             <LoginStackNavigator></LoginStackNavigator>
           </NavigationContainer>
