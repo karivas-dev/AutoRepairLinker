@@ -12,6 +12,7 @@ import { Card } from '../../components/Card';
 import { Header } from '../../components/Header';
 import { useEffect } from 'react';
 import { getStore, deleteStore } from '../../hooks/StoreApi';
+import { StoreBranchesList } from './Partials/Branches/StoreBranchesList';
 
 
 export const DetailStore = ({navigation, route}) => {
@@ -22,17 +23,13 @@ export const DetailStore = ({navigation, route}) => {
 
     const deleteStoreMutation = deleteStore(); //haber xd
 
-    useEffect(() => {
-        console.log(store);
-    },[store])
-
     const handleStoreDelete = async() => {
         if (confirm('You want to delete this Store ??? ..')) {
             await deleteStoreMutation.mutate(store?.data);
         }
     }
     return (
-        <AuthenticateLayout>
+        <AuthenticateLayout level={route.params?.level} flashMessage={route.params?.flashMessage}>
             <Header navigation={navigation}/>
             
             <View className="flex flex-1 flex-col justify-center items-center" >
@@ -75,13 +72,16 @@ export const DetailStore = ({navigation, route}) => {
                                             <Text className="text-gray-200 text-lg text-center" > 
                                                 <Text className="text-gray-200 text-lg font-bold" >Name: </Text> {store?.data.name}
                                             </Text><Text>{`\n`}</Text>
-
-                                            <Text className="text-gray-200 text-lg text-center" > 
-                                                <Text className="text-gray-200 text-lg font-bold" >Mas datos de branch: </Text> prueba
-                                            </Text><Text>{`\n`}</Text>
-                                           
                                         </Card>
                                     </View>
+                                    <View className="w-full max-w-sm">
+                                        <StoreBranchesList 
+                                            navigation={navigation} 
+                                            branches={store?.data.branches}
+                                            store_id={store?.data.id}
+                                        />
+                                    </View>
+                                    
                                 </>   
                             ) : null}
                         </>

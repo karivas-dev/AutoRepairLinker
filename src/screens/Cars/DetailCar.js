@@ -55,7 +55,14 @@ export const DetailCar = ({navigation, route}) => {
                                                 </View>
                                                 <View>
                                                 <View>
-                                                    <PrimaryButton message='Edit' onPress={() => consoles.log('hola')}/>
+                                                    <PrimaryButton message='Edit' onPress={() => (navigation.navigate('CreateEditCar',{ 
+                                                        id: car?.data.id,
+                                                        plates: car?.data.plates,
+                                                        serial_number: car?.data.serial_number,
+                                                        owner_id: car?.data.owner.id,
+                                                        brand_id: car?.data.model.brand.id,
+                                                        model_id: car?.data.model.id,
+                                                    }))}/>
                                                 </View>
                                                 <View className="mt-2">
                                                     <DangerButton message="Delete" onPress={() => handleDelete()} />

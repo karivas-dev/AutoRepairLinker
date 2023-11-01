@@ -44,6 +44,31 @@ const getCar = (id) => {
     return { data, isLoading, isError, error, isFetching , isSuccess}
 }
 
+
+const storeCar = (car) => (axiosRoute.post('cars.store', null, car));
+
+const updateCar = (car) => (axiosRoute.put('cars.update', car.id, car));
+
+const createEditCar = (formikErrors, car) => {
+    const queryClient = new useQueryClient();
+    const navigation = useNavigation();
+
+    return useMutation({
+        mutationFn: (car.id == '' ? storeCar : updateCar),
+
+        onError: (error) => {
+            formikErrors(error.response.data.errors);
+        },
+        onSuccess: (data) => {
+            queryClient.invalidateQueries(['cars']); 
+            navigation.navigate('Home', {
+                screen: 'CarsList',
+                params: {level: 'success', flashMessage: data?.data?.message, page: 1}
+            });
+        },
+    });
+}
+
 const destroyCar = (car) => axiosRoute.delete('cars.destroy', car.id);
 
 const deleteCar = () => {
@@ -64,4 +89,4 @@ const deleteCar = () => {
     });
 }
 
-export {getCars, getCar, deleteCar}
+export {getCars, getCar, createEditCar ,deleteCar}

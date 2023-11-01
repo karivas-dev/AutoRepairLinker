@@ -87,6 +87,13 @@ export const DetailReplacement = ({navigation, route}) => {
                                             <Text className="text-gray-200 text-lg text-center" > 
                                                 <Text className="text-gray-200 text-lg font-bold" >Model : </Text> {replacement?.data.model.name}
                                             </Text><Text>{`\n`}</Text>
+                                            <Text className="font-extrabold mb-3 text-center text-gray-200 mt-3 text-2xl">Inventory Details</Text>
+                                            <Text className="text-gray-200 text-lg text-center" > 
+                                                <Text className="text-gray-200 text-lg font-bold" >Quantity #: </Text> {replacement?.data.inventory.quantity}
+                                            </Text><Text>{`\n`}</Text>
+                                            <Text className="text-gray-200 text-lg text-center" > 
+                                                <Text className="text-gray-200 text-lg font-bold" >Unit Price : $</Text> {replacement?.data.inventory.unit_price}
+                                            </Text><Text>{`\n`}</Text>
                                         </Card>
                                     </View>
                                 </>   

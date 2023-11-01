@@ -1,27 +1,33 @@
 import { View, Text, Image, ActivityIndicator} from 'react-native';
 import { AuthenticateLayout } from '../../layouts/AuthenticateLayout';
 
-import { FontAwesome } from '@expo/vector-icons';
 import { PrimaryButton } from '../../components/PrimaryButton';
 import { DangerButton } from '../../components/DangerButton';
 import { MaterialIcons } from '@expo/vector-icons';
-
 import { Feather } from '@expo/vector-icons';
 import { Messages } from '../../components/Messages';
 import { Card } from '../../components/Card';
 import { Header } from '../../components/Header';
-import { deleteOwner, getOwner } from '../../hooks/OwnerApi';
+import { deleteBranch, getBranch } from '../../hooks/BranchApi';
 import { useEffect } from 'react';
-import { OwnerCarsList } from './Partials/Cars/OwnerCarsList';
 
-export const DetailOwner = ({navigation, route}) => {
-    const { data:owner, isLoading, isError, error, isFetching ,isSuccess} = getOwner(route.params.id);
+const showMain = (main) => {
+    if(main){
+        return "main"
+    }
+    else{
+        return "regular"
+    }
+};
 
-    const deleteOwnerMutation = deleteOwner();
+export const BranchDetail = ({navigation, route}) => {
+    const { data:branch, isLoading, isError, error, isFetching ,isSuccess} = getBranch(route.params.id);
 
-    const handleOwnerDelete = async() => {
-        if (confirm('You want to delete this Owner ??? ..')) {
-            await deleteOwnerMutation.mutateAsync(owner?.data);
+    const deleteBranchMutation = deleteBranch();
+
+    const handleBranchDelete = async() => {
+        if (confirm('You want to delete this Branch ??? ..')) {
+            await deleteBranchMutation.mutateAsync(branch?.data);
         }
     }
     return (
@@ -47,23 +53,14 @@ export const DetailOwner = ({navigation, route}) => {
                                         <Card>
                                             <View className="flex flex-row justify-between">
                                                 <View className="py-2">
-                                                    <Feather name="user" size={62} color="#F1F6F5" />
+                                                    <Feather name="git-branch" size={60} color="#F1F6F5" />
                                                 </View>
                                                 <View>
                                                     <View>
-                                                        <PrimaryButton message='Edit' onPress={() => navigation.navigate('CreateEditOwner',{
-                                                                id: owner?.data.id,
-                                                                firstname: owner?.data.firstname,
-                                                                lastname: owner?.data.lastname,
-                                                                email: owner?.data.email,
-                                                                telephone: owner?.data.telephone,
-                                                                district_id: owner?.data.district_id
-                                                            })
-                                                        }/>
+                                                        <PrimaryButton message='Edit' onPress={() => console.log('editar')}/>
                                                     </View>
-                                                   
                                                     <View className="mt-2">
-                                                        <DangerButton message="Delete" onPress={() => handleOwnerDelete()} />
+                                                        <DangerButton message="Delete" onPress={() => handleBranchDelete()} />
                                                     </View>
                                                 </View>
                                             </View>
@@ -72,25 +69,19 @@ export const DetailOwner = ({navigation, route}) => {
 
                                     <View className="w-full max-w-sm">
                                         <Card >
-                                            <Text className="text-gray-200 text-lg font-bold text-center" >{owner?.data.firstname}, {owner?.data.lastname}</Text><Text>{`\n`}</Text>
                                             <Text className="text-gray-200 text-lg text-center" > 
-                                                <Text className="text-gray-200 text-lg font-bold" >Email: </Text> {owner?.data.email}
-                                            </Text><Text>{`\n`}</Text>
-
-                                            <Text className="text-gray-200 text-lg text-center" > 
-                                                <Text className="text-gray-200 text-lg font-bold" >Phone: </Text> {owner?.data.telephone}
+                                                <Text className="text-gray-200 text-lg font-bold" >Email: </Text> {branch?.data.email}
                                             </Text><Text>{`\n`}</Text>
                                             <Text className="text-gray-200 text-lg text-center" > 
-                                                <Text className="text-gray-200 text-lg font-bold" >District: </Text> {owner?.data.district_id}
+                                                <Text className="text-gray-200 text-lg font-bold" >Telephone: </Text> {branch?.data.telephone}
+                                            </Text><Text>{`\n`}</Text>
+                                            <Text className="text-gray-200 text-lg text-center" > 
+                                                <Text className="text-gray-200 text-lg font-bold" >Main: </Text> {showMain(branch?.data.branch)}
+                                            </Text><Text>{`\n`}</Text>
+                                            <Text className="text-gray-200 text-lg text-center" > 
+                                                <Text className="text-gray-200 text-lg font-bold" >District: </Text> {branch?.data.district_id}
                                             </Text><Text>{`\n`}</Text>
                                         </Card>
-                                    </View>
-                                    <View className="w-full max-w-sm"> 
-                                        <OwnerCarsList
-                                            cars={owner?.data.cars}
-                                            owner_id = {owner?.data.id}
-                                            navigation={navigation}
-                                        />
                                     </View>
                                 </>   
                             ) : null}
@@ -100,12 +91,13 @@ export const DetailOwner = ({navigation, route}) => {
                
                <View className="flex-none w-full max-w-sm">
                     {
-                        deleteOwnerMutation.isLoading ? (
+                        deleteBranchMutation.isLoading ? (
                             <ActivityIndicator size="large" style={{marginVertical:16}} color="white"/>
                         ):(
                             <View>
-                                {deleteOwnerMutation.isError ? (
-                                    <Messages message={`Here was a problem processing Form : ${deleteOwnerMutation.error}`} level={'error'}/>
+                                {deleteBranchMutation.isError ? (
+                                    deleteBranchMutation.error.response.data.message ? (<Messages message={`${deleteBranchMutation.error.response.data.message}`} level={'error'}/>)
+                                    : (<Messages message={`Here was a problem processing Form : ${deleteBranchMutation.error}`} level={'error'}/>)
                                 ) : null}
                             </View>
                         )
