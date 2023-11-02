@@ -18,7 +18,7 @@ export const FormikInput = ({ placeholder, passEntry, label = null, formik, valu
                 value={formik.values[valueName]}
             />
             <Text className="text-red-500 capitalize-first">
-                { formik.touched[valueName] && formik.errors[valueName] }
+                { formik.touched?.[valueName] && formik.errors?.[valueName] }
             </Text>
         </View>
     );

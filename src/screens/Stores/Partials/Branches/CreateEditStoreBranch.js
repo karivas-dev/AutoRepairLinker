@@ -100,12 +100,6 @@ export const CreateEditStoreBranch = ({navigation, route}) => {
                         <PrimaryButton onPress={formik.handleSubmit}  message={formik.values.id == '' ? 'Store' : 'Edit'}/>
                     )}
                     </View>
-                    <View className="block w-full mt-2">
-                        {createEditAttempt.isError ? (
-                            createEditAttempt.error.response.data.message ? (<Messages message={`${createEditAttempt.error.response.data.message}`} level={'error'}/>)
-                            : (<Messages message={`Here was a problem processing Form : ${createEditAttempt.error}`} level={'error'}/>)
-                        ) : null}
-                    </View>
                 </View>
             </View>
         </AuthenticateLayout>

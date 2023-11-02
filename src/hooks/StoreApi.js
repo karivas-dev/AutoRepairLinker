@@ -58,7 +58,8 @@ const createEditStore = (formikErrors,store) => {
         mutationFn: (store.id == '' ?  storeStoreXd : updateStore),
         
         onError: (error) => {
-            formikErrors(error.response.data.errors);
+            const erno = error.response.data.errors != null ? error.response.data.errors : {'name': error.response.data.message};
+            formikErrors(erno);
         },
         onSuccess: (data) => {
             queryClient.invalidateQueries(['stores']);      
@@ -80,7 +81,8 @@ const createEditStoreBranch = (formikErrors,branch) => {
         mutationFn: (branch.id == '' ?  storeBranch : updateBranch),
         
         onError: (error) => {
-            formikErrors(error.response.data.errors);
+            const erno = error.response.data.errors != null ? error.response.data.errors : {'district_id': error.response.data.message};
+            formikErrors(erno);
         },
         onSuccess: (data) => {
             queryClient.invalidateQueries('store'); 

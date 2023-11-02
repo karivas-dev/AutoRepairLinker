@@ -51,7 +51,8 @@ const createEditBranch = (formikErrors,branch) => {
         mutationFn: (branch.id == '' ?  storeBranch : updateBranch),
         
         onError: (error) => {
-            formikErrors(error.response.data.errors);
+            const erno = error.response.data.errors != null ? error.response.data.errors : {'district_id': error.response.data.message};
+            formikErrors(erno);
         },
         onSuccess: (data) => {
             queryClient.invalidateQueries(['branches']); 

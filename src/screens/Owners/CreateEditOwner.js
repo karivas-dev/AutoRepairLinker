@@ -70,7 +70,7 @@ export const CreateEditOwner = ({navigation, route}) => {
                         <SelectInput selectedValue={formik.values.district_id} onValueChange={formik.handleChange('district_id')}
                                      DefaultPlaceholder="Selecciona Distrito" data={location?.districts.filter(d => d.town_id == selectedLocation.town_id)}/>
                         <Text className="text-red-500 capitalize-first">
-                            { formik.touched.district_id && formik.errors.district_id }
+                            { formik.touched?.district_id && formik.errors?.district_id }
                         </Text>
                     </>)}
 
