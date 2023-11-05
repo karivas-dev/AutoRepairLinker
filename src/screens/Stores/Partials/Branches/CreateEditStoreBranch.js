@@ -35,7 +35,6 @@ export const CreateEditStoreBranch = ({navigation, route}) => {
         }),
         onSubmit: async (branch) => await createEditAttempt.mutateAsync(branch),
     });
-    console.log(formik.values);
     const createEditAttempt = createEditStoreBranch(formik.setErrors, formik.values);
     const [selectedLocation, setSelectedLocation] = useState({state_id: 0, town_id: 0});
     const location = getLocation();
@@ -63,16 +62,9 @@ export const CreateEditStoreBranch = ({navigation, route}) => {
                     <Text className="text-lg font-extrabold text-gray-200 text-center mb-2">
                         { formik.values.id == '' ? 'Add new Branch to this Store' : 'Update Branch' }
                     </Text>
-                    <TxtInput placeholder={'email'} value={formik.values.email} onChangeText={formik.handleChange('email')}/>
-                    <Text className="text-red-500 capitalize-first">
-                        { formik.touched?.email && formik.errors?.email }
-                    </Text>  
-                    <TxtInput placeholder={'telephone'} value={formik.values.telephone} onChangeText={formik.handleChange('telephone')}/>
-                    <Text className="text-red-500 capitalize-first">
-                        { formik.touched?.telephone && formik.errors?.telephone }
-                    </Text>  
-                   {/*  <FormikInput valueName="email" formik={formik} placeholder="Store Email:" label={formik.values.id == '' ? null : 'Store Email: '}/>
-                    <FormikInput valueName="telephone" formik={formik} placeholder="Store Telephone:" label={formik.values.id == '' ? null : 'Store Telephone: '}/> */}
+
+                    <FormikInput valueName="email" formik={formik} placeholder="Store Email:" label={formik.values.id == '' ? null : 'Store Email: '}/>
+                    <FormikInput valueName="telephone" formik={formik} placeholder="Store Telephone:" label={formik.values.id == '' ? null : 'Store Telephone: '}/>
 
                     <SelectInput selectedValue={formik.values.main} onValueChange={formik.handleChange('main')}
                             DefaultPlaceholder="Is Main ?" data={[{id:1,name:'Yes'},{id:0,name:'No'}]}/>
