@@ -99,6 +99,28 @@ const createEditReplacement = (formikErrors, replacement) => {
     return createEditReplacementMutation;
 }   
 
+const storeInventory = (inventory) => (axiosRoute.post('inventories.store', null, inventory));
+
+const updateInventory = (inventory) => (axiosRoute.put('inventories.update', inventory.id, inventory));
+
+const createEditInventory = (formikErrors, inventory) => {
+    const queryClient = new useQueryClient();
+    const navigation = useNavigation();
+
+    return useMutation({
+        mutationFn: (inventory.id == '' ?  storeInventory : updateInventory),
+        
+        onError: (error) => {
+            const erno = error.response.data.errors != null ? error.response.data.errors : {'unit_price': error.response.data.message};
+            formikErrors(erno);
+        },
+        onSuccess: (data) => {
+            queryClient.invalidateQueries(['replacement']); 
+            navigation.navigate('DetailReplacement',{ level: 'success',  flashMessage: data?.data?.message}); 
+        },
+    });
+}
+
 const destroyReplacement = (car) => axiosRoute.delete('replacements.destroy', car.id);
 
 const deleteReplacement = () => {
@@ -119,4 +141,4 @@ const deleteReplacement = () => {
     });
 }
 
-export {getReplacements, getReplacement, deleteReplacement, createEditReplacement, getSelectModels}
+export {getReplacements, getReplacement, deleteReplacement, createEditInventory, createEditReplacement, getSelectModels}

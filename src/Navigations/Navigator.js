@@ -42,6 +42,7 @@ import { CreateEditStoreBranch } from "../screens/Stores/Partials/Branches/Creat
 import { BranchesList } from "../screens/Branches/BranchesList";
 import { DetailStoreBranch } from "../screens/Stores/Partials/Branches/DetailStoreBranch";
 import { BranchDetail } from "../screens/Branches/BranchDetail";
+import { CreateEditInventory } from "../screens/Replacements/Partials/Inventory/CreateEditInventory";
 
 
 const Tab = createBottomTabNavigator();
@@ -153,8 +154,9 @@ export const HomeStackNavigator = () => {
             <Stack.Screen name="CreateEditCar" component={CreateEditCar} />
 
             <Stack.Screen name="ReplacementsList" component={ReplacementsList} initialParams={{level: '', flashMessage: '', page: 1}}/>
-            <Stack.Screen name="DetailReplacement" component={DetailReplacement} />
+            <Stack.Screen name="DetailReplacement" component={DetailReplacement} initialParams={{level: '', flashMessage: ''}}/>
             <Stack.Screen name="EditCreateReplacement" component={EditCreateReplacement} />
+            <Stack.Screen name="CreateEditInventory" component={CreateEditInventory} />
             
             <Stack.Screen name="TicketsList" component={TicketsList} initialParams={{level: '', flashMessage: '', page: 1}}/>
             <Stack.Screen name="DetailTicket" component={DetailTicket} />
@@ -188,8 +190,9 @@ export const LoginStackNavigator = () => {
             <Stack.Screen name="CreateEditModel" component={CreateEditModel} />
 
             <Stack.Screen name="ReplacementsList" component={ReplacementsList} initialParams={{level: '', flashMessage: '', page: 1}}/>
-            <Stack.Screen name="DetailReplacement" component={DetailReplacement} />
+            <Stack.Screen name="DetailReplacement" component={DetailReplacement} initialParams={{level: '', flashMessage: ''}}/>
             <Stack.Screen name="EditCreateReplacement" component={EditCreateReplacement} />
+            <Stack.Screen name="CreateEditInventory" component={CreateEditInventory} />
 
             <Stack.Screen name="DetailCar" component={DetailCar} />
             <Stack.Screen name="CreateEditCar" component={CreateEditCar} />
