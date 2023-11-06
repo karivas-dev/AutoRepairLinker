@@ -101,7 +101,7 @@ export const GarageList = ({navigation, route}) => {
                         isLoading || isFetching ? (
                             <ActivityIndicator size="large" style={{marginVertical:16}} color="white"/>
                         ): isError ? (
-                            <Messages message={`Here was a problem processing Brands : ${error.message}`} level={'error'}/>
+                            <Messages message={`THere was a problem processing Garages : ${error.message}`} level={'error'}/>
                             
                         ) : garages ? (
                             <FlatList

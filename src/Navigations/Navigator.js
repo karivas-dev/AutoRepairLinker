@@ -38,11 +38,23 @@ import { DetailCar } from "../screens/Cars/DetailCar";
 import { TicketsList } from "../screens/Tickets/TicketsList";
 import { DetailTicket } from "../screens/Tickets/DetailTicket";
 import { CreateEditCar } from "../screens/Cars/CreateEditCar";
+
+import { CreateEditInventory } from "../screens/Replacements/Partials/Inventory/CreateEditInventory";
+
 import { CreateEditStoreBranch } from "../screens/Stores/Partials/Branches/CreateEditStoreBranch";
 import { BranchesList } from "../screens/Branches/BranchesList";
 import { DetailStoreBranch } from "../screens/Stores/Partials/Branches/DetailStoreBranch";
 import { BranchDetail } from "../screens/Branches/BranchDetail";
-import { CreateEditInventory } from "../screens/Replacements/Partials/Inventory/CreateEditInventory";
+
+import { FormGarage } from "../screens/Garage/FormGarage"; 
+import { DetailGarage } from "../screens/Garage/DetailGarage"; 
+import { GarageList } from "../screens/Garage/GarageList"; 
+import { DetailGarageBranch } from "../screens/Garage/Partials/Branches/DetailGarageBranch";
+import { GarageBranchesList } from "../screens/Garage/Partials/Branches/GarageBranchesList";
+import { CreateEditGarageBranch } from "../screens/Garage/Partials/Branches/CreateEditGarageBranch";
+
+
+
 
 
 const Tab = createBottomTabNavigator();
@@ -152,8 +164,12 @@ export const HomeStackNavigator = () => {
             <Stack.Screen name="BrandsList" component={BrandsList} initialParams={{level: '', flashMessage: ''}}/>
             <Stack.Screen name="DetailBrand" component={DetailBrand} initialParams={{level: '', flashMessage: '', page: 1}}/>
             <Stack.Screen name="CreateEditBrand" component={CreateEditBrand} />
+
             <Stack.Screen name="FormGarage" component={FormGarage} />
             <Stack.Screen name="DetailGarage" component={DetailGarage} />
+            <Stack.Screen name="GarageList" component={GarageList} initialParams={{level: '', flashMessage: '', page: 1}}/>
+            <Stack.Screen name="CreateEditGarageBranch" component={CreateEditGarageBranch} />
+            <Stack.Screen name="DetailGarageBranch" component={DetailGarageBranch} />
 
             <Stack.Screen name="StoresList" component={StoresList} initialParams={{level: '', flashMessage: '', page: 1}}/>
             <Stack.Screen name="DetailStore" component={DetailStore} initialParams={{level: '', flashMessage: ''}}/>
@@ -192,8 +208,12 @@ export const LoginStackNavigator = () => {
             <Stack.Screen name="DetailOwner" component={DetailOwner} />
             <Stack.Screen name="DetailBrand" component={DetailBrand} initialParams={{level: '', flashMessage: '', page: 1}}/>
             <Stack.Screen name="CreateEditBrand" component={CreateEditBrand} />
+
             <Stack.Screen name="FormGarage" component={FormGarage} />
             <Stack.Screen name="DetailGarage" component={DetailGarage} />
+            <Stack.Screen name="GarageList" component={GarageList} initialParams={{level: '', flashMessage: '', page: 1}}/>
+            <Stack.Screen name="CreateEditGarageBranch" component={CreateEditGarageBranch} />
+            <Stack.Screen name="DetailGarageBranch" component={DetailGarageBranch} />
 
             <Stack.Screen name="StoresList" component={StoresList} initialParams={{level: '', flashMessage: '', page: 1}}/>
             <Stack.Screen name="DetailStore" component={DetailStore} />

@@ -1,99 +1,110 @@
-import { View, Text, Image, ActivityIndicator } from 'react-native';
+import { View, Text, Image, ActivityIndicator} from 'react-native';
 import { AuthenticateLayout } from '../../layouts/AuthenticateLayout';
 
-import { FontAwesome } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { PrimaryButton } from '../../components/PrimaryButton';
 import { DangerButton } from '../../components/DangerButton';
-
 import { MaterialIcons } from '@expo/vector-icons';
+
+import { Feather } from '@expo/vector-icons';
 import { Messages } from '../../components/Messages';
 import { Card } from '../../components/Card';
 import { Header } from '../../components/Header';
-import { deleteGarage, getGarage } from '../../hooks/GarageApi';
+import { useEffect } from 'react';
+import { getGarage, deleteGarage } from '../../hooks/GarageApi';
+import { GarageBranchesList } from './Partials/Branches/GarageBranchesList';
+ 
 
-export const DetailGarage = ({ navigation, route }) => {
+export const DetailGarage = ({navigation, route}) => {
 
     const { id } = route.params;
+    
+    const { data:garage, isLoading, isError, error, isFetching ,isSuccess} = getGarage(id);
 
-    const { data: garage, isLoading, isError, error, isFetching, isSuccess } = getGarage(id);
+    const deleteGarageMutation = deleteGarage(); //haber xd
 
-    const deleteGarageMutation = deleteGarage();
-
-    const handleGarageDelete = async () => {
-        if (confirm('You want to delete this Brand ??? ..')) {
+    const handleGarageDelete = async() => {
+        if (confirm('You want to delete this Store ??? ..')) {
             await deleteGarageMutation.mutate(garage?.data);
         }
     }
-
     return (
-        <AuthenticateLayout>
-            <Header navigation={navigation} />
-            <View className="flex flex-1 flex-col justify-center items-center">
-                <View className="flex-none w-full max-w-sm">
-                    <Card>
-                        {
-                            isLoading || isFetching ? (
-                                <ActivityIndicator size="large" style={{ marginVertical: 16 }} color="white" />
-                            ) : (
-                                <View className="flex flex-row justify-between">
-                                    {isError ? (
-                                        <View>
-                                            <MaterialIcons name="error-outline" size={60} color="white" />
-                                            <Messages message={`Here was a problem processing Brands : ${error.message}`} level={'error'} />
-                                        </View>
-                                    ) : null}
-
-                                    {isSuccess ? (
-                                        <>
-                                            <View className="py-2">
-                                                <FontAwesome name="th-list" size={62} color="white" />
-                                                <View className="mt-4">
-                                                    <Text className="text-gray-200 text-lg font-bold text-center">{garage?.data.name}</Text>
-                                                </View>
-                                                <View className="text-gray-200 text-lg text-center" >
-                                                    <Text className="text-gray-200 text-lg font-bold" >Email: </Text> 
-                                                </View>
-                                                <View className="text-gray-200 text-lg text-center" >
-                                                    <Text className="text-gray-200 text-lg font-bold" >Phone: </Text> 
-                                                </View>
-                                                <View className="text-gray-200 text-lg text-center" >
-                                                    <Text className="text-gray-200 text-lg font-bold" >Branch Detail: </Text> 
-                                                </View>
-                                                <View className="text-gray-200 text-lg text-center" >
-                                                    <Text className="text-gray-200 text-lg font-bold" >District: </Text> 
-                                                </View>
-                                            </View>
-                                            <View className="py-2">
-                                                <PrimaryButton message='Edit' onPress={() => navigation.navigate('FormGarage', { id: id, name: garage?.data.name })} />
-
-                                                <View className="mt-2">
-                                                    <DangerButton message="delete" onPress={() => handleGarageDelete()} />
-                                                </View>
-
-                                            </View>
-                                        </>
-                                    ) : null}
-                                </View>
-                            )
-                        }
-                    </Card>
-                </View>
-                <View className="w-full max-w-sm">
+        <AuthenticateLayout level={route.params?.level} flashMessage={route.params?.flashMessage}>
+            <Header navigation={navigation}/>
+            
+            <View className="flex flex-1 flex-col justify-center items-center" >
                 {
-                            deleteGarageMutation.isLoading ? (
-                                <ActivityIndicator size="large" style={{marginVertical:16}} color="white"/>
-                            ):(
+                    isLoading || isFetching ? (
+                        <ActivityIndicator size="large" style={{marginVertical:16}} color="white"/>
+                    ): (
+                        <>
+                            {isError ? (
                                 <View>
-                                    {deleteGarageMutation.isError ? (
-                                        <Messages message={`Here was a problem processing Form : ${deleteGarageMutation.error}`} level={'error'}/>
-                                    ) : null}
+                                    <MaterialIcons name="error-outline" size={60} color="white" />
+                                    <Messages message={`Here was a problem processing Owners : ${error.message}`} level={'error'}/>
                                 </View>
-                            )
-                        }
+                            ):null}
+
+                            { isSuccess ? (
+                                <>
+                                    <View className="flex-none w-full max-w-sm" >
+                                        <Card>
+                                            <View className="flex flex-row justify-between">
+                                                <View className="py-2">
+                                                    <MaterialCommunityIcons name="warehouse" size={60} color="white" />
+                                                </View>
+                                                <View>
+                                                    <View>
+                                                        <PrimaryButton onPress={() => (navigation.navigate('FormGarage',{id: garage?.data.id, name: garage?.data.name}))}
+                                                            message="Edit"
+                                                        />
+                                                    </View>
+                                                    <View className="mt-2">
+                                                        <DangerButton message="Delete" onPress={() => handleGarageDelete()} />
+                                                    </View>
+                                                </View>
+                                            </View>
+                                        </Card>
+                                    </View>
+
+                                    <View className="w-full max-w-sm">
+                                        <Card >
+                                            <Text className="text-gray-200 text-lg text-center" > 
+                                                <Text className="text-gray-200 text-lg font-bold" >Name: </Text> {garage?.data.name}
+                                            </Text><Text>{`\n`}</Text>
+                                        </Card>
+                                    </View>
+                                    <View className="w-full max-w-sm">
+                                        <GarageBranchesList 
+                                            navigation={navigation} 
+                                            branches={garage?.data.branches}
+                                            store_id={garage?.data.id}
+                                        />
+                                    </View>
+                                    
+                                </>   
+                            ) : null}
+                        </>
+                    )
+                }
+               
+                <View className="flex-none w-full max-w-sm">
+                    {
+                        deleteGarageMutation.isLoading ? (
+                            <ActivityIndicator size="large" style={{marginVertical:16}} color="white"/>
+                        ):(
+                            <View>
+                                {deleteGarageMutation.isError ? (
+                                    deleteGarageMutation.error.response.data.message ? (<Messages message={`${deleteGarageMutation.error.response.data.message}`} level={'error'}/>)
+                                    : (<Messages message={`Here was a problem processing Form : ${deleteGarageMutation.error}`} level={'error'}/>)
+                                ) : null}
+                            </View>
+                        )
+                    }
                 </View>
+                
             </View>
-        </AuthenticateLayout>
-
-    )
-
+          
+       </AuthenticateLayout>
+    ) 
 }
