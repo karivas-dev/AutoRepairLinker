@@ -57,7 +57,8 @@ const createEditCar = (formikErrors, car) => {
         mutationFn: (car.id == '' ? storeCar : updateCar),
 
         onError: (error) => {
-            formikErrors(error.response.data.errors);
+            const erno = error.response.data.errors != null ? error.response.data.errors : {'model_id': error.response.data.message};
+            formikErrors(erno);
         },
         onSuccess: (data) => {
             queryClient.invalidateQueries(['cars']); 

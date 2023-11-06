@@ -48,7 +48,8 @@ const createEditBrand = (formikErrors, brand) => {
         mutationFn: (brand.id == '' ? storeBrand : updateBrand),
 
         onError: (error) => {
-            formikErrors(error.response.data.errors);
+            const erno = error.response.data.errors != null ? error.response.data.errors : {'name': error.response.data.message};
+            formikErrors(erno);
         },
         onSuccess: (data, variables) => {
             queryClient.invalidateQueries(['brands']);

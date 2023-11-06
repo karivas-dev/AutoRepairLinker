@@ -30,10 +30,11 @@ export const StoreBranchesList = ({navigation,branches,store_id }) => {
             let filteredData = branches.filter((branch) => {
                 const lowerEmail = branch.email.toLowerCase();
                 const lowerTelephone = branch.telephone.toLowerCase();
+                const mainOrRegular = showMain(branch.main).toLowerCase();
                 return (
                     lowerEmail.includes(textSearch.trim()) ||
                     lowerTelephone.includes(textSearch.trim()) ||
-                    branch.main.toString().includes(textSearch.trim())
+                    mainOrRegular.includes(textSearch.trim())
                 );
             });
             setFilterBranches(filteredData);

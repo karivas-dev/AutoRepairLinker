@@ -44,7 +44,7 @@ const getModel = (id) => {
     return { data, isLoading, isError, error, isFetching , isSuccess}
 }
 
-const storeModel = (model) => (axiosRoute.post('models.store', null, model),console.log(model));
+const storeModel = (model) => (axiosRoute.post('models.store', null, model));
 
 const updateModel = (model) => (axiosRoute.patch('models.update', model.id, model));
 
@@ -55,7 +55,8 @@ const createEditModel = (formikErrors, model) => {
         mutationFn: (model.id == '' ?  storeModel : updateModel),
         
         onError: (error) => {
-            formikErrors(error.response.data.errors);
+            const erno = error.response.data.errors != null ? error.response.data.errors : {'name': error.response.data.message};
+            formikErrors(erno);
         },
         onSuccess: (data) => {
             console.log('guardado');

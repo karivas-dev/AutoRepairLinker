@@ -64,7 +64,7 @@ export const EditCreateReplacement = ({navigation,route}) => {
                             )}
 
                             <Text className="text-red-500 capitalize-first">
-                                {formik.touched.model_id && formik.errors.model_id}
+                                {formik.touched?.model_id && formik.errors?.model_id}
                             </Text>
                         </>
                     )}
