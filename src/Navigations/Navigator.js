@@ -109,17 +109,6 @@ const BottomTabNavigator = () => {
                 initialParams={{level: '', flashMessage: '' , page: 1}}
             />
             <Tab.Screen
-                name="GarageList"
-                component={GarageList}
-                options={{
-                    tabBarLabel: '',
-                    tabBarIcon: ({focused}) => (
-                        <MaterialCommunityIcons name="garage" size={24} color={focused ? '#6987B7': 'white'} />
-                    ),
-                }}
-                initialParams={{level: '', flashMessage: ''}}
-            />
-            <Tab.Screen
                 name="OwnersList"
                 component={OwnersList}
                 options={{

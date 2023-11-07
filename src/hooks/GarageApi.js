@@ -81,7 +81,7 @@ const createEditGarageBranch = (formikErrors,branch) => {
         mutationFn: (branch.id == '' ?  storeBranch : updateBranch),
         
         onError: (error) => {
-            const erno = error.response.data.errors != null ? error.response.data.errors : {'name': error.response.data.message};
+            const erno = error.response.data.errors != null ? error.response.data.errors : {'district_id': error.response.data.message};
             formikErrors(erno);
         },
         onSuccess: (data) => {

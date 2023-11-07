@@ -86,11 +86,11 @@ export const CreateEditGarageBranch = ({navigation, route}) => {
                     </>)}
 
                     <View className="block w-full mt-2">
-                    { formik.isSubmitting ? (
-                        <ActivityIndicator size="large" style={{marginVertical:16}} color="white"/>
-                    ) : (
-                        <PrimaryButton onPress={formik.handleSubmit}  message={formik.values.id == '' ? 'Store' : 'Edit'}/>
-                    )}
+                        { formik.isSubmitting ? (
+                            <ActivityIndicator size="large" style={{marginVertical:16}} color="white"/>
+                        ) : (
+                            <PrimaryButton onPress={formik.handleSubmit}  message={formik.values.id == '' ? 'Store' : 'Edit'}/>
+                        )}
                     </View>
                 </View>
             </View>

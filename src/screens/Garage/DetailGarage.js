@@ -24,7 +24,7 @@ export const DetailGarage = ({navigation, route}) => {
     const deleteGarageMutation = deleteGarage(); //haber xd
 
     const handleGarageDelete = async() => {
-        if (confirm('You want to delete this Store ??? ..')) {
+        if (confirm('You want to delete this Garage ??? ..')) {
             await deleteGarageMutation.mutate(garage?.data);
         }
     }
@@ -78,7 +78,7 @@ export const DetailGarage = ({navigation, route}) => {
                                         <GarageBranchesList 
                                             navigation={navigation} 
                                             branches={garage?.data.branches}
-                                            store_id={garage?.data.id}
+                                            garage_id={garage?.data.id}
                                         />
                                     </View>
                                     

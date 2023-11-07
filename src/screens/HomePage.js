@@ -7,6 +7,7 @@ import {getAuthToken} from '../context/AuthContext';
 import { TxtInput } from '../components/TxtInput';
 import { Octicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -21,7 +22,8 @@ export const HomePage = () => {
         {icon: <Octicons name="tools" size={24} color="white" /> , name:'Replacements', route:'ReplacementsList'}, 
         {icon:<MaterialIcons name="store" size={24} color="white"/>, name:'Stores', route:'StoresList'}, 
         {icon:<AntDesign name="profile" size={24} color="white" /> ,name:'Brands', route:'BrandsList'}, 
-        {icon:<Ionicons name="ios-receipt" size={24} color="white" />, name:'Tickets', route:'TicketsList'}
+        {icon:<Ionicons name="ios-receipt" size={24} color="white" />, name:'Tickets', route:'TicketsList'},
+        {icon:<MaterialCommunityIcons name="garage" size={24} color="white" /> ,name:'Garages', route:'GarageList'},
     ];
 
     const [search, setSearch] = useState("");

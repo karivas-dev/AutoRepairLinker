@@ -6,7 +6,7 @@ import { TxtInput } from "../../components/TxtInput";
 import { PrimaryButton } from "../../components/PrimaryButton";
 import { Messages } from "../../components/Messages";
 import { FormGarage } from "./FormGarage";
-
+import {Header} from "../../components/Header";
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -19,12 +19,6 @@ export const GarageList = ({navigation, route}) => {
     const [search, setSearch] = useState('');
 
     const {data, isLoading, isError, isFetching, error, garages} = getGarages(page);
-
-    useEffect(() => {
-        console.log(data);
-        console.log('useEffect value', garages);
-        console.log(level, flashMessage);
-    }, [garages]);
 
     const handleSearch = (text) => {
         setSearch(text.toLowerCase());
@@ -47,14 +41,14 @@ export const GarageList = ({navigation, route}) => {
             <Card>
                 <View className="flex flex-row py-2" >
                     <View className="">
-                        <MaterialIcons name="build-circle" size={62} color="#F1F6F5" />
+                        <MaterialIcons name="build-circle" size={52} color="#F1F6F5" />
                     </View>
-                    <View className="grow">
+                    <View className="grow mt-4">
                         <View className="ml-4" >
                             <Text className="text-gray-200 text-md font-bold ">{garage.name}</Text>
                         </View>
                     </View>
-                    <View className="">
+                    <View className="mt-2">
                         <Pressable onPress={() => (navigation.navigate('DetailGarage', { id:garage.id }),setSearch(''))}>
                             <MaterialIcons name="arrow-forward-ios" size={30} color="white" />
                         </Pressable>
@@ -77,7 +71,7 @@ export const GarageList = ({navigation, route}) => {
 
     return (
         <AuthenticateLayout level={level} flashMessage={flashMessage}>
-
+            <Header navigation={navigation} />
             <View className="flex-1 items-center justify-center">
                 <View className="w-full max-w-sm">
                     <View className="flex flex-row justify-between">
