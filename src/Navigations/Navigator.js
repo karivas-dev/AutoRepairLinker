@@ -50,8 +50,10 @@ import { FormGarage } from "../screens/Garage/FormGarage";
 import { DetailGarage } from "../screens/Garage/DetailGarage"; 
 import { GarageList } from "../screens/Garage/GarageList"; 
 import { DetailGarageBranch } from "../screens/Garage/Partials/Branches/DetailGarageBranch";
-import { GarageBranchesList } from "../screens/Garage/Partials/Branches/GarageBranchesList";
 import { CreateEditGarageBranch } from "../screens/Garage/Partials/Branches/CreateEditGarageBranch";
+import { CreateEditTicket } from "../screens/Tickets/CreateEditTicket";
+import { DetailTicketBid } from "../screens/Tickets/Partials/Bids/DetailTicketBid";
+import { CreateEditTicketBid } from "../screens/Tickets/Partials/Bids/CreateEditTicketBid";
 
 
 
@@ -177,7 +179,10 @@ export const HomeStackNavigator = () => {
             <Stack.Screen name="CreateEditInventory" component={CreateEditInventory} />
             
             <Stack.Screen name="TicketsList" component={TicketsList} initialParams={{level: '', flashMessage: '', page: 1}}/>
-            <Stack.Screen name="DetailTicket" component={DetailTicket} />
+            <Stack.Screen name="DetailTicket" component={DetailTicket} initialParams={{level: '', flashMessage: ''}} />
+            <Stack.Screen name="DetailTicketBid" component={DetailTicketBid}/>
+            <Stack.Screen name="CreateEditTicketBid" component={CreateEditTicketBid}/>
+            <Stack.Screen name="CreateEditTicket" component={CreateEditTicket}/>
 
         </Stack.Navigator>
     )
@@ -222,7 +227,10 @@ export const LoginStackNavigator = () => {
             <Stack.Screen name="CreateEditCar" component={CreateEditCar} />
 
             <Stack.Screen name="TicketsList" component={TicketsList} initialParams={{level: '', flashMessage: '', page: 1}}/>
-            <Stack.Screen name="DetailTicket" component={DetailTicket} />
+            <Stack.Screen name="DetailTicket" component={DetailTicket} initialParams={{level: '', flashMessage: ''}} />
+            <Stack.Screen name="DetailTicketBid" component={DetailTicketBid}/>
+            <Stack.Screen name="CreateEditTicketBid" component={CreateEditTicketBid}/>
+            <Stack.Screen name="CreateEditTicket" component={CreateEditTicket}/>
         </Stack.Navigator>
     )
 };

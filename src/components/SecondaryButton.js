@@ -9,7 +9,7 @@ export const SecondaryButton = ({message , onPress}) => {
             bg-neutral-500 hover:bg-neutral-400 active:bg-neutral-600 focus:bg-gray-400 focus:ring-gray-600"
             onPress={onPress}
         >
-           <Text className="font-extrabold text-sm text-gray-200 uppercase">{message}</Text>
+           <Text className="font-extrabold text-sm text-gray-200 uppercase text-center">{message}</Text>
         </Pressable>
     );
 }

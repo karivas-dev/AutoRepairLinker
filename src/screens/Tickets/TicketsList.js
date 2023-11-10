@@ -104,7 +104,16 @@ export const TicketsList = ({navigation, route}) => {
                         <Text className="font-bold mb-6 text-gray-200 mt-5 text-2xl">Tickets</Text>
                         <View className="justify-end mt-5 mb-6">
                             <PrimaryButton
-                                onPress={() => (console.log('hola'))}
+                                onPress={() => ( 
+                                    navigation.navigate("CreateEditTicket", {
+                                        id: '',
+                                        description: '',
+                                        car_id: '',
+                                        garage_id: '',
+                                        ticket_status_id: '',
+                                    }),
+                                    setSearch("")
+                                )}
                                 message="+ new"
                             />
                         </View>

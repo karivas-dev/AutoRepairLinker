@@ -1,7 +1,7 @@
 import {Text, TextInput, View} from "react-native";
 import React from "react";
 
-export const FormikInput = ({ placeholder, passEntry, label = null, formik, valueName}) => {
+export const FormikInput = ({ placeholder, multiline,rows,passEntry, label = null, formik, valueName}) => {
 
     return (
         <View className="mb-4">
@@ -14,6 +14,8 @@ export const FormikInput = ({ placeholder, passEntry, label = null, formik, valu
                 placeholderTextColor="#E0E0E0"
                 placeholder={placeholder}
                 secureTextEntry={passEntry}
+                multiline={multiline}
+                numberOfLines={rows}
                 onChangeText={formik.handleChange(valueName)}
                 value={formik.values[valueName]}
             />

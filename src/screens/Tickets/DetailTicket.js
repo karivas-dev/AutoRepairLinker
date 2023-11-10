@@ -6,6 +6,7 @@ import { PrimaryButton } from '../../components/PrimaryButton';
 import { DangerButton } from '../../components/DangerButton';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { TicketBidList } from './Partials/Bids/TicketBidList';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Messages } from '../../components/Messages';
 import { Card } from '../../components/Card';
@@ -24,7 +25,7 @@ export const DetailTicket = ({navigation, route}) => {
     }
 
     return (
-        <AuthenticateLayout>
+        <AuthenticateLayout level={route.params?.level} flashMessage={route.params?.flashMessage}>
             <Header navigation={navigation}/>
             <View className="flex-none w-full max-w-sm">
                 {
@@ -68,7 +69,13 @@ export const DetailTicket = ({navigation, route}) => {
                                                 </View>
                                                 <View>
                                                     <View>
-                                                        <PrimaryButton message='Edit' onPress={() => console.log('hola')}/>
+                                                        <PrimaryButton message='Edit' onPress={() =>  navigation.navigate("CreateEditTicket", {
+                                                            id: ticket?.data.id,
+                                                            description: ticket?.data.description,
+                                                            car_id: ticket?.data.car.id,
+                                                            garage_id: ticket?.data.garage.id,
+                                                            ticket_status_id: ticket?.data.status_id,
+                                                        })}/>
                                                     </View>
                                                     <View className="mt-2">
                                                         <DangerButton message="Delete" onPress={() => handleDelete()} />
@@ -93,7 +100,13 @@ export const DetailTicket = ({navigation, route}) => {
                                                 <Text className="text-gray-200 text-lg font-bold" >Garage: </Text> {ticket?.data.garage.name}
                                             </Text><Text>{`\n`}</Text>
                                         </Card>
-
+                                        <View className="w-full max-w-sm">
+                                            <TicketBidList 
+                                                navigation={navigation} 
+                                                bids={ticket?.data.bids}
+                                                ticket_id={ticket?.data.id}
+                                            />
+                                        </View>
                                         <Card>
                                             <Text className="font-extrabold mb-3 text-center text-gray-200 mt-3 text-2xl">Car Details</Text>
                                             <Text className="text-gray-200 text-lg text-center" > 
@@ -126,7 +139,6 @@ export const DetailTicket = ({navigation, route}) => {
                                             <Text className="text-gray-200 text-lg text-center" > 
                                                 <Text className="text-gray-200 text-lg font-bold" > Phone: </Text> {ticket?.data.user.telephone}
                                             </Text><Text>{`\n`}</Text>
-                                           
                                         </Card>
                                     </View>
                                 </>   
