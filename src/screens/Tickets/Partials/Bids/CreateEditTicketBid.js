@@ -46,11 +46,15 @@ export const CreateEditTicketBid = ({navigation, route}) => {
     };
     const removeLastItem = () => {
         const updatedDetails = [...formik.values.details];
-        updatedDetails.pop(); // Remove the last item
-        formik.setValues({
-          ...formik.values,
-          details: updatedDetails,
-        });
+        if (updatedDetails.length > 1) {
+            updatedDetails.pop(); // Remove the last item
+            formik.setValues({
+            ...formik.values,
+            details: updatedDetails,
+            });
+        }else{
+            alert('You must have at least one detail item');
+        }
     };
     return (
         <AuthenticateLayout>
@@ -65,12 +69,14 @@ export const CreateEditTicketBid = ({navigation, route}) => {
                     <FormikInput valueName="timespan" formik={formik} placeholder="TimeSpan: (YYYY-MM-DD)" label={formik.values.id == '' ? null : 'TimeSpan: (YYYY-MM-DD)'}/>
 
                     <View className="flex flex-row justify-between mb-5">
-                        <Pressable onPress={() => addNewItem()}>
+                        <Pressable  className="px-2.5 py-2.5 rounded-full bg-blueC-100 "
+                            onPress={() => addNewItem()}>
                             <Feather name="plus" size={24} color="white" />
                         </Pressable>
                         <View className="justify-end">
-                            <Pressable onPress={() => removeLastItem()}>
-                                <Feather name="trash-2" size={24} color="red" />
+                            <Pressable className="px-2.5 py-2.5 rounded-full bg-red-500 " 
+                                onPress={() => removeLastItem()}>
+                                <Feather name="trash-2" size={24} color="white" />
                             </Pressable>
                         </View>
                     </View>
@@ -82,6 +88,7 @@ export const CreateEditTicketBid = ({navigation, route}) => {
                                 <Text className="text-red-500 capitalize-first">
                                     { formik.touched?.bid_status_id && formik.errors?.bid_status_id }
                                 </Text>
+                                <Text className="text-gray-200 text-lg font-bold mt-4 mb-4" >Bid Details:</Text> 
                                 {
                                     formik.values.details.map((detail, index) => (
                                         <View key={index}>
