@@ -13,8 +13,6 @@ import { HomePage } from "../screens/HomePage";
 import {CreateEditOwner} from "../screens/Owners/CreateEditOwner";
 import {DetailOwner} from '../screens/Owners/DetailOwner';
 
-import { UserProfile } from "../screens/User/UserProfile";
-
 import { ReplacementsList } from "../screens/Replacements/ReplacementsList";
 import { DetailReplacement } from "../screens/Replacements/DetailReplacement";
 import { EditCreateReplacement } from "../screens/Replacements/EditCreateReplacement";
@@ -120,17 +118,6 @@ const BottomTabNavigator = () => {
                     ),
                 }}
                 initialParams={{level: '', flashMessage: '', page: 1}}
-            />
-            <Tab.Screen 
-                name="UserProfile"
-                component={UserProfile}
-                options={{
-                    tabBarLabel: '',
-                    tabBarIcon: ({focused}) => (
-                        <FontAwesome5 name="user" size={24} color={focused ? '#6987B7': 'white'} />
-                    ),
-                   
-                }}
             />
         </Tab.Navigator>
     )
