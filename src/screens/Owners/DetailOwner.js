@@ -1,4 +1,4 @@
-import { View, Text, Image, ActivityIndicator} from 'react-native';
+import {View, Text, Image, ActivityIndicator, Alert} from 'react-native';
 import { AuthenticateLayout } from '../../layouts/AuthenticateLayout';
 
 import { FontAwesome } from '@expo/vector-icons';
@@ -20,9 +20,16 @@ export const DetailOwner = ({navigation, route}) => {
     const deleteOwnerMutation = deleteOwner();
 
     const handleOwnerDelete = async() => {
-        if (confirm('You want to delete this Owner ??? ..')) {
-            await deleteOwnerMutation.mutateAsync(owner?.data);
-        }
+        Alert.alert('Delete Owner', 'Are you sure you want to delete this Owner ?', [
+            {
+                text: 'Cancel',
+                style: 'cancel'
+            },
+            {
+                text: 'Delete',
+                onPress: () => deleteOwnerMutation.mutateAsync(owner?.data)
+            }
+        ]);
     }
     return (
         <AuthenticateLayout>
