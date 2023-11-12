@@ -1,4 +1,4 @@
-import { View, Text, Image, ActivityIndicator} from 'react-native';
+import {View, Text, Image, ActivityIndicator, Alert} from 'react-native';
 import { AuthenticateLayout } from '../../layouts/AuthenticateLayout';
 import { Header } from '../../components/Header';
 import { FontAwesome } from '@expo/vector-icons';
@@ -18,9 +18,17 @@ export const DetailCar = ({navigation, route}) => {
     const deleteCarMutation = deleteCar();
 
     const handleDelete = async() => {
-        if (confirm('You want to delete this Car ??? ..')) {
-            await deleteCarMutation.mutateAsync(car?.data);
-        }
+        Alert.alert('Delete Car', 'Are you sure you want to delete this Car ?', [
+            {
+                text: 'Cancel',
+                style: 'cancel'
+            }, {
+                text: 'OK',
+                onPress: () => {
+                    deleteCarMutation.mutateAsync(car?.data);
+                }
+            }
+        ]);
     }
 
     return (
