@@ -1,4 +1,4 @@
-import { View, Text, Image, ActivityIndicator} from 'react-native';
+import {View, Text, Image, ActivityIndicator, Alert} from 'react-native';
 import { AuthenticateLayout } from '../../layouts/AuthenticateLayout';
 
 import { FontAwesome } from '@expo/vector-icons';
@@ -19,9 +19,16 @@ export const DetailModel = ({navigation, route}) => {
     const deleteModelMutation = deleteModel();
 
     const handleBrandDelete = async() => {
-        if (confirm('You want to delete this Model ??? ..')) {
-            await deleteModelMutation.mutateAsync(model?.data);
-        }
+        Alert.alert('Delete Model', 'Are you sure you want to delete this Model ?', [
+            {
+                text: 'Cancel',
+                style: 'cancel'
+            },
+            {
+                text: 'Confirm',
+                onPress: () => deleteModelMutation.mutateAsync(model?.data)
+            }
+        ]);
     }
 
     return (
