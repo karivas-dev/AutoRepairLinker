@@ -1,4 +1,4 @@
-import { View, Text, Image, ActivityIndicator} from 'react-native';
+import {View, Text, Image, ActivityIndicator, Alert} from 'react-native';
 import { AuthenticateLayout } from '../../../../layouts/AuthenticateLayout';
 
 import { FontAwesome } from '@expo/vector-icons';
@@ -29,9 +29,18 @@ export const DetailGarageBranch = ({navigation,route}) => {
     const deleteBranchMutation = deleteGarageBranch();
 
     const handleBranchDelete = async() => {
-        if (confirm('You want to delete this Branch ??? ..')) {
-            await deleteBranchMutation.mutateAsync(branch?.data);
-        }
+        Alert.alert('Delete Branch', 'Are you sure you want to delete this Branch ?', [
+            {
+                text: 'Cancel',
+                style: 'cancel'
+            },
+            {
+                text: 'Delete',
+                onPress: () => {
+                    deleteBranchMutation.mutateAsync(branch?.data)
+                }
+            }
+        ]);
     }
     return (
         <AuthenticateLayout>
