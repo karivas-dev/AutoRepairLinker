@@ -1,4 +1,4 @@
-import { View, Text, Image, ActivityIndicator} from 'react-native';
+import {View, Text, Image, ActivityIndicator, Alert} from 'react-native';
 import { AuthenticateLayout } from '../../layouts/AuthenticateLayout';
 import { Header } from '../../components/Header';
 import { FontAwesome } from '@expo/vector-icons';
@@ -18,9 +18,17 @@ export const DetailReplacement = ({navigation, route}) => {
     const deleteReplacementMutation = deleteReplacement();
 
     const handleDelete = async() => {
-        if (confirm('You want to delete this Replacement ??? ..')) {
-            await deleteReplacementMutation.mutateAsync(replacement?.data);
-        }
+        Alert.alert('Delete Replacement', 'Are you sure you want to delete this Replacement ?', [
+            {
+                text: 'Cancel',
+                onPress: () => null,
+                style: 'cancel'
+            },
+            {
+                text: 'Confirm',
+                onPress: () => deleteReplacementMutation.mutateAsync(replacement?.data)
+            }
+        ]);
     }
 
     return (
