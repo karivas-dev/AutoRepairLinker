@@ -1,4 +1,4 @@
-import { View, Text, Image, ActivityIndicator} from 'react-native';
+import {View, Text, Image, ActivityIndicator, Alert} from 'react-native';
 import { AuthenticateLayout } from '../../layouts/AuthenticateLayout';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -24,9 +24,18 @@ export const DetailGarage = ({navigation, route}) => {
     const deleteGarageMutation = deleteGarage(); //haber xd
 
     const handleGarageDelete = async() => {
-        if (confirm('You want to delete this Garage ??? ..')) {
-            await deleteGarageMutation.mutate(garage?.data);
-        }
+        Alert.alert('Delete Garage', 'Are you sure you want to delete this Garage ?', [
+            {
+                text: 'Cancel',
+                style: 'cancel'
+            },
+            {
+                text: 'Delete',
+                onPress: () => {
+                    deleteGarageMutation.mutate(garage?.data)
+                }
+            }
+        ]);
     }
     return (
         <AuthenticateLayout level={route.params?.level} flashMessage={route.params?.flashMessage}>
