@@ -1,4 +1,4 @@
-import { View, Text, Image, ActivityIndicator} from 'react-native';
+import {View, Text, Image, ActivityIndicator, Alert} from 'react-native';
 import { AuthenticateLayout } from '../../layouts/AuthenticateLayout';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -24,9 +24,16 @@ export const DetailStore = ({navigation, route}) => {
     const deleteStoreMutation = deleteStore(); //haber xd
 
     const handleStoreDelete = async() => {
-        if (confirm('You want to delete this Store ??? ..')) {
-            await deleteStoreMutation.mutate(store?.data);
-        }
+        Alert.alert('Delete Store', 'Are you sure you want to delete this Store?', [
+            {
+                text: 'Cancel',
+                style: 'cancel'
+            },
+            {
+                text: 'Delete',
+                onPress: () => deleteStoreMutation.mutate(store?.data)
+            }
+        ]);
     }
     return (
         <AuthenticateLayout level={route.params?.level} flashMessage={route.params?.flashMessage}>
