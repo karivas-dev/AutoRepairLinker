@@ -1,4 +1,4 @@
-import { View, Text, Image, ActivityIndicator} from 'react-native';
+import {View, Text, Image, ActivityIndicator, Alert} from 'react-native';
 import { AuthenticateLayout } from '../../layouts/AuthenticateLayout';
 import { Header } from '../../components/Header';
 import { FontAwesome } from '@expo/vector-icons';
@@ -19,9 +19,16 @@ export const DetailTicket = ({navigation, route}) => {
     const deleteTicketMutation = deleteTicket();
 
     const handleDelete = async() => {
-        if (confirm('You want to delete this Ticket ??? ..')) {
-            await deleteTicketMutation.mutateAsync(ticket?.data);
-        }
+        Alert.alert('Delete Ticket', 'Are you sure you want to delete this Ticket ?', [
+            {
+                text: 'Cancel',
+                style: 'cancel'
+            },
+            {
+                text: 'Delete',
+                onPress: () => deleteTicketMutation.mutateAsync(ticket?.data)
+            }
+        ]);
     }
 
     return (
