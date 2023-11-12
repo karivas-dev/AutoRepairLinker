@@ -1,4 +1,4 @@
-import {Pressable, Text, View, FlatList, ActivityIndicator} from 'react-native';
+import {Pressable, Text, View, FlatList, ActivityIndicator, Alert} from 'react-native';
 import { useState,useCallback } from 'react';
 import {AuthenticateLayout} from '../layouts/AuthenticateLayout';
 import {Card} from '../components/Card';
@@ -12,6 +12,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import {useQueryClient} from "react-query";
 
 export const HomePage = () => {
     const navigation = useNavigation();
@@ -23,9 +24,17 @@ export const HomePage = () => {
     const userLogOut = userLogoutAttempt();
 
     const handleLogOut = () => {
-        if(confirm('Are you sure you want to log out ?')){
-            userLogOut.mutateAsync();
-        }
+        Alert.alert('Log Out', 'Are you sure you want to log out ?', [
+            {
+                text: 'Cancel',
+                style: 'cancel'
+            }, {
+                text: 'OK',
+                onPress: () => {
+                    userLogOut.mutateAsync();
+                }
+            }
+        ]);
     }
     const indexOptions  = [
         {icon: <Octicons name="tools" size={24} color="white" /> , name:'Replacements', route:'ReplacementsList'}, 
