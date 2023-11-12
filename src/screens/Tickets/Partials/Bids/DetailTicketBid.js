@@ -1,4 +1,4 @@
-import { View, Text, Image, ActivityIndicator} from 'react-native';
+import {View, Text, Image, ActivityIndicator, Alert} from 'react-native';
 import { AuthenticateLayout } from '../../../../layouts/AuthenticateLayout';
 
 import { FontAwesome } from '@expo/vector-icons';
@@ -19,9 +19,16 @@ export const DetailTicketBid = ({navigation,route}) => {
     const deleteBidMutation = deleteTicketBid();
 
     const handleBidDelete = async() => {
-        if (confirm('You want to delete this Ticket Bid ??? ..')) {
-            await deleteBidMutation.mutateAsync(bid?.data);
-        }
+        Alert.alert('Delete Ticket Bid', 'Are you sure you want to delete this Ticket Bid ?', [
+            {
+                text: 'Cancel',
+                style: 'cancel'
+            },
+            {
+                text: 'Delete',
+                onPress: () => deleteBidMutation.mutateAsync(bid?.data)
+            }
+        ]);
     }
     return (
         <AuthenticateLayout >
