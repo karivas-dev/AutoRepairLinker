@@ -72,6 +72,12 @@ const userLogoutAttempt = () => {
             queryClient.clear(); // resetea todos los queries
             navigation.navigate('Login');
         },
+        onError: async (error) => {
+            await logout();
+            await axiosRoute.refreshToken();
+            queryClient.clear(); // resetea todos los queries
+            navigation.navigate('Login');
+        }
     });
 }
 
