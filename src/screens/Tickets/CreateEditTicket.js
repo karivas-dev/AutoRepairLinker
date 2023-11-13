@@ -10,6 +10,7 @@ import { FormikInput } from '../../components/FormikInput';
 import { SelectInput } from '../../components/SelectInput';
 
 import { createEditTicket, getGarages, getCars, getTicketStatuses } from '../../hooks/TicketApi';
+import { user } from '../../context/UserAttributesContext';
 
 export const CreateEditTicket = ({navigation, route}) => {
     const formik = useFormik({
@@ -47,30 +48,37 @@ export const CreateEditTicket = ({navigation, route}) => {
                     <FormikInput multiline={true} rows={4} valueName="description" 
                     formik={formik} placeholder="Description:" label={formik.values.id == '' ? null : 'Description: '}/>
 
-                    {cars == null ? null : (
-                        <>
-                            <SelectInput selectedValue={formik.values.car_id}
-                                onValueChange={formik.handleChange('car_id')}
-                                DefaultPlaceholder="Select a Car"
-                                data={cars} 
-                            />
-                            <Text className="text-red-500 capitalize-first">
-                                {formik.touched?.car_id && formik.errors?.car_id}
-                            </Text>
-                        </>
-                    )}
-                    {garages == null ? null : (
-                        <>
-                            <SelectInput selectedValue={formik.values.garage_id}
-                                onValueChange={formik.handleChange('garage_id')}
-                                DefaultPlaceholder="Select a Garage"
-                                data={garages} 
-                            />
-                            <Text className="text-red-500 capitalize-first">
-                                {formik.touched?.garage_id && formik.errors?.garage_id}
-                            </Text>
-                        </>
-                    )}
+                    {
+                        user.type == 'Insurer' ? (
+                            <>
+                                {cars == null ? null : (
+                                    <>
+                                        <SelectInput selectedValue={formik.values.car_id}
+                                            onValueChange={formik.handleChange('car_id')}
+                                            DefaultPlaceholder="Select a Car"
+                                            data={cars} 
+                                        />
+                                        <Text className="text-red-500 capitalize-first">
+                                            {formik.touched?.car_id && formik.errors?.car_id}
+                                        </Text>
+                                    </>
+                                )}
+                                {garages == null ? null : (
+                                    <>
+                                        <SelectInput selectedValue={formik.values.garage_id}
+                                            onValueChange={formik.handleChange('garage_id')}
+                                            DefaultPlaceholder="Select a Garage"
+                                            data={garages} 
+                                        />
+                                        <Text className="text-red-500 capitalize-first">
+                                            {formik.touched?.garage_id && formik.errors?.garage_id}
+                                        </Text>
+                                    </>
+                                )}
+                            </> 
+                        ): null
+                    }
+                    
                     {ticket?.ticket_statuses == null ? null : (
                         <>
                             <SelectInput selectedValue={formik.values.ticket_status_id} onValueChange={formik.handleChange('ticket_status_id')}
