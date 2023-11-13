@@ -1,4 +1,4 @@
-import { View, Text, Image, ActivityIndicator} from 'react-native';
+import {View, Text, Image, ActivityIndicator, Alert} from 'react-native';
 import { AuthenticateLayout } from '../../layouts/AuthenticateLayout';
 
 import { FontAwesome } from '@expo/vector-icons';
@@ -11,6 +11,7 @@ import { Card } from '../../components/Card';
 import { Header } from '../../components/Header';
 import { deleteModel } from '../../hooks/ModelApi';
 import { getModel } from '../../hooks/ModelApi';
+import { user } from '../../context/UserAttributesContext';
 
 export const DetailModel = ({navigation, route}) => {
       
@@ -19,9 +20,16 @@ export const DetailModel = ({navigation, route}) => {
     const deleteModelMutation = deleteModel();
 
     const handleBrandDelete = async() => {
-        if (confirm('You want to delete this Model ??? ..')) {
-            await deleteModelMutation.mutateAsync(model?.data);
-        }
+        Alert.alert('Delete Model', 'Are you sure you want to delete this Model ?', [
+            {
+                text: 'Cancel',
+                style: 'cancel'
+            },
+            {
+                text: 'Confirm',
+                onPress: () => deleteModelMutation.mutateAsync(model?.data)
+            }
+        ]);
     }
 
     return (
@@ -50,18 +58,20 @@ export const DetailModel = ({navigation, route}) => {
                                                     <Text className="text-gray-200 text-lg font-bold text-center">{model?.data.name}</Text>
                                                 </View>
                                             </View>
-                                            <View className="py-2">
-                                                <PrimaryButton message='Edit' onPress={() => navigation.navigate('CreateEditModel', { 
-                                                    id: route.params.id , 
-                                                    name: model?.data.name,
-                                                    brand_id: route.params.brandId
-                                                })}/>
-                                                
-                                                <View className="mt-2">
-                                                    <DangerButton message="delete" onPress={() => handleBrandDelete()}/>
-                                                </View>
-                                                
-                                            </View>
+                                            {
+                                                user.type != 'Garage' ? (
+                                                    <View className="py-2">
+                                                        <PrimaryButton message='Edit' onPress={() => navigation.navigate('CreateEditModel', { 
+                                                            id: route.params.id , 
+                                                            name: model?.data.name,
+                                                            brand_id: route.params.brandId
+                                                        })}/>
+                                                        {/* <View className="mt-2">
+                                                            <DangerButton message="delete" onPress={() => handleBrandDelete()}/>
+                                                        </View>      */}                                                 
+                                                    </View>
+                                                ):null
+                                            }
                                         </>   
                                     ) : null}
                                 </View> 

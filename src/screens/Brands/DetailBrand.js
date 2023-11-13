@@ -1,4 +1,4 @@
-import { View, Text, Image, ActivityIndicator} from 'react-native';
+import {View, Text, Image, ActivityIndicator, Alert} from 'react-native';
 import { AuthenticateLayout } from '../../layouts/AuthenticateLayout';
 
 import { FontAwesome } from '@expo/vector-icons';
@@ -12,6 +12,7 @@ import { Messages } from '../../components/Messages';
 import { Card } from '../../components/Card';
 import { Header } from '../../components/Header';
 import { deleteBrand, getBrand } from '../../hooks/BrandApi';
+import { user } from '../../context/UserAttributesContext';
 
 export const DetailBrand = ({navigation, route}) => {
     
@@ -22,9 +23,18 @@ export const DetailBrand = ({navigation, route}) => {
     const deleteBrandMutation = deleteBrand();
 
     const handleBrandDelete = async() => {
-        if (confirm('You want to delete this Brand ??? ..')) {
-            await deleteBrandMutation.mutate(brand?.data);
-        }
+        Alert.alert('Delete Brand', 'Are you sure you want to delete this Brand ?', [
+            {
+                text: 'Cancel',
+                style: 'cancel'
+            },
+            {
+                text: 'Delete',
+                onPress: () => {
+                    deleteBrandMutation.mutate(brand?.data);
+                }
+            }
+        ]);
     }
 
     return (
@@ -54,16 +64,18 @@ export const DetailBrand = ({navigation, route}) => {
                                                 </View>
                                             </View>
                                             <View className="py-2">
-                                                <PrimaryButton message='Edit' onPress={() => navigation.navigate('CreateEditBrand', { id: id , name: brand?.data.name})}/>
-                                                
-                                                {/*  <View className="mt-2">
-                                                    <SecondaryButton message="+ model" onPress={() => console.log('add model')}/>
-                                                </View> */}
-
-                                                <View className="mt-2">
-                                                    <DangerButton message="delete" onPress={() => handleBrandDelete()}/>
-                                                </View>
-                                                
+                                                {
+                                                    user.type != 'Garage' ? (
+                                                        <>
+                                                            <PrimaryButton message='Edit' onPress={() => navigation.navigate('CreateEditBrand',
+                                                             { id: id , name: brand?.data.name})}/>
+                                                            <View className="mt-2">
+                                                                <DangerButton message="delete" onPress={() => handleBrandDelete()}/>
+                                                            </View>
+                                                        </>
+                                                        
+                                                    ):null
+                                                }                          
                                             </View>
                                         </>   
                                     ) : null}

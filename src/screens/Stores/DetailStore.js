@@ -1,4 +1,4 @@
-import { View, Text, Image, ActivityIndicator} from 'react-native';
+import {View, Text, Image, ActivityIndicator, Alert} from 'react-native';
 import { AuthenticateLayout } from '../../layouts/AuthenticateLayout';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -12,6 +12,8 @@ import { Card } from '../../components/Card';
 import { Header } from '../../components/Header';
 import { useEffect } from 'react';
 import { getStore, deleteStore } from '../../hooks/StoreApi';
+import { StoreBranchesList } from './Partials/Branches/StoreBranchesList';
+import { user } from '../../context/UserAttributesContext';
 
 
 export const DetailStore = ({navigation, route}) => {
@@ -22,17 +24,20 @@ export const DetailStore = ({navigation, route}) => {
 
     const deleteStoreMutation = deleteStore(); //haber xd
 
-    useEffect(() => {
-        console.log(store);
-    },[store])
-
     const handleStoreDelete = async() => {
-        if (confirm('You want to delete this Store ??? ..')) {
-            await deleteStoreMutation.mutate(store?.data);
-        }
+        Alert.alert('Delete Store', 'Are you sure you want to delete this Store?', [
+            {
+                text: 'Cancel',
+                style: 'cancel'
+            },
+            {
+                text: 'Delete',
+                onPress: () => deleteStoreMutation.mutate(store?.data)
+            }
+        ]);
     }
     return (
-        <AuthenticateLayout>
+        <AuthenticateLayout level={route.params?.level} flashMessage={route.params?.flashMessage}>
             <Header navigation={navigation}/>
             
             <View className="flex flex-1 flex-col justify-center items-center" >
@@ -57,31 +62,38 @@ export const DetailStore = ({navigation, route}) => {
                                                     <MaterialCommunityIcons name="warehouse" size={60} color="white" />
                                                 </View>
                                                 <View>
-                                                    <View>
-                                                        <PrimaryButton onPress={() => (navigation.navigate('CreateEditStore',{id: store?.data.id, name: store?.data.name}))}
-                                                            message="Edit"
-                                                        />
-                                                    </View>
-                                                    <View className="mt-2">
+                                                    {
+                                                        user.isAdmin && (user.type == 'Insurer' || user.type == 'Store') ? (
+                                                            <View>
+                                                                <PrimaryButton onPress={() => (navigation.navigate('CreateEditStore',{id: store?.data.id, name: store?.data.name}))}
+                                                                    message="Edit"
+                                                                />
+                                                            </View>
+                                                        ):null
+                                                    }
+                                                   {/*  <View className="mt-2">
                                                         <DangerButton message="Delete" onPress={() => handleStoreDelete()} />
-                                                    </View>
+                                                    </View> */}
                                                 </View>
                                             </View>
                                         </Card>
                                     </View>
 
                                     <View className="w-full max-w-sm">
-                                        <Card >
+                                        <Card>
                                             <Text className="text-gray-200 text-lg text-center" > 
                                                 <Text className="text-gray-200 text-lg font-bold" >Name: </Text> {store?.data.name}
                                             </Text><Text>{`\n`}</Text>
-
-                                            <Text className="text-gray-200 text-lg text-center" > 
-                                                <Text className="text-gray-200 text-lg font-bold" >Mas datos de branch: </Text> prueba
-                                            </Text><Text>{`\n`}</Text>
-                                           
                                         </Card>
                                     </View>
+                                    <View className="w-full max-w-sm">
+                                        <StoreBranchesList 
+                                            navigation={navigation} 
+                                            branches={store?.data.branches}
+                                            store_id={store?.data.id}
+                                        />
+                                    </View>
+                                    
                                 </>   
                             ) : null}
                         </>

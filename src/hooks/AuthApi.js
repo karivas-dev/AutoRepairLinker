@@ -12,10 +12,11 @@ const userLoginAttempt = (formikErrors) => {
         mutationFn: loginAttempt,
 
         onError: (error) => {
-            formikErrors(error.response.data.errors);
+            const erno = error.response.data.errors != null ? error.response.data.errors : {'password': error.response.data.message};
+            formikErrors(erno);
         },
         onSuccess: async (data) => {
-            await saveLoginData(data.data?.token);
+            await saveLoginData(data.data);
             await axiosRoute.refreshToken();
             navigation.navigate('Home', {screen: 'HomePage'});
         },
@@ -49,7 +50,7 @@ const userLoginWithGoogleSubAttempt = () => {
         mutationFn: googleSubLoginAttempt,
 
         onSuccess: async (data) => {
-            await saveLoginData(data.data?.token);
+            await saveLoginData(data.data);
             await axiosRoute.refreshToken();
             navigation.navigate('Home', {screen: 'HomePage'});
         }
@@ -72,6 +73,13 @@ const userLogoutAttempt = () => {
             queryClient.clear(); // resetea todos los queries
             navigation.navigate('Login');
         },
+        onError: async (error) => {
+            await logout();
+            await axiosRoute.refreshToken();
+            queryClient.clear(); // resetea todos los queries
+            navigation.navigate('Login');
+        },
+        
     });
 }
 

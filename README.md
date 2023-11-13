@@ -2,6 +2,17 @@
 
 AutoRepair Linker es una aplicación móvil diseñada para simplificar y optimizar el proceso de reclamos de seguros automovilísticos, facilitando la comunicación y colaboración entre aseguradoras, talleres asociados y proveedores de repuestos de automóviles. Esta plataforma innovadora se ha desarrollado para mejorar la eficiencia y la transparencia en todo el ciclo de reclamos.
 
+## Desarrolladores
+Josías Isaac Alvarenga Romero | DPSG04T
+
+Luis Antonio Bonilla Elias | DPSG04T
+
+Alfonso Antonio Fernández Cotto | DPSG04T
+
+Karen Sofía Rivas Rivas | DPSG04T
+
+Diego Fernando Gómez Castro | DPSG03T
+
 ## Especificación de ramas
 Para el desarrollo de proyecto se trabajará aplicando el modelo Git Flow con la finalidad de agilizar el trabajo mediante la creación de diferentes ramas para cada 'Feature' a desarrollar. Esto permite agilidad y organización dentro del equipo de desarrollo, brindando como valor agregado facilidades para el trabajo simultaneo entre cada 'Branch'.
 
@@ -12,18 +23,15 @@ Para este proyecto se utilizan las Licencias de Creative Commons, concretamente:
 
 ## Enlaces externos
 
- [Video demostrativo ARL](https://drive.google.com/file/d/1_KBlnP3PZhCXX79ygTTPCeBl3kEDuINe/view)
 
- [Manual técnico ARL](https://drive.google.com/file/d/1715BaiMBVLNFizyiHAul80rQoM8vBx3o/view)
+[Repositorio de AutoRepair Linker API (Backend)](https://github.com/karivas-dev/AutoRepairLinker-API)
 
- [Manual de usuario ARL](https://drive.google.com/file/d/1753ZRdOgp3b9e8ZQKtz5SDsvaYzzyCg1/view)
+[Repositorio de AutoRepair Linker (Frontend)](https://github.com/karivas-dev/AutoRepairLinker)
 
- [Planificación de proyecto GitHub Project](https://github.com/users/karivas-dev/projects/4)
+[Planificación de proyecto](https://github.com/users/karivas-dev/projects/4)
 
- [Mockups iniciales](https://mockitt.wondershare.com/proto/WVoB5eNgrzrg9ia4rWNhXS/sharing?view_mode=read_only)
+[Mockups iniciales](https://mockitt.wondershare.com/proto/WVoB5eNgrzrg9ia4rWNhXS/sharing?view_mode=read_only)
 
- [Repositorio de AutoRepair Linker (Frontend)](https://github.com/karivas-dev/AutoRepairLinker)
+[Manual de usuario](https://drive.google.com/file/d/1eRbp81bS1r0B72hA08IGVz9qPtzWbwXx/view?usp=sharing)
 
- [Repositorio de AutoRepair Linker API (Backend)](https://github.com/karivas-dev/AutoRepairLinker-API)
-
-
+[Manual de técnico](https://drive.google.com/file/d/14dDnnLBuMXEL5Yu-6vzO8tl561bo2JiY/view?usp=sharing)

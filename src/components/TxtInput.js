@@ -1,6 +1,6 @@
 import { TextInput } from "react-native";
 
-export const TxtInput = ({ placeholder, passEntry ,onChangeText, value}) => {
+export const TxtInput = ({ placeholder, passEntry ,onChangeText,onBlur, value}) => {
 
     return (
         <TextInput
@@ -9,6 +9,7 @@ export const TxtInput = ({ placeholder, passEntry ,onChangeText, value}) => {
             placeholderTextColor="#E0E0E0"
             placeholder={placeholder}
             secureTextEntry={passEntry}
+            onBlur={onBlur}
             onChangeText={onChangeText}
             value={value}
         />

@@ -48,14 +48,12 @@ const createEditBrand = (formikErrors, brand) => {
         mutationFn: (brand.id == '' ? storeBrand : updateBrand),
 
         onError: (error) => {
-            formikErrors(error.response.data.errors);
+            const erno = error.response.data.errors != null ? error.response.data.errors : {'name': error.response.data.message};
+            formikErrors(erno);
         },
         onSuccess: (data, variables) => {
-            queryClient.invalidateQueries(['brands', 1]); //para recargar el query, debe ir con el nombre del queryKey y si tiene parametro ponerlo
-            navigation.navigate('Home', {
-                screen: 'BrandsList',
-                params: {level: 'success', flashMessage: data?.data?.message}
-            });
+            queryClient.invalidateQueries(['brands']);
+            navigation.navigate('BrandsList',{ level: 'success',  flashMessage: data?.data?.message , page: 1}); 
         },
     });
 }
@@ -72,13 +70,8 @@ const deleteBrand = () => {
 
         onSuccess: (data) => {
             console.log('eliminado');
-            queryClient.invalidateQueries(['brands', 1]); //para recargar el query, debe ir con el nombre del queryKey y si tiene parametro ponerlo aca por defecto 1 por la pagina 1 xd
-            navigation.navigate('Home', {screen: 'BrandsList',
-                params: {
-                    level: 'success',
-                    flashMessage: 'La marca se elimino correctamente.'/*  flashMessage: data?.data?.message */
-                }
-            });
+            queryClient.invalidateQueries(['brands']);
+            navigation.navigate('BrandsList',{ level: 'success',  flashMessage: 'La marca se elimino correctamente.'}); 
         },
     });
 }

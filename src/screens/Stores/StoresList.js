@@ -11,7 +11,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { getStores } from "../../hooks/StoreApi";
-
+import { user } from "../../context/UserAttributesContext";
 export const StoresList = ({navigation, route}) => {
 
     //flash message
@@ -78,12 +78,16 @@ export const StoresList = ({navigation, route}) => {
                     <View className="flex flex-row justify-between">
                         <Text className="font-bold mb-6 text-gray-200 mt-5 text-3xl">Stores</Text>
                         <View className="justify-end mt-5 mb-6">
-                            <PrimaryButton onPress={() => (navigation.navigate('CreateEditStore',{ 
-                                storeParms  : {
-                                    id: '',
-                                    name:'',
-                                }}), setSearch(''))}
-                            message="+ Store"/>
+                            {
+                                user.isAdmin && user.type == 'Insurer' ? (
+                                    <PrimaryButton onPress={() => (navigation.navigate('CreateEditStore',{ 
+                                        storeParms  : {
+                                            id: '',
+                                            name:'',
+                                        }}), setSearch(''))}
+                                    message="+ Store"/>
+                                ):null
+                            }                          
                         </View>
                     </View>
                     {
