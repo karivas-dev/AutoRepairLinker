@@ -14,7 +14,7 @@ import {Messages} from "../components/Messages";
 WebBrowser.maybeCompleteAuthSession();
 
 export const Login = () => {
-    /* const [googleLoginMessage, setGoogleLoginMessage] = useState(null);
+    const [googleLoginMessage, setGoogleLoginMessage] = useState(null);
     const [request, response, promptAsync] = Google.useAuthRequest({
         clientId: process.env.EXPO_PUBLIC_GOOGLE_ANDROID_ID
     });
@@ -23,7 +23,7 @@ export const Login = () => {
         if (response?.type === 'success') {
             loginGoogleAttempt.mutateAsync(response.authentication.accessToken);
         }
-    }, [response]); */
+    }, [response]);
 
     const formik = useFormik({
         initialValues: {
@@ -37,8 +37,8 @@ export const Login = () => {
         onSubmit: async (user) => await loginAttempt.mutateAsync(user)
     });
     const loginAttempt = userLoginAttempt(formik.setErrors);
-   /*  const loginWithGoogleSubAttempt = userLoginWithGoogleSubAttempt();
-    const loginGoogleAttempt = userLoginWithGoogleAttempt(setGoogleLoginMessage, loginWithGoogleSubAttempt); */
+    const loginWithGoogleSubAttempt = userLoginWithGoogleSubAttempt();
+    const loginGoogleAttempt = userLoginWithGoogleAttempt(setGoogleLoginMessage, loginWithGoogleSubAttempt);
 
     return (
         <GuestLayout>
@@ -67,12 +67,12 @@ export const Login = () => {
 
             <View className="flex flex-row justify-between mt-5">
                 <PrimaryButton onPress={formik.handleSubmit} message='Log In'/>
-               {/*  <PrimaryButton onPress={() => promptAsync()} message='Google Log In'/> */}
+                <PrimaryButton onPress={() => promptAsync()} message='Google Log In'/>
             </View>
 
-           {/*  {googleLoginMessage == null ? null : (
+            {googleLoginMessage == null ? null : (
                 <Messages level="error" message={googleLoginMessage}/>
-            )} */}
+            )}
 
             {formik.isSubmitting ? (
                 <ActivityIndicator size="large" style={{marginVertical: 16}} color="white"/>
