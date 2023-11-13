@@ -11,6 +11,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Messages } from '../../components/Messages';
 import { Card } from '../../components/Card';
 import { deleteTicket, getTicket } from '../../hooks/TicketApi';
+import { user } from '../../context/UserAttributesContext';
 
 export const DetailTicket = ({navigation, route}) => {
 
@@ -74,20 +75,24 @@ export const DetailTicket = ({navigation, route}) => {
                                                 <View className="py-2">
                                                     <Ionicons name="receipt" size={62} color="#F1F6F5" />
                                                 </View>
-                                                <View>
-                                                    <View>
-                                                        <PrimaryButton message='Edit' onPress={() =>  navigation.navigate("CreateEditTicket", {
-                                                            id: ticket?.data.id,
-                                                            description: ticket?.data.description,
-                                                            car_id: ticket?.data.car.id,
-                                                            garage_id: ticket?.data.garage.id,
-                                                            ticket_status_id: ticket?.data.status_id,
-                                                        })}/>
-                                                    </View>
-                                                    <View className="mt-2">
-                                                        <DangerButton message="Delete" onPress={() => handleDelete()} />
-                                                    </View>
-                                                </View>
+                                                {
+                                                    user.type == 'Insurer'  ? (
+                                                        <View>
+                                                            <View>
+                                                                <PrimaryButton message='Edit' onPress={() =>  navigation.navigate("CreateEditTicket", {
+                                                                    id: ticket?.data.id,
+                                                                    description: ticket?.data.description,
+                                                                    car_id: ticket?.data.car.id,
+                                                                    garage_id: ticket?.data.garage.id,
+                                                                    ticket_status_id: ticket?.data.status_id,
+                                                                })}/>
+                                                            </View>
+                                                            <View className="mt-2">
+                                                                <DangerButton message="Delete" onPress={() => handleDelete()} />
+                                                            </View>
+                                                        </View>
+                                                    ):null
+                                                }
                                             </View>
                                         </Card>
                                     </View>
@@ -107,13 +112,17 @@ export const DetailTicket = ({navigation, route}) => {
                                                 <Text className="text-gray-200 text-lg font-bold" >Garage: </Text> {ticket?.data.garage.name}
                                             </Text><Text>{`\n`}</Text>
                                         </Card>
-                                        <View className="w-full max-w-sm">
-                                            <TicketBidList 
-                                                navigation={navigation} 
-                                                bids={ticket?.data.bids}
-                                                ticket_id={ticket?.data.id}
-                                            />
-                                        </View>
+                                        {
+                                            user.type == 'Insurer' || user.type == 'Garage' ? (
+                                                <View className="w-full max-w-sm">
+                                                    <TicketBidList 
+                                                        navigation={navigation} 
+                                                        bids={ticket?.data.bids}
+                                                        ticket_id={ticket?.data.id}
+                                                    />
+                                                </View>
+                                            ):null
+                                        }
                                         <Card>
                                             <Text className="font-extrabold mb-3 text-center text-gray-200 mt-3 text-2xl">Car Details</Text>
                                             <Text className="text-gray-200 text-lg text-center" > 

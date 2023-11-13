@@ -13,6 +13,7 @@ import { Header } from '../../components/Header';
 import { useEffect } from 'react';
 import { getGarage, deleteGarage } from '../../hooks/GarageApi';
 import { GarageBranchesList } from './Partials/Branches/GarageBranchesList';
+import { user } from '../../context/UserAttributesContext';
  
 
 export const DetailGarage = ({navigation, route}) => {
@@ -62,16 +63,21 @@ export const DetailGarage = ({navigation, route}) => {
                                                 <View className="py-2">
                                                     <MaterialCommunityIcons name="warehouse" size={60} color="white" />
                                                 </View>
-                                                <View>
-                                                    <View>
-                                                        <PrimaryButton onPress={() => (navigation.navigate('FormGarage',{id: garage?.data.id, name: garage?.data.name}))}
-                                                            message="Edit"
-                                                        />
-                                                    </View>
-                                                    <View className="mt-2">
-                                                        <DangerButton message="Delete" onPress={() => handleGarageDelete()} />
-                                                    </View>
-                                                </View>
+                                                {
+                                                    user.isAdmin && (user.type == 'Insurer' || user.type == 'Garage') ? (
+                                                        <View>
+                                                            <View>
+                                                                <PrimaryButton onPress={() => (navigation.navigate('FormGarage',
+                                                                    {id: garage?.data.id, name: garage?.data.name}))}
+                                                                    message="Edit"
+                                                                />
+                                                            </View>
+                                                           {/*  <View className="mt-2">
+                                                                <DangerButton message="Delete" onPress={() => handleGarageDelete()} />
+                                                            </View> */}
+                                                        </View>
+                                                    ):null
+                                                }
                                             </View>
                                         </Card>
                                     </View>

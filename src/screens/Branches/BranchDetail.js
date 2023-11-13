@@ -10,6 +10,7 @@ import { Card } from '../../components/Card';
 import { Header } from '../../components/Header';
 import { deleteBranch, getBranch } from '../../hooks/BranchApi';
 import { useEffect } from 'react';
+import { user } from '../../context/UserAttributesContext';
 
 const showMain = (main) => {
     if(main){
@@ -63,14 +64,18 @@ export const BranchDetail = ({navigation, route}) => {
                                                 <View className="py-2">
                                                     <Feather name="git-branch" size={60} color="#F1F6F5" />
                                                 </View>
-                                                <View>
-                                                    <View>
-                                                        <PrimaryButton message='Edit' onPress={() => console.log('editar')}/>
-                                                    </View>
-                                                    <View className="mt-2">
-                                                        <DangerButton message="Delete" onPress={() => handleBranchDelete()} />
-                                                    </View>
-                                                </View>
+                                                {
+                                                    user.isAdmin ? (
+                                                        <View>
+                                                           {/*  <View>
+                                                                <PrimaryButton message='Edit' onPress={() => console.log('editar')}/>
+                                                            </View> */}
+                                                            <View className="mt-2">
+                                                                <DangerButton message="Delete" onPress={() => handleBranchDelete()} />
+                                                            </View>
+                                                        </View>
+                                                    ):null
+                                                }
                                             </View>
                                         </Card>
                                     </View>

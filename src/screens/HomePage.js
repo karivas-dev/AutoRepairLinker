@@ -5,7 +5,7 @@ import {Card} from '../components/Card';
 import { Messages } from '../components/Messages';
 import {useNavigation} from '@react-navigation/native';
 import {userLogoutAttempt} from '../hooks/AuthApi';
-import {getAuthToken} from '../context/AuthContext';
+import {getAuthIsAdmin, getAuthToken, getAuthType} from '../context/AuthContext';
 import { TxtInput } from '../components/TxtInput';
 import { Octicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -16,15 +16,21 @@ import {useQueryClient} from "react-query";
 
 export const HomePage = () => {
     const navigation = useNavigation();
-   /*  const tok = async() => {
+    const tok = async() => {
         
-        return await getAuthToken();
+        const token = await getAuthToken();
+        const type = await getAuthType();
+        const isAdmin = await getAuthIsAdmin();
+        console.log(isAdmin); 
+        console.log(type); 
+        console.log(token);
+
     }
-    console.log(tok()); */
+    console.log(tok());
     const userLogOut = userLogoutAttempt();
 
     const handleLogOut = () => {
-        Alert.alert('Log Out', 'Are you sure you want to log out ?', [
+       /*  Alert.alert('Log Out', 'Are you sure you want to log out ?', [
             {
                 text: 'Cancel',
                 style: 'cancel'
@@ -34,7 +40,8 @@ export const HomePage = () => {
                     userLogOut.mutateAsync();
                 }
             }
-        ]);
+        ]); */
+        userLogOut.mutateAsync();
     }
     const indexOptions  = [
         {icon: <Octicons name="tools" size={24} color="white" /> , name:'Replacements', route:'ReplacementsList'}, 

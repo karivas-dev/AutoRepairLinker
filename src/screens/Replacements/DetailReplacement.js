@@ -10,6 +10,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Messages } from '../../components/Messages';
 import { Card } from '../../components/Card';
 import { getReplacement ,deleteReplacement} from '../../hooks/ReplacementApi';
+import { user } from '../../context/UserAttributesContext';
 
 export const DetailReplacement = ({navigation, route}) => {
 
@@ -62,29 +63,37 @@ export const DetailReplacement = ({navigation, route}) => {
                                                     <MaterialCommunityIcons name="toolbox-outline" size={72} color="#F1F6F5" />
                                                 </View>
                                                 <View>
-                                                    <View>
-                                                        <PrimaryButton message='Edit' onPress={() => 
-                                                            navigation.navigate("EditCreateReplacement", {
-                                                                id: replacement?.data.id,
-                                                                name: replacement?.data.name,
-                                                                description: replacement?.data.description,
-                                                                brand_id: replacement?.data.model.brand.id,
-                                                                model_id: replacement?.data.model.id,
-                                                            })}
-                                                        />
-                                                    </View>
-                                                    <View className="mt-2">
+                                                    {
+                                                        user.isAdmin  && user.type == 'Store' ? (
+                                                            <PrimaryButton message='Edit' onPress={() => 
+                                                                navigation.navigate("EditCreateReplacement", {
+                                                                    id: replacement?.data.id,
+                                                                    name: replacement?.data.name,
+                                                                    description: replacement?.data.description,
+                                                                    brand_id: replacement?.data.model.brand.id,
+                                                                    model_id: replacement?.data.model.id,
+                                                                })}
+                                                            />
+                                                        ):null
+                                                    }
+                                                   
+                                                  {/*   <View className="mt-2">
                                                         <DangerButton message="Delete" onPress={() => handleDelete()} />
-                                                    </View>
+                                                    </View> */}
                                                     <View className="mt-2">
-                                                        <SecondaryButton message={replacement?.data?.inventory != null ? 'Inv Edit': ' Inv Add'} onPress={
-                                                            () => (navigation.navigate('CreateEditInventory', {
-                                                                id: replacement?.data.inventory?.id ?? '',
-                                                                replacement_id: replacement?.data.id ,
-                                                                quantity: replacement?.data.inventory?.quantity ?? '',
-                                                                unit_price: replacement?.data.inventory?.unit_price ?? '',
-                                                            }))}
-                                                        />
+                                                        {
+                                                            user.type == 'Store' ? (
+                                                            
+                                                                    <SecondaryButton message={replacement?.data?.inventory != null ? 'Inv Edit': ' Inv Add'} onPress={
+                                                                        () => (navigation.navigate('CreateEditInventory', {
+                                                                            id: replacement?.data.inventory?.id ?? '',
+                                                                            replacement_id: replacement?.data.id ,
+                                                                            quantity: replacement?.data.inventory?.quantity ?? '',
+                                                                            unit_price: replacement?.data.inventory?.unit_price ?? '',
+                                                                        }))}
+                                                                    />
+                                                            ):null
+                                                        }
                                                     </View>
                                                 </View>
                                             </View>

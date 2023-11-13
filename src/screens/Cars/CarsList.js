@@ -9,6 +9,7 @@ import { Messages } from "../../components/Messages";
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { getCars } from "../../hooks/CarApi";
+import { user } from "../../context/UserAttributesContext";
 
 export const CarsList = ({navigation, route}) => {
 
@@ -82,9 +83,6 @@ export const CarsList = ({navigation, route}) => {
                 <View className="w-full max-w-sm">
                     <View className="flex flex-row justify-between">
                         <Text className="font-bold mb-6 text-gray-200 mt-5 text-3xl" >Cars</Text>
-                        <View className="justify-end mt-5 mb-6">
-                            <PrimaryButton onPress={() => (setSearch(''))} message="+ Car"/>
-                        </View>
                     </View>
                     {
                         isLoading || isFetching? (

@@ -8,6 +8,7 @@ import { SecondaryButton } from "../../../../components/SecondaryButton";
 import { Messages } from "../../../../components/Messages";
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { user } from "../../../../context/UserAttributesContext";
 
 
 export const OwnerCarsList = ({navigation,owner_id,cars}) => {
@@ -57,16 +58,20 @@ export const OwnerCarsList = ({navigation,owner_id,cars}) => {
             <View className="w-full max-w-sm">
                 <View className="flex flex-row justify-between">
                     <Text className="font-bold mb-6 text-gray-200 mt-5 text-2xl">Cars</Text>
-                    <View className="justify-end mt-5 mb-6">
-                        <SecondaryButton onPress={() => (navigation.navigate('CreateEditCar',{ 
-                            id: '',
-                            plates: '',
-                            serial_number: '',
-                            owner_id: owner_id,
-                            brand_id: '',
-                            model_id: '',
-                        }), setSearch(''))} message="+ Car"/>
-                    </View>
+                    {
+                        user.type == 'Insurer' ? (
+                            <View className="justify-end mt-5 mb-6">
+                                <SecondaryButton onPress={() => (navigation.navigate('CreateEditCar',{ 
+                                    id: '',
+                                    plates: '',
+                                    serial_number: '',
+                                    owner_id: owner_id,
+                                    brand_id: '',
+                                    model_id: '',
+                                }), setSearch(''))} message="+ Car"/>
+                            </View>
+                        ):null
+                    }
                 </View>
                 {
                     cars.length != 0 ? (

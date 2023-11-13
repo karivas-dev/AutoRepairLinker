@@ -10,6 +10,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Messages } from '../../components/Messages';
 import { Card } from '../../components/Card';
 import { deleteCar, getCar } from '../../hooks/CarApi';
+import { user } from '../../context/UserAttributesContext';
 
 export const DetailCar = ({navigation, route}) => {
 
@@ -61,21 +62,25 @@ export const DetailCar = ({navigation, route}) => {
                                                 <View className="py-2">
                                                     <MaterialCommunityIcons name="car" size={62} color="#F1F6F5" />
                                                 </View>
-                                                <View>
-                                                <View>
-                                                    <PrimaryButton message='Edit' onPress={() => (navigation.navigate('CreateEditCar',{ 
-                                                        id: car?.data.id,
-                                                        plates: car?.data.plates,
-                                                        serial_number: car?.data.serial_number,
-                                                        owner_id: car?.data.owner.id,
-                                                        brand_id: car?.data.model.brand.id,
-                                                        model_id: car?.data.model.id,
-                                                    }))}/>
-                                                </View>
-                                                <View className="mt-2">
-                                                    <DangerButton message="Delete" onPress={() => handleDelete()} />
-                                                </View>
-                                                </View>
+                                                {
+                                                    user.type == 'Insurer' ? (
+                                                        <View>
+                                                            <View>
+                                                                <PrimaryButton message='Edit' onPress={() => (navigation.navigate('CreateEditCar',{ 
+                                                                    id: car?.data.id,
+                                                                    plates: car?.data.plates,
+                                                                    serial_number: car?.data.serial_number,
+                                                                    owner_id: car?.data.owner.id,
+                                                                    brand_id: car?.data.model.brand.id,
+                                                                    model_id: car?.data.model.id,
+                                                                }))}/>
+                                                            </View>
+                                                            <View className="mt-2">
+                                                                <DangerButton message="Delete" onPress={() => handleDelete()} />
+                                                            </View>
+                                                        </View>
+                                                    ):null
+                                                }
                                             </View>
                                         </Card>
                                     </View>

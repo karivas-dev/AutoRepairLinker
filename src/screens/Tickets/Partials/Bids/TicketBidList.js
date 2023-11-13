@@ -8,6 +8,7 @@ import { SecondaryButton } from "../../../../components/SecondaryButton";
 import { Messages } from "../../../../components/Messages";
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { user } from "../../../../context/UserAttributesContext";
 
 export const TicketBidList = ({navigation,bids,ticket_id }) => {
 
@@ -36,9 +37,13 @@ export const TicketBidList = ({navigation,bids,ticket_id }) => {
                     <View className="grow">
                         <View className="p-4" >
                             <View className="mb-2">
-                                <Pressable onPress={() => (navigation.navigate('DetailTicketBid',{ id: bid ,ticket_id:ticket_id }), setSearch(''))}>
-                                    <Text className="text-gray-200 text-md font-bold text-center underline">{"ID: " + bid}</Text>
-                                </Pressable>
+                                {
+                                    user.type == 'Insurer' || user.type == 'Garage' ? (
+                                        <Pressable onPress={() => (navigation.navigate('DetailTicketBid',{ id: bid ,ticket_id:ticket_id }), setSearch(''))}>
+                                            <Text className="text-gray-200 text-md font-bold text-center underline">{"ID: " + bid}</Text>
+                                        </Pressable>
+                                    ):<Text className="text-gray-200 text-md font-bold text-center underline">{"ID: " + bid}</Text>
+                                }
                             </View>
                         </View>
                     </View>
@@ -53,13 +58,17 @@ export const TicketBidList = ({navigation,bids,ticket_id }) => {
                 <View className="flex flex-row justify-between">
                     <Text className="font-bold mb-6 text-gray-200 mt-5 text-2xl">Bids</Text>
                     <View className="justify-end mt-5 mb-6">
-                        <SecondaryButton onPress={() => (navigation.navigate('CreateEditTicketBid',{ 
-                            id: '',
-                            ticket_id: ticket_id,
-                            bid_status_id: '',
-                            timespan: '',
-                            details: [{ id: null, name: '', price: 0 }],
-                        }), setSearch(''))} message="+ Bid"/>
+                        {
+                            user.type == 'Garage' || user.type == 'Insurer'  ? (
+                                <SecondaryButton onPress={() => (navigation.navigate('CreateEditTicketBid',{ 
+                                    id: '',
+                                    ticket_id: ticket_id,
+                                    bid_status_id: '',
+                                    timespan: '',
+                                    details: [{ id: null, name: '', price: 0 }],
+                                }), setSearch(''))} message="+ Bid"/>
+                            ):null
+                        }
                     </View>
                 </View>
                 {

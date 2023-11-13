@@ -11,6 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { getTickets } from "../../hooks/TicketApi";
 import { FontAwesome5 } from '@expo/vector-icons';
+import { user } from "../../context/UserAttributesContext";
 
 export const TicketsList = ({navigation, route}) => {
     const { level, flashMessage, page } = route.params;
@@ -102,21 +103,25 @@ export const TicketsList = ({navigation, route}) => {
                 <View className="w-full max-w-sm">
                     <View className="flex flex-row justify-between">
                         <Text className="font-bold mb-6 text-gray-200 mt-5 text-2xl">Tickets</Text>
-                        <View className="justify-end mt-5 mb-6">
-                            <PrimaryButton
-                                onPress={() => ( 
-                                    navigation.navigate("CreateEditTicket", {
-                                        id: '',
-                                        description: '',
-                                        car_id: '',
-                                        garage_id: '',
-                                        ticket_status_id: '',
-                                    }),
-                                    setSearch("")
-                                )}
-                                message="+ new"
-                            />
-                        </View>
+                        {
+                            user.type == 'Insurer' ? (
+                                <View className="justify-end mt-5 mb-6">
+                                    <PrimaryButton
+                                        onPress={() => ( 
+                                            navigation.navigate("CreateEditTicket", {
+                                                id: '',
+                                                description: '',
+                                                car_id: '',
+                                                garage_id: '',
+                                                ticket_status_id: '',
+                                            }),
+                                            setSearch("")
+                                        )}
+                                        message="+ new"
+                                    />
+                                </View>
+                            ):null
+                        }
                     </View>
                     {isLoading || isFetching ? null : isError ? (
                         <MaterialIcons name="error-outline" size={24} color="white" />

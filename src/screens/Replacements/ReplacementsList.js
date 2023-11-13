@@ -10,6 +10,7 @@ import { Messages } from "../../components/Messages";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { getReplacements } from "../../hooks/ReplacementApi";
+import { user } from "../../context/UserAttributesContext";
 
 export const ReplacementsList = ({navigation, route}) => {
     const { level, flashMessage, page } = route.params;
@@ -93,21 +94,25 @@ export const ReplacementsList = ({navigation, route}) => {
                 <View className="w-full max-w-sm">
                     <View className="flex flex-row justify-between">
                         <Text className="font-bold mb-6 text-gray-200 mt-5 text-2xl">Replacements</Text>
-                        <View className="justify-end mt-5 mb-6">
-                            <PrimaryButton
-                                onPress={() => (
-                                    navigation.navigate("EditCreateReplacement", {
-                                        id: '',
-                                        name: '',
-                                        description: '',
-                                        brand_id: '',
-                                        model_id: '',
-                                    }),
-                                    setSearch("")
-                                )}
-                                message="+ new"
-                            />
-                        </View>
+                        {
+                            user.isAdmin && user.type == "Insurer" ? (
+                                <View className="justify-end mt-5 mb-6">
+                                    <PrimaryButton
+                                        onPress={() => (
+                                            navigation.navigate("EditCreateReplacement", {
+                                                id: '',
+                                                name: '',
+                                                description: '',
+                                                brand_id: '',
+                                                model_id: '',
+                                            }),
+                                            setSearch("")
+                                        )}
+                                        message="+ new"
+                                    />
+                                </View>
+                            ):null
+                        }
                     </View>
                     {isLoading || isFetching ? null : isError ? (
                         <MaterialIcons name="error-outline" size={24} color="white" />

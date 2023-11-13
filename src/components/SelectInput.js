@@ -2,7 +2,7 @@ import React from "react";
 import {Picker} from "@react-native-picker/picker";
 
 
-export const SelectInput = ({ data, DefaultPlaceholder,onValueChange,selectedValue }) => {
+export const SelectInput = ({ data, DefaultPlaceholder,onValueChange,selectedValue ,onBlur}) => {
 
     return (
         <Picker
@@ -10,6 +10,7 @@ export const SelectInput = ({ data, DefaultPlaceholder,onValueChange,selectedVal
            rounded-lg shadow-sm p-2.5 text-gray-200"
            onValueChange={onValueChange}
            selectedValue={selectedValue}
+           onBlur={onBlur}
         >
             {DefaultPlaceholder && (
                 <Picker.Item

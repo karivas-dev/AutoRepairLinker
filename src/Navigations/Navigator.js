@@ -52,9 +52,8 @@ import { CreateEditGarageBranch } from "../screens/Garage/Partials/Branches/Crea
 import { CreateEditTicket } from "../screens/Tickets/CreateEditTicket";
 import { DetailTicketBid } from "../screens/Tickets/Partials/Bids/DetailTicketBid";
 import { CreateEditTicketBid } from "../screens/Tickets/Partials/Bids/CreateEditTicketBid";
-
-
-
+import { user } from "../context/UserAttributesContext";
+import { CreateEditBidReplacement } from "../screens/Tickets/Partials/Bids/BidReplacements/CreateEditBidReplacements";
 
 
 const Tab = createBottomTabNavigator();
@@ -96,29 +95,38 @@ const BottomTabNavigator = () => {
                 }}
                 initialParams={{level: '', flashMessage: '',page: 1}}
             />
-             <Tab.Screen
-                name="CarsList"
-                component={CarsList}
-                options={{
-                    tabBarLabel: '',
-                    tabBarIcon: ({focused}) => (
-                        /* <AntDesign name="car" size={24} color={focused ? '#6987B7': 'white'} /> */
-                        BottomTabItemIcon(AntDesign,24,'car',focused) 
-                    ),
-                }}
-                initialParams={{level: '', flashMessage: '' , page: 1}}
-            />
-            <Tab.Screen
-                name="OwnersList"
-                component={OwnersList}
-                options={{
-                    tabBarLabel: '',
-                    tabBarIcon: ({focused}) => (
-                        <MaterialIcons name="groups" size={24} color={focused ? '#6987B7': 'white'} />
-                    ),
-                }}
-                initialParams={{level: '', flashMessage: '', page: 1}}
-            />
+            {
+                user.type == 'Insurer' ? (
+                    <Tab.Screen
+                        name="CarsList"
+                        component={CarsList}
+                        options={{
+                            tabBarLabel: '',
+                            tabBarIcon: ({focused}) => (
+                                /* <AntDesign name="car" size={24} color={focused ? '#6987B7': 'white'} /> */
+                                BottomTabItemIcon(AntDesign,24,'car',focused) 
+                            ),
+                        }}
+                        initialParams={{level: '', flashMessage: '' , page: 1}}
+                    />
+                ):null
+            }
+            {
+                user.type == 'Insurer' ? (
+                    <Tab.Screen
+                        name="OwnersList"
+                        component={OwnersList}
+                        options={{
+                            tabBarLabel: '',
+                            tabBarIcon: ({focused}) => (
+                                <MaterialIcons name="groups" size={24} color={focused ? '#6987B7': 'white'} />
+                            ),
+                        }}
+                        initialParams={{level: '', flashMessage: '', page: 1}}
+                    />
+                ):null
+            }
+            
         </Tab.Navigator>
     )
 }
@@ -170,6 +178,8 @@ export const HomeStackNavigator = () => {
             <Stack.Screen name="DetailTicketBid" component={DetailTicketBid}/>
             <Stack.Screen name="CreateEditTicketBid" component={CreateEditTicketBid}/>
             <Stack.Screen name="CreateEditTicket" component={CreateEditTicket}/>
+            <Stack.Screen name="CreateEditBidReplacement" component={CreateEditBidReplacement} initialParams={{page: 1}}/>
+
 
         </Stack.Navigator>
     )
@@ -218,6 +228,8 @@ export const LoginStackNavigator = () => {
             <Stack.Screen name="DetailTicketBid" component={DetailTicketBid}/>
             <Stack.Screen name="CreateEditTicketBid" component={CreateEditTicketBid}/>
             <Stack.Screen name="CreateEditTicket" component={CreateEditTicket}/>
+            <Stack.Screen name="CreateEditBidReplacement" component={CreateEditBidReplacement} initialParams={{page: 1}}/>
+
         </Stack.Navigator>
     )
 };

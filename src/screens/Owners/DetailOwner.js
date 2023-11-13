@@ -13,6 +13,7 @@ import { Header } from '../../components/Header';
 import { deleteOwner, getOwner } from '../../hooks/OwnerApi';
 import { useEffect } from 'react';
 import { OwnerCarsList } from './Partials/Cars/OwnerCarsList';
+import { user } from '../../context/UserAttributesContext';
 
 export const DetailOwner = ({navigation, route}) => {
     const { data:owner, isLoading, isError, error, isFetching ,isSuccess} = getOwner(route.params.id);
@@ -56,23 +57,27 @@ export const DetailOwner = ({navigation, route}) => {
                                                 <View className="py-2">
                                                     <Feather name="user" size={62} color="#F1F6F5" />
                                                 </View>
-                                                <View>
-                                                    <View>
-                                                        <PrimaryButton message='Edit' onPress={() => navigation.navigate('CreateEditOwner',{
-                                                                id: owner?.data.id,
-                                                                firstname: owner?.data.firstname,
-                                                                lastname: owner?.data.lastname,
-                                                                email: owner?.data.email,
-                                                                telephone: owner?.data.telephone,
-                                                                district_id: owner?.data.district_id
-                                                            })
-                                                        }/>
-                                                    </View>
-                                                   
-                                                    <View className="mt-2">
-                                                        <DangerButton message="Delete" onPress={() => handleOwnerDelete()} />
-                                                    </View>
-                                                </View>
+                                                {
+                                                    user.type == 'Insurer' ? (
+                                                        <View>
+                                                            <View>
+                                                                <PrimaryButton message='Edit' onPress={() => navigation.navigate('CreateEditOwner',{
+                                                                        id: owner?.data.id,
+                                                                        firstname: owner?.data.firstname,
+                                                                        lastname: owner?.data.lastname,
+                                                                        email: owner?.data.email,
+                                                                        telephone: owner?.data.telephone,
+                                                                        district_id: owner?.data.district_id
+                                                                    })
+                                                                }/>
+                                                            </View>
+                                                        
+                                                            <View className="mt-2">
+                                                                <DangerButton message="Delete" onPress={() => handleOwnerDelete()} />
+                                                            </View>
+                                                        </View>
+                                                    ):null
+                                                }
                                             </View>
                                         </Card>
                                     </View>

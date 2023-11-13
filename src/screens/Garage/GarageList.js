@@ -11,6 +11,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
 import { getGarages } from "../../hooks/GarageApi";
+import { user } from "../../context/UserAttributesContext";
 
 export const GarageList = ({navigation, route}) => {
     const {level, flashMessage} = route.params;
@@ -76,9 +77,13 @@ export const GarageList = ({navigation, route}) => {
                 <View className="w-full max-w-sm">
                     <View className="flex flex-row justify-between">
                         <Text className="font-bold mb-6 text-gray-200 mt-5" style={{fontSize:34}}>Garages</Text>
-                        <View className="justify-end mt-5 mb-6">
-                            <PrimaryButton onPress={() => (navigation.navigate('FormGarage',{id:'' ,name:''}), setSearch(''))} message="+ Garage"/>
-                        </View>
+                        {
+                            user.isAdmin && user.type == 'Insurer' ? (
+                                <View className="justify-end mt-5 mb-6">
+                                    <PrimaryButton onPress={() => (navigation.navigate('FormGarage',{id:'' ,name:''}), setSearch(''))} message="+ Garage"/>
+                                </View>
+                            ):null
+                        }
                     </View>
                     {
                         isLoading || isFetching? (

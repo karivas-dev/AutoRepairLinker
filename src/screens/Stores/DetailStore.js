@@ -13,6 +13,7 @@ import { Header } from '../../components/Header';
 import { useEffect } from 'react';
 import { getStore, deleteStore } from '../../hooks/StoreApi';
 import { StoreBranchesList } from './Partials/Branches/StoreBranchesList';
+import { user } from '../../context/UserAttributesContext';
 
 
 export const DetailStore = ({navigation, route}) => {
@@ -61,21 +62,25 @@ export const DetailStore = ({navigation, route}) => {
                                                     <MaterialCommunityIcons name="warehouse" size={60} color="white" />
                                                 </View>
                                                 <View>
-                                                    <View>
-                                                        <PrimaryButton onPress={() => (navigation.navigate('CreateEditStore',{id: store?.data.id, name: store?.data.name}))}
-                                                            message="Edit"
-                                                        />
-                                                    </View>
-                                                    <View className="mt-2">
+                                                    {
+                                                        user.isAdmin && (user.type == 'Insurer' || user.type == 'Store') ? (
+                                                            <View>
+                                                                <PrimaryButton onPress={() => (navigation.navigate('CreateEditStore',{id: store?.data.id, name: store?.data.name}))}
+                                                                    message="Edit"
+                                                                />
+                                                            </View>
+                                                        ):null
+                                                    }
+                                                   {/*  <View className="mt-2">
                                                         <DangerButton message="Delete" onPress={() => handleStoreDelete()} />
-                                                    </View>
+                                                    </View> */}
                                                 </View>
                                             </View>
                                         </Card>
                                     </View>
 
                                     <View className="w-full max-w-sm">
-                                        <Card >
+                                        <Card>
                                             <Text className="text-gray-200 text-lg text-center" > 
                                                 <Text className="text-gray-200 text-lg font-bold" >Name: </Text> {store?.data.name}
                                             </Text><Text>{`\n`}</Text>

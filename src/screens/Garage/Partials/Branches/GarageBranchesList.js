@@ -9,6 +9,7 @@ import { Messages } from "../../../../components/Messages";
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { getBranches } from "../../../../hooks/BranchApi";
+import { user } from "../../../../context/UserAttributesContext";
 
 const showMain = (main) => {
     if (main) {
@@ -78,17 +79,21 @@ export const GarageBranchesList = ({ navigation, branches, garage_id }) => {
             <View className="w-full max-w-sm">
                 <View className="flex flex-row justify-between">
                     <Text className="font-bold mb-6 text-gray-200 mt-5 text-2xl">Branches</Text>
-                    <View className="justify-end mt-5 mb-6">
-                        <SecondaryButton onPress={() => (navigation.navigate('CreateEditGarageBranch', {
-                            id: '',
-                            email: '',
-                            telephone: '',
-                            main: '',
-                            district_id: '',
-                            branchable_id: garage_id,
-                            branchable_type: 'Garage',
-                        }), setSearch(''))} message="+ Branch" />
-                    </View>
+                    {
+                        user.isAdmin ? (
+                            <View className="justify-end mt-5 mb-6">
+                                <SecondaryButton onPress={() => (navigation.navigate('CreateEditGarageBranch', {
+                                    id: '',
+                                    email: '',
+                                    telephone: '',
+                                    main: '',
+                                    district_id: '',
+                                    branchable_id: garage_id,
+                                    branchable_type: 'Garage',
+                                }), setSearch(''))} message="+ Branch" />
+                            </View>
+                        ):null
+                    }
                 </View>
                 {
                     branches.length != 0 ? (

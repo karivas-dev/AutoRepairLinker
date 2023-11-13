@@ -10,6 +10,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { getOwners } from "../../hooks/OwnerApi";
 import { Pressable } from "react-native";
+import { user } from "../../context/UserAttributesContext";
 
 export const OwnersList = ({navigation, route}) => {
 
@@ -58,11 +59,15 @@ export const OwnersList = ({navigation, route}) => {
                             <Text className="text-gray-200 text-md ">{ owner.telephone }</Text>
                         </View>
                     </View>
-                    <View className="py-2">
-                        <Pressable onPress={() => (navigation.navigate('DetailOwner',{ id: owner.id }), setSearch(''))}>
-                            <MaterialIcons name="arrow-forward-ios" size={30} color="white" />
-                        </Pressable>
-                    </View>
+                    {
+                        user.type == 'Insurer' ? (
+                            <View className="py-2">
+                                <Pressable onPress={() => (navigation.navigate('DetailOwner',{ id: owner.id }), setSearch(''))}>
+                                    <MaterialIcons name="arrow-forward-ios" size={30} color="white" />
+                                </Pressable>
+                            </View>
+                        ):null
+                    }
                 </View>
             </Card>
         )
@@ -85,17 +90,21 @@ export const OwnersList = ({navigation, route}) => {
                 <View className="w-full max-w-sm">
                     <View className="flex flex-row justify-between">
                         <Text className="font-bold mb-6 text-gray-200 mt-5 text-3xl">Owners</Text>
-                        <View className="justify-end mt-5 mb-6">
-                            <PrimaryButton onPress={() => (navigation.navigate('CreateEditOwner',{ 
-                                ownerParms  : {
-                                    id: '',
-                                    firstname:'',
-                                    lastname: '',
-                                    email: '',
-                                    telephone: '',
-                                    district_id: ''
-                                }}), setSearch(''))} message="+ Owner"/>
-                        </View>
+                        {
+                            user.type == 'Insurer' ? (
+                                <View className="justify-end mt-5 mb-6">
+                                    <PrimaryButton onPress={() => (navigation.navigate('CreateEditOwner',{ 
+                                        ownerParms  : {
+                                            id: '',
+                                            firstname:'',
+                                            lastname: '',
+                                            email: '',
+                                            telephone: '',
+                                            district_id: ''
+                                        }}), setSearch(''))} message="+ Owner"/>
+                                </View>
+                            ):null
+                        }
                     </View>
                     {
                         isLoading || isFetching? (

@@ -8,6 +8,7 @@ import { SecondaryButton } from "../../../../components/SecondaryButton";
 import { Messages } from "../../../../components/Messages";
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { user } from "../../../../context/UserAttributesContext";
 
 const showMain = (main) => {
     if(main){
@@ -76,15 +77,19 @@ export const StoreBranchesList = ({navigation,branches,store_id }) => {
                 <View className="flex flex-row justify-between">
                     <Text className="font-bold mb-6 text-gray-200 mt-5 text-2xl">Branches</Text>
                     <View className="justify-end mt-5 mb-6">
-                        <SecondaryButton onPress={() => (navigation.navigate('CreateEditStoreBranch',{ 
-                            id: '',
-                            email: '',
-                            telephone: '',
-                            main: '',
-                            district_id: '',
-                            branchable_id: store_id,
-                            branchable_type: 'Store',
-                        }), setSearch(''))} message="+ Branch"/>
+                        {
+                            user.isAdmin ? (
+                                <SecondaryButton onPress={() => (navigation.navigate('CreateEditStoreBranch',{ 
+                                    id: '',
+                                    email: '',
+                                    telephone: '',
+                                    main: '',
+                                    district_id: '',
+                                    branchable_id: store_id,
+                                    branchable_type: 'Store',
+                                }), setSearch(''))} message="+ Branch"/>
+                            ):null
+                        }
                     </View>
                 </View>
                 {

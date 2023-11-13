@@ -12,6 +12,7 @@ import { Messages } from '../../components/Messages';
 import { Card } from '../../components/Card';
 import { Header } from '../../components/Header';
 import { deleteBrand, getBrand } from '../../hooks/BrandApi';
+import { user } from '../../context/UserAttributesContext';
 
 export const DetailBrand = ({navigation, route}) => {
     
@@ -63,16 +64,18 @@ export const DetailBrand = ({navigation, route}) => {
                                                 </View>
                                             </View>
                                             <View className="py-2">
-                                                <PrimaryButton message='Edit' onPress={() => navigation.navigate('CreateEditBrand', { id: id , name: brand?.data.name})}/>
-                                                
-                                                {/*  <View className="mt-2">
-                                                    <SecondaryButton message="+ model" onPress={() => console.log('add model')}/>
-                                                </View> */}
-
-                                                <View className="mt-2">
-                                                    <DangerButton message="delete" onPress={() => handleBrandDelete()}/>
-                                                </View>
-                                                
+                                                {
+                                                    user.type != 'Garage' ? (
+                                                        <>
+                                                            <PrimaryButton message='Edit' onPress={() => navigation.navigate('CreateEditBrand',
+                                                             { id: id , name: brand?.data.name})}/>
+                                                            <View className="mt-2">
+                                                                <DangerButton message="delete" onPress={() => handleBrandDelete()}/>
+                                                            </View>
+                                                        </>
+                                                        
+                                                    ):null
+                                                }                          
                                             </View>
                                         </>   
                                     ) : null}

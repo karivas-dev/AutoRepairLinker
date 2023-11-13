@@ -13,6 +13,7 @@ import { Header } from '../../../../components/Header';
 import { getBranch } from '../../../../hooks/BranchApi';
 
 import { deleteGarageBranch } from '../../../../hooks/GarageApi';
+import { user } from '../../../../context/UserAttributesContext';
 
 const showMain = (main) => {
     if(main){
@@ -42,6 +43,7 @@ export const DetailGarageBranch = ({navigation,route}) => {
             }
         ]);
     }
+    
     return (
         <AuthenticateLayout>
             <Header navigation={navigation}/>
@@ -67,23 +69,27 @@ export const DetailGarageBranch = ({navigation,route}) => {
                                                 <View className="py-2">
                                                     <Feather name="git-branch" size={60} color="#F1F6F5" />
                                                 </View>
-                                                <View>
-                                                    <View>
-                                                        <PrimaryButton message='Edit' onPress={() => navigation.navigate('CreateEditGarageBranch',{
-                                                                id: branch?.data.id,
-                                                                email: branch?.data.email,
-                                                                telephone: branch?.data.telephone,
-                                                                main: branch?.data.main,
-                                                                district_id: branch?.data.district_id,
-                                                                branchable_id: branch?.data.branchable_id,
-                                                                branchable_type: 'Garage',
-                                                            })
-                                                        }/>
-                                                    </View>
-                                                    <View className="mt-2">
-                                                        <DangerButton message="Delete" onPress={() => handleBranchDelete()} />
-                                                    </View>
-                                                </View>
+                                                {
+                                                    user.isAdmin && user.type == 'Garage' ? (
+                                                        <View>
+                                                            <View>
+                                                                <PrimaryButton message='Edit' onPress={() => navigation.navigate('CreateEditGarageBranch',{
+                                                                        id: branch?.data.id,
+                                                                        email: branch?.data.email,
+                                                                        telephone: branch?.data.telephone,
+                                                                        main: branch?.data.main,
+                                                                        district_id: branch?.data.district_id,
+                                                                        branchable_id: branch?.data.branchable_id,
+                                                                        branchable_type: 'Garage',
+                                                                    })
+                                                                }/>
+                                                            </View>
+                                                            <View className="mt-2">
+                                                                <DangerButton message="Delete" onPress={() => handleBranchDelete()} />
+                                                            </View>
+                                                        </View>
+                                                    ):null
+                                                }
                                             </View>
                                         </Card>
                                     </View>

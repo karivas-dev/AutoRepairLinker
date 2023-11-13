@@ -12,6 +12,8 @@ import { Card } from '../../../../components/Card';
 import { Header } from '../../../../components/Header';
 import { getTicketBid, deleteTicketBid } from '../../../../hooks/BidsApi';
 import { BidDetailList } from './BidDetailList';
+import { user } from '../../../../context/UserAttributesContext';
+import { BidReplacementsList } from './BidReplacements/BidReplacementsList';
 
 export const DetailTicketBid = ({navigation,route}) => {
     const { data:bid, isLoading, isError, error, isFetching ,isSuccess} = getTicketBid(route.params.id);
@@ -31,7 +33,7 @@ export const DetailTicketBid = ({navigation,route}) => {
         ]);
     }
     return (
-        <AuthenticateLayout >
+        <AuthenticateLayout level={route.params?.level} flashMessage={route.params?.flashMessage}>
             <Header navigation={navigation}/>
             <View className="flex-none w-full max-w-sm">
                 {
@@ -70,17 +72,25 @@ export const DetailTicketBid = ({navigation,route}) => {
                                                 </View>
                                                 <View>
                                                     <View>
-                                                        <PrimaryButton message='Edit' onPress={() => navigation.navigate('CreateEditTicketBid',{
-                                                                id: bid?.data.id,
-                                                                ticket_id: route.params.ticket_id,
-                                                                bid_status_id: bid?.data.status.id,
-                                                                timespan: bid?.data.timespan,
-                                                                details: bid?.data.details,
-                                                            })
-                                                        }/>
+                                                        {
+                                                            user.type == 'Garage' ? (
+                                                                <PrimaryButton message='Edit' onPress={() => navigation.navigate('CreateEditTicketBid',{
+                                                                    id: bid?.data.id,
+                                                                    ticket_id: route.params.ticket_id,
+                                                                    bid_status_id: bid?.data.status.id,
+                                                                    timespan: bid?.data.timespan,
+                                                                    details: bid?.data.details,
+                                                                })
+                                                            }/>
+                                                            ):null
+                                                        }
                                                     </View>
                                                     <View className="mt-2">
-                                                        <DangerButton message="Delete" onPress={() => handleBidDelete()} />
+                                                        {
+                                                            user.type == 'Insurer' || user.type == 'Garage' ? (
+                                                                <DangerButton message="Delete" onPress={() => handleBidDelete()} />
+                                                            ):null
+                                                        }
                                                     </View>
                                                 </View>
                                             </View>
@@ -109,6 +119,13 @@ export const DetailTicketBid = ({navigation,route}) => {
                                     <View className="w-full max-w-sm">
                                         <BidDetailList
                                             details={bid?.data.details}
+                                        />
+                                    </View>
+                                    <View className="w-full max-w-sm">
+                                        <BidReplacementsList
+                                            bidReplacements={bid?.data.replacements}
+                                            bid_id={bid?.data.id}
+                                            navigation={navigation}
                                         />
                                     </View>
                                 </>   
