@@ -30,7 +30,7 @@ export const HomePage = () => {
     const userLogOut = userLogoutAttempt();
 
     const handleLogOut = () => {
-       /*  Alert.alert('Log Out', 'Are you sure you want to log out ?', [
+       Alert.alert('Log Out', 'Are you sure you want to log out ?', [
             {
                 text: 'Cancel',
                 style: 'cancel'
@@ -40,8 +40,7 @@ export const HomePage = () => {
                     userLogOut.mutateAsync();
                 }
             }
-        ]); */
-        userLogOut.mutateAsync();
+        ]);
     }
     const indexOptions  = [
         {icon: <Octicons name="tools" size={24} color="white" /> , name:'Replacements', route:'ReplacementsList'}, 

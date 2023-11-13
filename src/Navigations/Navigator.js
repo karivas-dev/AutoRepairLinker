@@ -54,6 +54,7 @@ import { DetailTicketBid } from "../screens/Tickets/Partials/Bids/DetailTicketBi
 import { CreateEditTicketBid } from "../screens/Tickets/Partials/Bids/CreateEditTicketBid";
 import { user } from "../context/UserAttributesContext";
 import { CreateEditBidReplacement } from "../screens/Tickets/Partials/Bids/BidReplacements/CreateEditBidReplacements";
+import {useNavigation} from "@react-navigation/native";
 
 
 const Tab = createBottomTabNavigator();
@@ -135,14 +136,14 @@ const Stack = createStackNavigator();
 const screenOptionsStyle = {
     headerShown:false
 }
-export const HomeStackNavigator = () => {
 
+export const StackNavigator = ({isLoggedIn}) => {
     return (
-        <Stack.Navigator screenOptions={screenOptionsStyle} >
-            <Stack.Screen name="Home" component={BottomTabNavigator} />
+        <Stack.Navigator screenOptions={screenOptionsStyle}>
             <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Home" component={BottomTabNavigator} />
             <Stack.Screen name="ResetPassword" component={ResetPassword} />
-            
+
             <Stack.Screen name="BranchDetail" component={BranchDetail}/>
 
             <Stack.Screen name="CreateEditOwner" component={CreateEditOwner} />
@@ -172,56 +173,6 @@ export const HomeStackNavigator = () => {
             <Stack.Screen name="DetailReplacement" component={DetailReplacement} initialParams={{level: '', flashMessage: ''}}/>
             <Stack.Screen name="EditCreateReplacement" component={EditCreateReplacement} />
             <Stack.Screen name="CreateEditInventory" component={CreateEditInventory} />
-            
-            <Stack.Screen name="TicketsList" component={TicketsList} initialParams={{level: '', flashMessage: '', page: 1}}/>
-            <Stack.Screen name="DetailTicket" component={DetailTicket} initialParams={{level: '', flashMessage: ''}} />
-            <Stack.Screen name="DetailTicketBid" component={DetailTicketBid}/>
-            <Stack.Screen name="CreateEditTicketBid" component={CreateEditTicketBid}/>
-            <Stack.Screen name="CreateEditTicket" component={CreateEditTicket}/>
-            <Stack.Screen name="CreateEditBidReplacement" component={CreateEditBidReplacement} initialParams={{page: 1}}/>
-
-
-        </Stack.Navigator>
-    )
-};
-
-export const LoginStackNavigator = () => {
-    
-    return (
-        <Stack.Navigator screenOptions={screenOptionsStyle} >
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Home" component={BottomTabNavigator} />
-            <Stack.Screen name="ResetPassword" component={ResetPassword} />
-
-            <Stack.Screen name="BranchDetail" component={BranchDetail}/>
-
-            <Stack.Screen name="CreateEditOwner" component={CreateEditOwner} />
-            <Stack.Screen name="DetailOwner" component={DetailOwner} />
-            <Stack.Screen name="DetailBrand" component={DetailBrand} initialParams={{level: '', flashMessage: '', page: 1}}/>
-            <Stack.Screen name="CreateEditBrand" component={CreateEditBrand} />
-
-            <Stack.Screen name="FormGarage" component={FormGarage} />
-            <Stack.Screen name="DetailGarage" component={DetailGarage} />
-            <Stack.Screen name="GarageList" component={GarageList} initialParams={{level: '', flashMessage: '', page: 1}}/>
-            <Stack.Screen name="CreateEditGarageBranch" component={CreateEditGarageBranch} />
-            <Stack.Screen name="DetailGarageBranch" component={DetailGarageBranch} />
-
-            <Stack.Screen name="StoresList" component={StoresList} initialParams={{level: '', flashMessage: '', page: 1}}/>
-            <Stack.Screen name="DetailStore" component={DetailStore} />
-            <Stack.Screen name="CreateEditStore" component={CreateEditStore} />
-            <Stack.Screen name="CreateEditStoreBranch" component={CreateEditStoreBranch} />
-            <Stack.Screen name="DetailStoreBranch" component={DetailStoreBranch}/>
-
-            <Stack.Screen name="DetailModel" component={DetailModel} />
-            <Stack.Screen name="CreateEditModel" component={CreateEditModel} />
-
-            <Stack.Screen name="ReplacementsList" component={ReplacementsList} initialParams={{level: '', flashMessage: '', page: 1}}/>
-            <Stack.Screen name="DetailReplacement" component={DetailReplacement} initialParams={{level: '', flashMessage: ''}}/>
-            <Stack.Screen name="EditCreateReplacement" component={EditCreateReplacement} />
-            <Stack.Screen name="CreateEditInventory" component={CreateEditInventory} />
-
-            <Stack.Screen name="DetailCar" component={DetailCar} />
-            <Stack.Screen name="CreateEditCar" component={CreateEditCar} />
 
             <Stack.Screen name="TicketsList" component={TicketsList} initialParams={{level: '', flashMessage: '', page: 1}}/>
             <Stack.Screen name="DetailTicket" component={DetailTicket} initialParams={{level: '', flashMessage: ''}} />
@@ -229,7 +180,6 @@ export const LoginStackNavigator = () => {
             <Stack.Screen name="CreateEditTicketBid" component={CreateEditTicketBid}/>
             <Stack.Screen name="CreateEditTicket" component={CreateEditTicket}/>
             <Stack.Screen name="CreateEditBidReplacement" component={CreateEditBidReplacement} initialParams={{page: 1}}/>
-
         </Stack.Navigator>
     )
 };
