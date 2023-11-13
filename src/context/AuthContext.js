@@ -1,7 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {user} from "./UserAttributesContext";
 
 export const saveLoginData = async (data) => {
   try {
+    user.isAdmin = data.admin;
+    user.type = data.type;
     await AsyncStorage.setItem('token', data.token);
     await AsyncStorage.setItem('type', data.type);
     await AsyncStorage.setItem('admin', data.admin);

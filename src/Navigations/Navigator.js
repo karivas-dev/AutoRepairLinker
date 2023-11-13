@@ -137,7 +137,7 @@ const screenOptionsStyle = {
     headerShown:false
 }
 
-export const StackNavigator = ({isLoggedIn}) => {
+export const StackNavigator = () => {
     return (
         <Stack.Navigator screenOptions={screenOptionsStyle}>
             <Stack.Screen name="Login" component={Login} />
