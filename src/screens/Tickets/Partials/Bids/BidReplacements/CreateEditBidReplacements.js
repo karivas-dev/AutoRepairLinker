@@ -19,20 +19,33 @@ export const CreateEditBidReplacement = ({navigation, route}) => {
    
     const formik = useFormik({
         initialValues: {
-            id: route.params.id ?? '',
+            inventory_id: '',
             bid_id: route.params.bid_id ,
             replacement_id:'',
             quantity: '',
+            price:'',
         },
         validationSchema: Yup.object().shape({
             bid_id: Yup.number().required(),
-            replacement_id: Yup.number().required(),
-            quantity: Yup.number().required(),
+            inventory_id: Yup.number().required(),
+            quantity: Yup.number().positive().required(),
         }),
         onSubmit: async (bid) => await createEditAttempt.mutateAsync(bid),
     });
     const createEditAttempt = createEditBidReplacement(formik.setErrors, formik.values);
     let replacements = getBidReplacements();
+
+    useEffect(() => {
+        if(replacements != null){
+            replacements.filter((replacement) => {
+                if(replacement.id == formik.values.inventory_id){
+                    formik.setFieldValue('price', replacement.price);
+                    formik.setFieldValue('replacement_id', replacement.replacement_id);
+                }
+            });
+        }
+
+    },[formik.values.inventory_id]);
     console.log(formik.values);
     return (
         <AuthenticateLayout>
@@ -43,17 +56,17 @@ export const CreateEditBidReplacement = ({navigation, route}) => {
                     <Text className="text-lg font-extrabold text-gray-200 text-center mb-2">
                         { formik.values.id == '' ? 'Add new Bid for Replacements' : 'Update Bid for Replacements' }
                     </Text>
-                    <Text className="text-red-500 capitalize-first">
+                    <Text className="text-red-500 capitalize-first mb-4">
                         { formik.touched?.bid_id && formik.errors?.bid_id }
                     </Text>
                     
                     {
-                        replacements == null ? null : (
+                        replacements.length == 0 ? null : (
                             <>
-                                <SelectInput selectedValue={formik.values.replacement_id} onValueChange={formik.handleChange('replacement_id')}
+                                <SelectInput selectedValue={formik.values.inventory_id} onValueChange={formik.handleChange('inventory_id')}
                                     DefaultPlaceholder="Replacement :" data={replacements}/>
                                 <Text className="text-red-500 capitalize-first">
-                                    { formik.touched?.replacement_id && formik.errors?.replacement_id }
+                                    { formik.touched?.inventory_id && formik.errors?.inventory_id }
                                 </Text>
                                 <View className="mt-4">
                                     <FormikInput valueName="quantity" formik={formik} placeholder="Quantity" label={formik.values.id == '' ? null : 'Quantity'}/>

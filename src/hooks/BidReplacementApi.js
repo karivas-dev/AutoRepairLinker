@@ -22,26 +22,29 @@ export const createEditBidReplacement = (formikErrors ,bid_replacement) => {
     });
 }
 
-const fetchReplacements = async (page) => (await axiosRoute.get('replacements.index', { page: page})).data;
+const fetchReplacements = async () => (await axiosRoute.get('inventories.index')).data;
 export const getBidReplacements = () => {
     const [allData, setAllData] = useState([]); // Estado para almacenar todos los datos
     useEffect(() => {
         async function fetchData() {
-            const data = await  fetchReplacements(1);
+            const data = await  fetchReplacements();
             let allDataArray = [];
             if(data.data.length == 0 ){
                 setAllData([{id:'', name:'No Replacements in our records'}]);
             }
             else{
-                for (let page = 1; page <= data.meta?.last_page; page++) {
-                    const response = await fetchReplacements(page);
-                    const formattedData = response.data.map(replacement => ({ id: replacement.id, name: replacement.name }));
-                    allDataArray = [...allDataArray, ...formattedData];
-                }
+                const formattedData = data.data.map(inventory => ({ id: inventory.id, name: (inventory.replacement.name + ', ' + inventory.store), 
+                    replacement_id: inventory.replacement.id, price: inventory.unit_price})
+                );
+                allDataArray = [...allDataArray, ...formattedData];
                 setAllData(allDataArray);
             }
         }
         fetchData();
+
     }, []);
+    useEffect(() => {
+        console.log(allData);
+    }, [allData]);
     return allData;
 }
