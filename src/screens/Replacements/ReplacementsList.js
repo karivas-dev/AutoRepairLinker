@@ -95,7 +95,7 @@ export const ReplacementsList = ({navigation, route}) => {
                     <View className="flex flex-row justify-between">
                         <Text className="font-bold mb-6 text-gray-200 mt-5 text-2xl">Replacements</Text>
                         {
-                            user.isAdmin && user.type == "Insurer" ? (
+                            user.isAdmin && user.type == "Store" ? (
                                 <View className="justify-end mt-5 mb-6">
                                     <PrimaryButton
                                         onPress={() => (

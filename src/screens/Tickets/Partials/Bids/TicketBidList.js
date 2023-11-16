@@ -59,13 +59,13 @@ export const TicketBidList = ({navigation,bids,ticket_id }) => {
                     <Text className="font-bold mb-6 text-gray-200 mt-5 text-2xl">Bids</Text>
                     <View className="justify-end mt-5 mb-6">
                         {
-                            user.type == 'Garage' || user.type == 'Insurer'  ? (
+                            user.type == 'Garage'  ? (
                                 <SecondaryButton onPress={() => (navigation.navigate('CreateEditTicketBid',{ 
                                     id: '',
                                     ticket_id: ticket_id,
                                     bid_status_id: '',
                                     timespan: '',
-                                    details: [{ id: null, name: '', price: 0 }],
+                                    details: [{ id: '', name: '', price: 0 }],
                                 }), setSearch(''))} message="+ Bid"/>
                             ):null
                         }

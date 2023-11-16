@@ -76,20 +76,22 @@ export const DetailTicket = ({navigation, route}) => {
                                                     <Ionicons name="receipt" size={62} color="#F1F6F5" />
                                                 </View>
                                                 {
-                                                    user.type == 'Insurer'  ? (
+                                                    user.type == 'Insurer' || user.type == 'Garage' ? (
                                                         <View>
-                                                            <View>
-                                                                <PrimaryButton message='Edit' onPress={() =>  navigation.navigate("CreateEditTicket", {
-                                                                    id: ticket?.data.id,
-                                                                    description: ticket?.data.description,
-                                                                    car_id: ticket?.data.car.id,
-                                                                    garage_id: ticket?.data.garage.id,
-                                                                    ticket_status_id: ticket?.data.status_id,
-                                                                })}/>
-                                                            </View>
-                                                            <View className="mt-2">
-                                                                <DangerButton message="Delete" onPress={() => handleDelete()} />
-                                                            </View>
+                                                            <PrimaryButton message='Edit' onPress={() =>  navigation.navigate("CreateEditTicket", {
+                                                                id: ticket?.data.id,
+                                                                description: ticket?.data.description,
+                                                                car_id: ticket?.data.car.id,
+                                                                garage_id: ticket?.data.garage.id,
+                                                                ticket_status_id: ticket?.data.status_id,
+                                                            })}/>
+                                                        </View>
+                                                    ):null
+                                                }
+                                                {
+                                                    user.type == 'Insurer' ? (
+                                                        <View className="mt-2">
+                                                            <DangerButton message="Delete" onPress={() => handleDelete()} />
                                                         </View>
                                                     ):null
                                                 }

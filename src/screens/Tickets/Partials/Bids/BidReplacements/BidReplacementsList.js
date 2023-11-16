@@ -6,6 +6,7 @@ import { TxtInput } from "../../../../../components/TxtInput";
 import { Messages } from "../../../../../components/Messages";
 import { PrimaryButton } from "../../../../../components/PrimaryButton";
 import { SecondaryButton } from "../../../../../components/SecondaryButton";
+import { user } from "../../../../../context/UserAttributesContext";
 export const BidReplacementsList = ({navigation,bidReplacements,bid_id}) => {
 
     const [filterBidReplacements,setFilterBidReplacements] = useState(bidReplacements);
@@ -58,19 +59,23 @@ export const BidReplacementsList = ({navigation,bidReplacements,bid_id}) => {
             <View className="w-full max-w-sm">
                 <View className="flex flex-row justify-between">
                     <Text className="font-bold mb-6 text-gray-200 mt-5 text-2xl">Replacement Details</Text>
-                    <View className="justify-end mt-5 mb-6">
-                        <SecondaryButton
-                            onPress={() => ( 
-                                navigation.navigate("CreateEditBidReplacement", {
-                                    id: '',
-                                    bid_id: bid_id,
-                                    replacements : [{ id: null, replacement_id: '', quantity: ''}],
-                                }),
-                                setSearch("")
-                            )}
-                            message="+ ADD"
-                        />
-                    </View>
+                    {
+                        user.type == 'Garage' ? (
+                            <View className="justify-end mt-5 mb-6">
+                                <SecondaryButton
+                                    onPress={() => ( 
+                                        navigation.navigate("CreateEditBidReplacement", {
+                                            id: '',
+                                            bid_id: bid_id,
+                                            replacements : [{ id: null, replacement_id: '', quantity: ''}],
+                                        }),
+                                        setSearch("")
+                                    )}
+                                    message="+ ADD"
+                                />
+                            </View>
+                        ):null
+                    }
                 </View>
                 {
                     bidReplacements.length != 0 ? (

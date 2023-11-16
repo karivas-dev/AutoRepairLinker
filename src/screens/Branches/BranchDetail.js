@@ -65,14 +65,14 @@ export const BranchDetail = ({navigation, route}) => {
                                                     <Feather name="git-branch" size={60} color="#F1F6F5" />
                                                 </View>
                                                 {
-                                                    user.isAdmin ? (
+                                                    user.isAdmin  ? (
                                                         <View>
                                                            {/*  <View>
                                                                 <PrimaryButton message='Edit' onPress={() => console.log('editar')}/>
                                                             </View> */}
-                                                            <View className="mt-2">
+                                                            {/* <View className="mt-2">
                                                                 <DangerButton message="Delete" onPress={() => handleBranchDelete()} />
-                                                            </View>
+                                                            </View> */}
                                                         </View>
                                                     ):null
                                                 }

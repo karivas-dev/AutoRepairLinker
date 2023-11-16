@@ -82,18 +82,30 @@ export const DetailReplacement = ({navigation, route}) => {
                                                     </View> */}
                                                     <View className="mt-2">
                                                         {
-                                                            user.type == 'Store' ? (
-                                                            
-                                                                    <SecondaryButton message={replacement?.data?.inventory != null ? 'Inv Edit': ' Inv Add'} onPress={
-                                                                        () => (navigation.navigate('CreateEditInventory', {
-                                                                            id: replacement?.data.inventory?.id ?? '',
-                                                                            replacement_id: replacement?.data.id ,
-                                                                            quantity: replacement?.data.inventory?.quantity ?? '',
-                                                                            unit_price: replacement?.data.inventory?.unit_price ?? '',
-                                                                        }))}
-                                                                    />
+                                                            user.type == 'Store' && replacement?.data?.inventory == null ? (
+                                                                <SecondaryButton message={'Inv Add'} onPress={
+                                                                    () => (navigation.navigate('CreateEditInventory', {
+                                                                        id: replacement?.data.inventory?.id ?? '',
+                                                                        replacement_id: replacement?.data.id ,
+                                                                        quantity: replacement?.data.inventory?.quantity ?? '',
+                                                                        unit_price: replacement?.data.inventory?.unit_price ?? '',
+                                                                    }))}
+                                                                />
                                                             ):null
                                                         }
+                                                        {
+                                                            user.type == 'Store' && replacement?.data?.inventory != null ? (
+                                                                <SecondaryButton message={'Inv Edit'} onPress={
+                                                                    () => (navigation.navigate('CreateEditInventory', {
+                                                                        id: replacement?.data.inventory?.id ,
+                                                                        replacement_id: replacement?.data.id ,
+                                                                        quantity: replacement?.data.inventory?.quantity,
+                                                                        unit_price: replacement?.data.inventory?.unit_price,
+                                                                    }))}
+                                                                />
+                                                            ):null
+                                                        }
+                                                       
                                                     </View>
                                                 </View>
                                             </View>

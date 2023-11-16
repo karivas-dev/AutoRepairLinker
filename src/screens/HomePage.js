@@ -12,6 +12,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { user } from '../context/UserAttributesContext';
 import {useQueryClient} from "react-query";
 
 export const HomePage = () => {
@@ -41,6 +42,7 @@ export const HomePage = () => {
                 }
             }
         ]);
+        userLogOut.mutateAsync();
     }
     const indexOptions  = [
         {icon: <Octicons name="tools" size={24} color="white" /> , name:'Replacements', route:'ReplacementsList'}, 
@@ -70,6 +72,9 @@ export const HomePage = () => {
     };
 
     const renderItem = useCallback(({ item: option }) => {
+        if(user.type == 'Store' && option.name == 'Tickets'){
+            return null;
+        }
         return (
             <Card>
                 <View className="flex flex-row">

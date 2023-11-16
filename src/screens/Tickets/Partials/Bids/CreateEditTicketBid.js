@@ -19,7 +19,7 @@ export const CreateEditTicketBid = ({navigation, route}) => {
             ticket_id: route.params.ticket_id ?? '',
             bid_status_id: route.params.bid_status_id ?? '',
             timespan: route.params.timespan ?? '',
-            details: route.params.details ?? [{ id: null, name: '', price: 0 }],
+            details: route.params.details ?? [{ id: '', name: '', price: 0 }],
         },
         validationSchema: Yup.object().shape({
             ticket_id: Yup.number().required(),
@@ -41,7 +41,7 @@ export const CreateEditTicketBid = ({navigation, route}) => {
     const addNewItem = () => {
         formik.setValues({
           ...formik.values,
-          details: [...formik.values.details, { id: null, name: '', price: 0 }],
+          details: [...formik.values.details, { id: '', name: '', price: 0 }],
         });
     };
     const removeLastItem = () => {
@@ -56,6 +56,7 @@ export const CreateEditTicketBid = ({navigation, route}) => {
             alert('You must have at least one detail item');
         }
     };
+    console.log(formik.values);
     return (
         <AuthenticateLayout>
             <Header navigation={navigation}/>
